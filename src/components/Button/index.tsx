@@ -11,7 +11,9 @@ interface ButtonProps {
 const Button: React.FC<ButtonProps> = ({text, type, onClick}) => {
     return (
         <div className='container__button'>
-            <button type={type} onClick={onClick}>{text&&text}</button>
+            <button type={type} onClick={onClick} className='button'>
+                <span>{text&&text}</span>
+            </button>
         </div>
     )
 }

@@ -19,9 +19,9 @@ export const Sign: React.FC = () => {
     }
 
     return (
-        <div className='container_login'>
-            <div className='login__box'>
-                <div className='login__header'>
+        <div className='container__sign'>
+            <div className='sign__box'>
+                <div className='sign__header'>
                     <div className='header__title'>
                         <h1>Login</h1>
                     </div>
@@ -30,7 +30,7 @@ export const Sign: React.FC = () => {
                         <p>Faça o login aqui.</p>
                     </div>
                 </div>
-                <form onSubmit={handleSubmit} className='login__form'>
+                <form onSubmit={handleSubmit} className='sign__form'>
                     <div className='form__inputs'>
                         <Input placeholder="E-mail" type="email" value={email} onChange={(e) => setEmail(e.target.value)}/>
                         <Input placeholder="Senha" type="password" value={password} onChange={(e) => setPassword(e.target.value)}/>
@@ -40,28 +40,28 @@ export const Sign: React.FC = () => {
                     </div>
                 </form>
             </div>
-            <div className='signup__box'>
-                <div className='login__header'>
+            <div className='sign__box'>
+                <div className='sign__header'>
                     <div className='header__title'>
-                        <h1>Login</h1>
+                        <h1>Cadastre-se</h1>
                     </div>
                     <div className='header__info'>
-                        <h2>Bem-Vindo!</h2>
-                        <p>Faça o login aqui.</p>
+                        <h2>Primeira vez?</h2>
+                        <p>Cadastre-se aqui.</p>
                     </div>
                 </div>
-                <form onSubmit={handleSubmit} className='login__form'>
+                <form onSubmit={handleSubmit} className='sign__form'>
                     <div className='form__inputs'>
                         <Input placeholder="E-mail" type="email" value={email} onChange={(e) => setEmail(e.target.value)}/>
                         <Input placeholder="Senha" type="password" value={password} onChange={(e) => setPassword(e.target.value)}/>
                     </div>
                     <div className='form__button'>
-                        <Button type='submit' text='Login'/>
+                        <Button type='submit' text='Cadastro'/>
                     </div>
                 </form>
             </div>
-            <div className='image__box'>
-
+            <div className='sign__image'>
+                <img src="" alt="" />
             </div>
         </div>
     )

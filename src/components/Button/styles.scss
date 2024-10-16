@@ -1,0 +1,40 @@
+@import '../../globals.scss';
+
+* {
+    font-family: 'Satoshi-Variable', sans-serif;
+}
+
+.container__button {
+    display: flex;
+    align-items: center;
+    outline: none;
+}
+
+.container__button button {
+    transition: ease-in-out 0.2s;
+    outline: none;
+}
+
+.button {
+    all: unset;
+    width: 100%;
+    border-radius: 12px;
+    background-color: #7152F3;
+    padding: 12px 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.button:hover {
+    background-color: #3517B4;
+    cursor: pointer;
+    transform: scale(1.03);
+}
+
+.button > span{
+    color: white;
+    font-weight: 500;
+    font-size: 16px;
+}
