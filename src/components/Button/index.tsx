@@ -15,7 +15,7 @@ const Button: React.FC<ButtonProps> = ({text, type, onClick, Icon, outline, only
     return (
         <div className='container__button'>
             <button type={type} onClick={onClick} className={`${outline?'button--outline':onlyIcon?'button--onlyIcon':'button'}`}>
-                {onlyIcon&&Icon?Icon:<span>{Icon&&Icon}{text&&text}</span>}
+                {onlyIcon?<span>{Icon}</span>:<span>{Icon&&Icon}{text&&text}</span>}
             </button>
         </div>
     )

@@ -1,6 +1,7 @@
 import React from 'react'
 import './styles.scss'
 import Button from '../Button'
+import { Check, Trash, Edit2 } from 'react-feather'
 
 interface DashboardTaskProps {
     title: string
@@ -14,8 +15,7 @@ export const DashboardTask: React.FC<DashboardTaskProps> = ({title, description,
     return (
         <div className="dashboard__task">
             <div className="task__time">
-                <h2>{hour}:</h2>
-                <h2>{minute}</h2>
+                <h2>{hour}:{minute}</h2>
                 <span>{date}</span>
             </div>
             <div className="task__info">
@@ -23,9 +23,9 @@ export const DashboardTask: React.FC<DashboardTaskProps> = ({title, description,
                 <p>{description}</p>
             </div>
             <div className="task__func">
-                <Button text="Concluir" type="button"/>
-                <Button text="Editar" type="button"/>
-                <Button text="Excluir" type="button"/>
+                <Button Icon={<Check/>} type="button" onlyIcon/>
+                <Button Icon={<Edit2/>} type="button" onlyIcon/>
+                <Button Icon={<Trash/>} type="button" onlyIcon/>
             </div>
         </div>
     )
