@@ -6,9 +6,6 @@ import { getCookie } from "../../../utils/cookies";
 import Button from "../../../components/Button";
 import { DashboardTask } from "../../../components/DashboardTask";
 
-import { useGetGestationsByUser, useGetKidsByMom, useGetUsers } from "../../../utils/Queries";
-
-import {ChevronDown, PlusSquare} from 'react-feather'
 import { useGetConsultationsByGestation, useGetGestationsByUser, useGetKidsByMom, useGetUsers } from "../../../utils/Queries";
 
 import { useMutation } from "@apollo/client";
