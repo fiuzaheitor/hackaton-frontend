@@ -17,7 +17,7 @@ export const M_CREATE_USER = gql`
 `
 
 export const M_DELETE_USER = gql`
-    mutation DeleteUser($id: String) {
+    mutation DeleteUser($id: ID!) {
         deleteUser(id: $id) {
             id
         }
@@ -25,7 +25,7 @@ export const M_DELETE_USER = gql`
 `
 
 export const M_UPDATE_USER = gql`
-    mutation UpdateUser($id: String, $data: UserInput) {
+    mutation UpdateUser($id: ID!, $data: UserInput) {
         updateUser(id: $id, data: $data) {
             id
         }
@@ -41,7 +41,7 @@ export const M_CREATE_KID = gql`
 `
 
 export const M_DELETE_KID = gql`
-    mutation DeleteKid($id: String) {
+    mutation DeleteKid($id: ID!) {
         deleteKid(id: $id) {
             id
         }
@@ -49,7 +49,7 @@ export const M_DELETE_KID = gql`
 `
 
 export const M_UPDATE_KID = gql`
-    mutation UpdateKid($id: String, $data: KidInput) {
+    mutation UpdateKid($id: ID!, $data: KidInput) {
         updateKid(id: $id, data: $data) {
             id
         }
@@ -65,7 +65,7 @@ export const M_CREATE_GESTATION = gql`
 `
 
 export const M_DELETE_GESTATION = gql`
-    mutation DeleteGestation($id: String) {
+    mutation DeleteGestation($id: ID!) {
         deleteGestation(id: $id) {
             id
         }
@@ -73,7 +73,7 @@ export const M_DELETE_GESTATION = gql`
 `
 
 export const M_UPDATE_GESTATION = gql`
-    mutation UpdateGestation($id: String, $data: GestationInput) {
+    mutation UpdateGestation($id: ID!, $data: GestationInput) {
         updateGestation(id: $id, data: $data) {
             id
         }
@@ -89,7 +89,7 @@ export const M_CREATE_CONSULTATION = gql`
 `
 
 export const M_DELETE_CONSULTATION = gql`
-    mutation DeleteConsultation($id: String) {
+    mutation DeleteConsultation($id: ID!) {
         deleteConsultation(id: $id) {
             id
         }
@@ -97,7 +97,7 @@ export const M_DELETE_CONSULTATION = gql`
 `
 
 export const M_UPDATE_CONSULTATION = gql`
-    mutation UpdateConsultation($id: String, $data: ConsultationInput) {
+    mutation UpdateConsultation($id: ID!, $data: ConsultationInput) {
         updateConsultation(id: $id, data: $data) {
             id
         }
@@ -113,7 +113,7 @@ export const M_CREATE_VACCINE_CARD = gql`
 `
 
 export const M_DELETE_VACCINE_CARD = gql`
-    mutation DeleteVaccineCard($id: String) {
+    mutation DeleteVaccineCard($id: ID!) {
         deleteVaccineCard(id: $id) {
             id
         }
@@ -121,7 +121,7 @@ export const M_DELETE_VACCINE_CARD = gql`
 `
 
 export const M_UPDATE_VACCINE_CARD = gql`
-    mutation UpdateVaccineCard($id: String, $data: VaccineCardInput) {
+    mutation UpdateVaccineCard($id: ID!, $data: VaccineCardInput) {
         updateVaccineCard(id: $id, data: $data) {
             id
         }
@@ -137,7 +137,7 @@ export const M_CREATE_VACCINE = gql`
 `
 
 export const M_DELETE_VACCINE = gql`
-    mutation DeleteVaccine($id: String) {
+    mutation DeleteVaccine($id: ID!) {
         deleteVaccine(id: $id) {
             id
         }
@@ -145,7 +145,7 @@ export const M_DELETE_VACCINE = gql`
 `
 
 export const M_UPDATE_VACCINE = gql`
-    mutation UpdateVaccine($id: String, $data: VaccineInput) {
+    mutation UpdateVaccine($id: ID!, $data: VaccineInput) {
         updateVaccine(id: $id, data: $data) {
             id
         }

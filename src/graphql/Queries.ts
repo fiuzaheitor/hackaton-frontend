@@ -103,6 +103,7 @@ export const G_GESTATIONS_BY_USER = gql`
                 name
             }
             week
+            createdAt
         }
     }
 `

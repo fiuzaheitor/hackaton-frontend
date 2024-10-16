@@ -8,7 +8,7 @@ import { DashboardTask } from "../../../components/DashboardTask";
 import {ChevronDown, PlusSquare} from 'react-feather'
 import { useGetConsultationsByGestation, useGetGestationsByUser, useGetKidsByMom, useGetUsers } from "../../../utils/Queries";
 import { useMutation } from "@apollo/client";
-import { M_CREATE_CONSULTATION, M_CREATE_GESTATION, M_CREATE_KID, M_UPDATE_CONSULTATION } from "../../../graphql/Mutations";
+import { M_CREATE_CONSULTATION, M_CREATE_GESTATION, M_CREATE_KID, M_CREATE_VACCINE_CARD, M_UPDATE_CONSULTATION, M_UPDATE_GESTATION } from "../../../graphql/Mutations";
 
 export const Home: React.FC = () => {
     const auth = JSON.parse(getCookie('_bu_l') as string)
@@ -42,16 +42,54 @@ export const Home: React.FC = () => {
         }
     }
 
+    const [updateGestation] = useMutation(M_UPDATE_GESTATION) 
+
+    const UpdateGestation = async (gestationId: any, data: any) => {
+        try {
+            const newGestation = updateGestation({
+                variables: {
+                    id: gestationId,
+                    data: data
+                }
+            }).then((res) => {
+                console.log(res)
+            })
+        } catch (err: any) {
+            console.log(err.message)
+        }
+    }
+
     const [createKid] = useMutation(M_CREATE_KID)
 
-    const CreateKid = async () => {
+    const CreateKid = async (momId: any, name: any, birthDate: any) => {
         try {
             const newKid = createKid({
                 variables: {
                     data: {
-                        mom: auth?.ui,
-                        name: "Nome do bebê",
-                        birthDate: new Date(),
+                        mom: momId,
+                        name: name,
+                        birthDate: birthDate,
+                    }
+                }
+            }).then((res) => {
+                return res.data.createKid.id
+            })
+            console.log(newKid)
+            return newKid
+
+        } catch (err: any) {
+            console.log(err.message)
+        }
+    }
+
+    const [createVaccineCard] = useMutation(M_CREATE_VACCINE_CARD)
+
+    const CreateVaccineCard = async (kidId: any) => {
+        try {
+            const newVaccineCard = createVaccineCard({
+                variables: {
+                    data: {
+                        kid: kidId,
                     }
                 }
             }).then((res) => {
@@ -164,6 +202,38 @@ export const Home: React.FC = () => {
             });
         }
     };
+
+    const handleFinishGestation = async (gestationId: any, hasBorn: any, kidName: any) => {
+        const gestation = dataUserGestations?.gestationsByMom.find((gestation: any) => gestation.id === gestationId);
+        
+        if (gestation && hasBorn) {
+            try {
+                const kid: any = await CreateKid(auth?.ui, kidName, new Date().getTime());
+
+                if (kid) {
+                    await CreateVaccineCard(kid);
+                } else {
+                    console.error("Error: Kid creation returned undefined.");
+                }
+            } catch (error) {
+                console.error("Error creating kid or vaccine card:", error);
+            }
+        } 
+    
+        UpdateGestation(gestationId, {
+            isFinished: true
+        })
+    };
+
+    useEffect(() => {
+        if (dataUserGestations) {
+            const gestation = dataUserGestations?.gestationsByMom[0]
+            if(gestation.createdAt > new Date().getTime() + (60 * 60 * 24 * 7 * 1000)) {
+                UpdateGestation(gestation.id, { week: gestation.week + 1 })
+            }
+        }
+    }, [dataUserGestations])
+    
     
 
     return (
@@ -191,7 +261,7 @@ export const Home: React.FC = () => {
                     <div className="home__title">
                         <h1>16 de Outubro de 2024</h1>
                         <div className="home__buttons">
-                            <Button text="Add" type="button" Icon={<PlusSquare color="#fff"/>} onClick={handleCreateCalendar}/>
+                            <Button text="Add" type="button" Icon={<PlusSquare color="#fff"/>} onClick={() => handleFinishGestation(dataUserGestations?.gestationsByMom[0]?.id, true, "Carlos")}/>
                         </div>
                     </div>
                     <div className="home__dashboard">
