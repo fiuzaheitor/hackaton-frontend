@@ -1,0 +1,52 @@
+@import "../../styles/globals.scss";
+
+.popup__overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);  // Fundo semi-transparente
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.popup__content {
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: white;
+    padding: 32px;
+    border-radius: 12px;
+    max-width: 500px;
+    width: 100%;
+    position: relative;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    gap: 32px;
+}
+
+.popup__content button {    
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+.popup__content button:hover {
+    color: $red-100;
+    outline: none;
+    border: none;
+    transform: scale(1.1);
+}
+
+.popup__body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
