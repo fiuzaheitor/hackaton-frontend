@@ -7,15 +7,13 @@ interface DashboardTaskProps {
     title: string
     description: string
     date: string
-    hour: string
-    minute: string
 }
 
-export const DashboardTask: React.FC<DashboardTaskProps> = ({title, description, date, hour, minute}) => {
+export const DashboardTask: React.FC<DashboardTaskProps> = ({title, description, date}) => {
     return (
         <div className="dashboard__task">
             <div className="task__time">
-                <h2>{hour}:{minute}</h2>
+                <h2>Manhã</h2>
                 <span>{date}</span>
             </div>
             <div className="task__info">

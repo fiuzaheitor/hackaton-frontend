@@ -113,6 +113,7 @@ export const G_CONSULTATION = gql`
         consultation(id: $id) {
             id
             date
+            week
             gestation {
                 id
                 week
@@ -127,6 +128,7 @@ export const G_CONSULTATIONS = gql`
         consultations {
             id
             date
+            week
             gestation {
                 id
                 week
@@ -141,6 +143,7 @@ export const G_CONSULTATIONS_BY_GESTATION = gql`
         consultationsByGestation(gestationId: $gestationId) {
             id
             date
+            week
             gestation {
                 id
                 week

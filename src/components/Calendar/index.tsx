@@ -3,10 +3,12 @@ import './styles.scss';
 import { useGetConsultationsByGestation } from "../../utils/Queries";
 import { CalendarDay } from "../CalendarDay";
 
-export const Calendar: React.FC = () => {
+export const Calendar: React.FC<{onClick: any}> = ({onClick}) => {
     const feather = require('feather-icons');
     // Consultar as consultas da gestação
-    const { data: dataConsultationsByGestation, loading: loadingConsultationsByGestation, error: errorConsultationsByGestation } = useGetConsultationsByGestation('6710131033faa29f52e4ba59');
+    const { data: dataConsultationsByGestation, loading: loadingConsultationsByGestation, error: errorConsultationsByGestation } = useGetConsultationsByGestation('671008bd53d0a9a09c42bfd6');
+
+    console.log(dataConsultationsByGestation);
 
     const [currentDate, setCurrentDate] = useState(new Date());
 
@@ -45,14 +47,17 @@ export const Calendar: React.FC = () => {
             const date = new Date(year, month, day);  // Data correta do loop
             const isToday = date.toDateString() === today.toDateString();  // Comparação de hoje
             
-            // Verificar se é um dia de evento/consulta
-            const isEventDay = dataConsultationsByGestation?.consultationsByGestation.some((consultation: any) => {
-                const consultationDate = new Date(consultation.date);  // Converter milissegundos para Date
-                return consultationDate.toDateString() === date.toDateString();  // Comparar as datas
-            });
+            let isEventDay = false;
 
+            dataConsultationsByGestation?.consultationsByGestation.map((consultation: any) => {
+                const consultationDate = new Date(consultation.date);
+                if (date.toDateString() === consultationDate.toDateString()) {
+                    isEventDay = true;
+                }
+            });
+            
             dayElements.push(
-                <CalendarDay key={day} day={day} isToday={isToday} isEventDay={isEventDay} />
+                <CalendarDay date={date.toDateString()} key={day} day={day} isToday={isToday} isEventDay={isEventDay} onClick={onClick}/>
             );
         }
 
@@ -63,9 +68,6 @@ export const Calendar: React.FC = () => {
         const newDate = new Date(currentDate.getFullYear(), currentDate.getMonth() + offset, 1);
         setCurrentDate(newDate);
     };
-
-    if (loadingConsultationsByGestation) return <p>Loading...</p>;
-    if (errorConsultationsByGestation) return <p>Error loading consultations.</p>;
 
     return (
         <div className="calendar">

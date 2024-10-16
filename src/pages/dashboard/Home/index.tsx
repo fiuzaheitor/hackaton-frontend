@@ -17,7 +17,9 @@ export const Home: React.FC = () => {
     const dashboardItems = '123';
     const auth = JSON.parse(getCookie('_bu_l') as string)
     const [viewFilter, setViewFilter] = useState<Boolean>(true)
-    const [selectedFilter, setSelectedFilter] = useState<string>('')
+    const [selectedFilter, setSelectedFilter] = useState<any>(new Date().toDateString())
+
+    console.log("filtro:" + selectedFilter)
 
     const {data: dataUserGestations, loading: loadingUserGestations, error: errorUserGestations} = useGetGestationsByUser(auth?.ui)
     const {data: dataConsultationsByGestation, loading: loadingConsultationsByGestation, error: errorConsultationsByGestation} = useGetConsultationsByGestation(dataUserGestations?.gestationsByMom[0]?.id)
@@ -173,7 +175,7 @@ export const Home: React.FC = () => {
     };
     
     const handleCreateCalendar = () => {
-        let currentWeek = dataUserGestations?.gestationsByMom[0]?.week;
+        let currentWeek = 12
         let consultations: any = [];
 
         if (currentWeek === undefined) {
@@ -236,6 +238,14 @@ export const Home: React.FC = () => {
     };
 
     useEffect(() => {
+        if(dataConsultationsByGestation){
+            dataConsultationsByGestation.consultationsByGestation.map((consultation: any) => {
+                console.log(new Date(consultation.date).toLocaleDateString());
+            })
+        }
+    }, [dataConsultationsByGestation])
+
+    useEffect(() => {
         if (dataUserGestations?.gestationsByMom[0] !== undefined) {
             const gestation = dataUserGestations?.gestationsByMom[0];
     
@@ -254,14 +264,27 @@ export const Home: React.FC = () => {
         }
     }, [dataUserGestations])
     
-    
+    const formatDate = (date: any) => {
+        const months = [
+            'janeiro', 'fevereiro', 'março', 'abril', 'maio', 'junho',
+            'julho', 'agosto', 'setembro', 'outubro', 'novembro', 'dezembro'
+        ];
+
+        const day = date.getDate().toString().padStart(2, '0');
+        const month = months[date.getMonth()];
+        const year = date.getFullYear();
+
+        const formattedDate = `${day} de ${month} de ${year}`;
+
+        return formattedDate;
+    }
 
     return (
         <section className="container">
             <Header />
             <div className="container__home">
                 <div className="home__side">
-                    <Calendar />
+                    <Calendar onClick={setSelectedFilter}/>
                     <div className="side__filter">
                         <div className="filter__header">
                             <h2>Calendário</h2>
@@ -279,20 +302,22 @@ export const Home: React.FC = () => {
                 </div>
                 <div className="home__content">
                     <div className="home__title">
-                        <h1>16 de Outubro de 2024</h1>
+                        <h1>{formatDate(new Date(selectedFilter))}</h1>
                         <div className="home__buttons">
-                            <Button text="Add" type="button" Icon={<PlusSquare color="#fff"/>} onClick={() => handleFinishGestation(dataUserGestations?.gestationsByMom[0]?.id, true, "Carlos")}/>
+                            <Button text="Add" type="button" Icon={<PlusSquare color="#fff"/>} onClick={handleCreateCalendar}/>
                         </div>
                     </div>
                     <div className="home__dashboard">
-                        {!dashboardItems?
+                        {dataConsultationsByGestation?.consultationsByGestation.filter((consultation: any) => new Date(consultation.date).toDateString() === selectedFilter).length == 0?
                         <div className="dashboard__empty">
                             <h2>Não há eventos programados para esse dia!</h2>
                         </div>:
                         <div>
-                            <DashboardTask title="Titulo da Task" description="Descrição da task" hour="20" minute="30" date="16/10/2024"/>
-                            <DashboardTask title="Titulo da Task" description="Descrição da task" hour="20" minute="30" date="16/10/2024"/>
-                            <DashboardTask title="Titulo da Task" description="Descrição da task" hour="20" minute="30" date="16/10/2024"/>
+                            {
+                                dataConsultationsByGestation?.consultationsByGestation.filter((consultation: any) => new Date(consultation.date).toDateString() === selectedFilter).map((consultation: any) => {
+                                    return <DashboardTask title="Consulta" description={"Consulta da " + consultation?.week + "º semana de pré-natal." } date={new Date(consultation.date).toLocaleDateString()} />
+                                })
+                            }
                         </div>}
                             
                     </div>
