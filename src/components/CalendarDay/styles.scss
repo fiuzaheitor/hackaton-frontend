@@ -1,0 +1,19 @@
+@import "../../styles/globals.scss";
+
+.calendar-day {
+    text-align: center;
+    padding: 12px;
+    transition: background-color 0.2s ease;
+    font-size: 14px;
+    border-radius: 10px;
+    font-weight: 500;
+
+    &:hover {
+        background-color: #cdd4e0;
+        cursor: pointer;
+    }
+
+    &.today {
+        background-color: #ccc; // cor para o dia de hoje
+    }
+}
