@@ -3,19 +3,19 @@ import React from 'react'
 import './styles.scss'
 
 interface ButtonProps {
-    text: string
+    text?: string
     type: 'submit' | 'button'
     onClick?: () => void
-    Icon?: React.ReactElement
+    Icon?: React.ReactNode
     outline?: boolean
+    onlyIcon?: boolean
 }
 
-const Button: React.FC<ButtonProps> = ({text, type, onClick, Icon, outline}) => {
+const Button: React.FC<ButtonProps> = ({text, type, onClick, Icon, outline, onlyIcon}) => {
     return (
         <div className='container__button'>
-            <button type={type} onClick={onClick} className={`${outline?'button--outline':'button'}`}>
-                {Icon&&Icon}
-                <span>{text&&text}</span>
+            <button type={type} onClick={onClick} className={`${outline?'button--outline':onlyIcon?'button--onlyIcon':'button'}`}>
+                {onlyIcon&&Icon?Icon:<span>{Icon&&Icon}{text&&text}</span>}
             </button>
         </div>
     )

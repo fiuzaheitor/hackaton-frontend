@@ -4,6 +4,7 @@ import './styles.scss'
 
 import { MenuItem } from '../MenuItem'
 import Button from '../Button'
+import { ChevronDown, LogOut } from 'react-feather'
 
 export const Header: React.FC = () => {
     const [isOpenDropdown, setIsOpenDropdown] = useState(false)
@@ -32,10 +33,10 @@ export const Header: React.FC = () => {
                         <span className="name__func">Nome menor</span>
                     </div>
                     <div onClick={() => setIsOpenDropdown(!isOpenDropdown)} className={`dropdown_button ${isOpenDropdown&&'button--active'}`}>
-                        <img src="/icons/chevron-down.svg" alt="Icone" />
+                        <ChevronDown width={24} height={24}/>
                     </div>
                     <div className={`dropdown_options ${isOpenDropdown ? 'dropdown_options--active' : ''}`}>
-                        <Button text="Logout" type="button" outline onClick={() => {}} Icon={<img src='/icons/arrow-right-start-on-rectangle.svg' alt='Icon'/>}/>
+                        <Button text="Logout" type="button" outline onClick={() => {}} Icon={<LogOut/>}/>
                     </div>
                 </div>
             </div>

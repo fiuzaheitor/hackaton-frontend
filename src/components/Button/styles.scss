@@ -4,6 +4,23 @@
     font-family: 'Satoshi-Variable', sans-serif;
 }
 
+button {
+    all: unset;
+    cursor: pointer;
+}
+
+button svg {
+    width: 24px;
+    height: 24px;
+}
+
+button span {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
 .container__button {
     display: flex;
     align-items: center;
@@ -64,3 +81,4 @@
     font-weight: 500;
     font-size: 16px;
 }
+
