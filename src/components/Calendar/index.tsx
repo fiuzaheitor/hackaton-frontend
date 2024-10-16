@@ -1,9 +1,12 @@
 import React, { useState } from "react";
 import './styles.scss';
+import { useGetConsultationsByGestation } from "../../utils/Queries";
 import { CalendarDay } from "../CalendarDay";
 
 export const Calendar: React.FC = () => {
     const feather = require('feather-icons');
+    // Consultar as consultas da gestação
+    const { data: dataConsultationsByGestation, loading: loadingConsultationsByGestation, error: errorConsultationsByGestation } = useGetConsultationsByGestation('6710131033faa29f52e4ba59');
 
     const [currentDate, setCurrentDate] = useState(new Date());
 
@@ -39,12 +42,17 @@ export const Calendar: React.FC = () => {
 
         // Adicionar os dias do mês
         for (let day = 1; day <= days; day++) {
-            const date = new Date(year, month, day);
-            const isCurrentWeek = getWeekNumber(date) === currentWeek;
-            const isToday = date.toDateString() === today.toDateString();
+            const date = new Date(year, month, day);  // Data correta do loop
+            const isToday = date.toDateString() === today.toDateString();  // Comparação de hoje
             
+            // Verificar se é um dia de evento/consulta
+            const isEventDay = dataConsultationsByGestation?.consultationsByGestation.some((consultation: any) => {
+                const consultationDate = new Date(consultation.date);  // Converter milissegundos para Date
+                return consultationDate.toDateString() === date.toDateString();  // Comparar as datas
+            });
+
             dayElements.push(
-                <CalendarDay key={day} day={day} isCurrentWeek={isCurrentWeek} isToday={isToday} />
+                <CalendarDay key={day} day={day} isToday={isToday} isEventDay={isEventDay} />
             );
         }
 
@@ -56,10 +64,18 @@ export const Calendar: React.FC = () => {
         setCurrentDate(newDate);
     };
 
+    if (loadingConsultationsByGestation) return <p>Loading...</p>;
+    if (errorConsultationsByGestation) return <p>Error loading consultations.</p>;
+
     return (
         <div className="calendar">
             <div className="calendar-header">
-                <h2>{currentDate.toLocaleString('default', { month: 'long' }).substring(0, 1).toUpperCase() + currentDate.toLocaleString('default', { month: 'long' }).substring(1, 3) + " " + currentDate.toLocaleString('default', { year: "numeric" })}</h2>
+                <h2>
+                    {currentDate.toLocaleString('default', { month: 'long' }).substring(0, 1).toUpperCase() +
+                        currentDate.toLocaleString('default', { month: 'long' }).substring(1, 3) +
+                        " " +
+                        currentDate.toLocaleString('default', { year: "numeric" })}
+                </h2>
                 <div className="header-buttons">
                     <button onClick={() => changeMonth(-1)} dangerouslySetInnerHTML={{ __html: feather.icons["chevron-left"].toSvg() }}></button>
                     <button onClick={() => changeMonth(1)} dangerouslySetInnerHTML={{ __html: feather.icons["chevron-right"].toSvg() }}></button>

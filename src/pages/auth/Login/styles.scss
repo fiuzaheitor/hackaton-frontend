@@ -39,7 +39,7 @@
 }
 
 .login__box {
-  width: 50%;
+  width: 60%;
   display: flex;
   flex-direction: column;
   gap: 24px;
@@ -105,4 +105,46 @@
 
 .form__button {
   margin-top: 24px;
+}
+
+@media (max-width: 1040px) {
+  .login__image {
+    width: 50%;
+    height: 100%;
+  }
+
+  .login__image img {
+    position: relative;
+    width: 400px;
+    object-fit: cover;
+  }
+
+  .login__box {
+    width: 100%;
+  }
+}
+
+@media (max-width: 900px) {
+  .container_login {
+    width: 80%;
+    align-self: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0px;
+  }
+
+  .login__image {
+    display: none;
+  }
+
+  .login__box {
+    width: 100%;
+  }
+}
+
+@media (max-width: 900px) {
+  .container_login {
+    width: 100%;
+  }
 }

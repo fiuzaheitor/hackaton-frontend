@@ -17,3 +17,12 @@
         background-color: $brand2-500-50; // cor para o dia de hoje
     }
 }
+
+.event-day {
+    background-color: $brand-500-20; // cor para os dias com eventos
+    color: $dark-100;
+    border-radius: 10px;
+    padding: 12px;
+    font-size: 14px;
+    font-weight: 500;
+}

@@ -106,3 +106,47 @@
 .form__button {
   margin-top: 24px;
 }
+
+@media (max-width: 1040px) {
+  .signup__image {
+    width: 50%;
+    height: 100%;
+    gap: 0px;
+  }
+
+  .signup__image img {
+    position: relative;
+    width: 400px;
+    object-fit: cover;
+  }
+
+  .signup__box {
+    width: 100%;
+  }
+}
+
+@media (max-width: 900px) {
+  .container__signup {
+    width: 100dvw;
+    justify-self: center;
+    align-self: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .signup__image {
+    display: none;
+  }
+
+  .signup__box {
+    width: 100%;
+    align-self: center;
+  }
+}
+
+@media (max-width: 550px) {
+  .container_signup {
+    width: 100%;
+  }
+}

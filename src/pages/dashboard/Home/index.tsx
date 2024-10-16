@@ -173,8 +173,13 @@ export const Home: React.FC = () => {
     };
     
     const handleCreateCalendar = () => {
-        let currentWeek = dataUserGestations?.gestationsByMom[0].week;
+        let currentWeek = dataUserGestations?.gestationsByMom[0]?.week;
         let consultations: any = [];
+
+        if (currentWeek === undefined) {
+            console.error("Gestação não encontrada.");
+            return; // Sai da função se não houver gestação
+        }
     
         while (currentWeek <= 41) {
             currentWeek += currentWeek <= 28 ? 4 : currentWeek <= 36 ? 2 : 1;
@@ -209,7 +214,7 @@ export const Home: React.FC = () => {
     };
 
     const handleFinishGestation = async (gestationId: any, hasBorn: any, kidName: any) => {
-        const gestation = dataUserGestations?.gestationsByMom.find((gestation: any) => gestation.id === gestationId);
+        const gestation = dataUserGestations?.gestationsByMom?.find((gestation: any) => gestation.id === gestationId);
         
         if (gestation && hasBorn) {
             try {
@@ -231,10 +236,20 @@ export const Home: React.FC = () => {
     };
 
     useEffect(() => {
-        if (dataUserGestations) {
-            const gestation = dataUserGestations?.gestationsByMom[0]
-            if(gestation.createdAt > new Date().getTime() + (60 * 60 * 24 * 7 * 1000)) {
-                UpdateGestation(gestation.id, { week: gestation.week + 1 })
+        if (dataUserGestations?.gestationsByMom[0] !== undefined) {
+            const gestation = dataUserGestations?.gestationsByMom[0];
+    
+            console.log('Gestação:', gestation); // Log da gestação
+            console.log('Created At:', gestation.createdAt); // Log do createdAt
+    
+            const createdAtTimestamp = typeof gestation.createdAt === 'string' 
+                ? new Date(gestation.createdAt).getTime() 
+                : gestation.createdAt;
+    
+            console.log('Created At Timestamp:', createdAtTimestamp); // Log do timestamp convertido
+    
+            if (createdAtTimestamp > Date.now() + (60 * 60 * 24 * 7 * 1000)) {
+                UpdateGestation(gestation.id, { week: gestation.week + 1 });
             }
         }
     }, [dataUserGestations])
