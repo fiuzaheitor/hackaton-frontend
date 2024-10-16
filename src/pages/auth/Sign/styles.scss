@@ -1,4 +1,4 @@
-@import '../../../globals.scss';
+@import "../../../styles/globals.scss";
 
 * {
     font-family: 'Satoshi-Variable', sans-serif;
@@ -6,6 +6,7 @@
 
 .container__sign {
     display: flex;
+    width: 100vw;
     align-items: center;
     justify-content: center;
     height: 100vh;

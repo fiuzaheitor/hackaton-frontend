@@ -1,0 +1,13 @@
+.container_bu {
+  .columns {
+    display: flex;
+  }
+}
+
+@media (orientation: portrait) {
+  .container_bu {
+    .columns {
+      flex-direction: column;
+    }
+  }
+}
