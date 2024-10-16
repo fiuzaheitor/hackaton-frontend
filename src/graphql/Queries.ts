@@ -149,6 +149,7 @@ export const G_CONSULTATION = gql`
                 id
                 week
             }
+            isFinished
             createdAt
             updatedAt
             createdBy
@@ -166,6 +167,7 @@ export const G_CONSULTATIONS = gql`
                 id
                 week
             }
+            isFinished
             createdAt
             updatedAt
             createdBy
@@ -183,6 +185,7 @@ export const G_CONSULTATIONS_BY_GESTATION = gql`
                 id
                 week
             }
+            isFinished
             createdAt
             updatedAt
             createdBy
