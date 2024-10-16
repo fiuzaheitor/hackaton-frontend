@@ -1,30 +1,58 @@
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import { useNavigate } from 'react-router-dom';
 import './styles.scss'
 import Button from '../../../components/Button'
 import Input from '../../../components/Input'
+import { ToastContainer, toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
+import { M_LOGIN } from '../../../graphql/Mutations';
+import { useMutation } from '@apollo/client';
+import { useAuth } from '../../../hoc/AuthContext';
 
 export const Login: React.FC = () => {
+    const isSignUp = new URLSearchParams(window.location.search).get('signup')
     const navigate = useNavigate();
+    const auth = useAuth()
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
+    const [error, setError] = useState('')
 
-    const handleSubmit = (event: React.FormEvent) => {
+    const [loginUser] = useMutation(M_LOGIN)
+  
+    
+    // fetch('http://localhost:4000/send-email', {
+    //     method: 'POST',
+    //     headers: {
+    //         'Content-Type': 'application/json',
+    //     },
+    //     body: JSON.stringify({email: "brunolustosads@gmail.com", subject: "Teste envio email Hackaton", message: "Sucesso!"})
+    // })
+
+    const handleSubmit = async (event: React.FormEvent) => {
         event.preventDefault()
-        fetch('http://localhost:4000/send-email', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({email: "brunolustosads@gmail.com", subject: "Teste envio email Hackaton", message: "Sucesso!"})
-        })
 
-        console.log('Submit')
-        navigate('/home')
+        try {
+            const res = await auth.authenticate(email as string, password as string)
+            if (res === 'success') {
+              navigate('/home')
+              toast.success('Login realizado com sucesso!')
+            } else {
+              toast.error('Email ou senha incorretos!')
+            }
+          } catch (err: any) {
+            setError(err.message)
+          }
     }
+
+    useEffect(() => {
+        if (isSignUp) {
+          toast.success('Cadastro realizado com sucesso!')
+        }
+      }, [isSignUp])
 
     return (
         <div className='container_login'>
+            <ToastContainer position='top-left'/>
             <div className='login__image'>
                 <img src="" alt="Ilustraçõa" />
             </div>
