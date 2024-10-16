@@ -40,7 +40,7 @@ export const Home: React.FC = () => {
                         </div>
                     </div>
                     <div className="home__dashboard">
-                        <DashboardTask title="Titulo da Task" description="Descrição da task" hour="20" minute="30" date=""/>
+                        <DashboardTask title="Titulo da Task" description="Descrição da task" hour="20" minute="30" date="16/10/2024"/>
                     </div>
                 </div>
             </div>
