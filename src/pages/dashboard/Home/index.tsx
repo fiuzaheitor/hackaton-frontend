@@ -5,14 +5,19 @@ import { Calendar } from "../../../components/Calendar";
 import { getCookie } from "../../../utils/cookies";
 import Button from "../../../components/Button";
 import { DashboardTask } from "../../../components/DashboardTask";
-import {ChevronDown, PlusSquare} from 'react-feather'
+
 import { useGetConsultationsByGestation, useGetGestationsByUser, useGetKidsByMom, useGetUsers } from "../../../utils/Queries";
+
 import { useMutation } from "@apollo/client";
 import { M_CREATE_CONSULTATION, M_CREATE_GESTATION, M_CREATE_KID, M_CREATE_VACCINE_CARD, M_UPDATE_CONSULTATION, M_UPDATE_GESTATION } from "../../../graphql/Mutations";
+import {ChevronDown, Filter, PlusSquare} from 'react-feather'
+import { FilterItem } from "../../../components/FilterItem";
 
 export const Home: React.FC = () => {
+    const dashboardItems = '123';
     const auth = JSON.parse(getCookie('_bu_l') as string)
     const [viewFilter, setViewFilter] = useState<Boolean>(true)
+    const [selectedFilter, setSelectedFilter] = useState<string>('')
 
     const {data: dataUserGestations, loading: loadingUserGestations, error: errorUserGestations} = useGetGestationsByUser(auth?.ui)
     const {data: dataConsultationsByGestation, loading: loadingConsultationsByGestation, error: errorConsultationsByGestation} = useGetConsultationsByGestation(dataUserGestations?.gestationsByMom[0]?.id)
@@ -251,8 +256,8 @@ export const Home: React.FC = () => {
                         </div>
                         <div className={`filter__content ${viewFilter&&"filter__content--open"}`}>
                             <div className="content__item">
-                                <span>Eventos</span>
-                                <span>5</span>
+                                <FilterItem name="Maternidade"/>
+                                <FilterItem name="Infantil"/>
                             </div>
                         </div>
                     </div>
@@ -265,7 +270,16 @@ export const Home: React.FC = () => {
                         </div>
                     </div>
                     <div className="home__dashboard">
-                        <DashboardTask title="Titulo da Task" description="Descrição da task" hour="20" minute="30" date="16/10/2024"/>
+                        {!dashboardItems?
+                        <div className="dashboard__empty">
+                            <h2>Não há eventos programados para esse dia!</h2>
+                        </div>:
+                        <div>
+                            <DashboardTask title="Titulo da Task" description="Descrição da task" hour="20" minute="30" date="16/10/2024"/>
+                            <DashboardTask title="Titulo da Task" description="Descrição da task" hour="20" minute="30" date="16/10/2024"/>
+                            <DashboardTask title="Titulo da Task" description="Descrição da task" hour="20" minute="30" date="16/10/2024"/>
+                        </div>}
+                            
                     </div>
                 </div>
             </div>
