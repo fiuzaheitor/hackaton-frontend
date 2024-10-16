@@ -1,4 +1,13 @@
-@import url('https://fonts.cdnfonts.com/css/satoshi');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+@font-face {
+  font-family: 'Satoshi-Variable';
+  src: url('../assets/fonts/Satoshi/Satoshi-Variable.woff2') format('woff2'),
+       url('../assets/fonts/Satoshi/Satoshi-Variable.woff') format('woff'),
+       url('../assets/fonts/Satoshi/Satoshi-Variable.ttf') format('truetype');
+  font-weight: 300 900;
+  font-display: swap;
+  font-style: normal;
+}
 
 $dark-100: #16151C;
 $dark-80: #16151C80;
@@ -27,6 +36,10 @@ $brand-500: #7152F3;
 $brand-800: #3517B4;
 $brand-900: #250C92;
 
+$brand2-500-10: #F8136E10;
+$brand2-500: #F8136E;
+$brand2-800: #c60f58;
+
 $yellow-100: #EFBE12;
 $yellow-5: #EFBE1205;
 
@@ -54,8 +67,7 @@ $text-large: 20px;
 $text-xl: 49px;
 $text-2xl: 61px;
 
-$font-base: 'Satoshi-Regular';
-$font-variable: 'Satoshi-Variable';
+$font-base: 'Satoshi-Variable', sans-serif;
 
 $font-light: 300;
 $font-regular: 400;

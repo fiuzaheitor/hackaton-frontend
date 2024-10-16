@@ -19,7 +19,7 @@
     all: unset;
     width: 100%;
     border-radius: 12px;
-    background-color: #7152F3;
+    background-color: $brand2-500;
     padding: 12px 24px;
     display: flex;
     justify-content: center;
@@ -28,12 +28,13 @@
 }
 
 .button:hover {
-    background-color: #3517B4;
+    background-color: $brand2-800;
     cursor: pointer;
     transform: scale(1.03);
 }
 
 .button > span{
+    font-family: $font-base;
     color: white;
     font-weight: 500;
     font-size: 16px;

@@ -11,12 +11,10 @@ interface NavbarProps {
 
 export const Navbar: React.FC<NavbarProps> = ({open}) => {
     return (
-        <div className='container__navbar'>
-            <div className={`navbar__menu ${open?"navbar__menu--open":"navbar__menu--closed"}`}>
-                <MenuItem title='pag1' onClick={() => redirect("")}/>
-                <MenuItem title='pag1' onClick={() => redirect("")}/>
-                <MenuItem title='pag1' onClick={() => redirect("")}/>
-            </div>
+        <div className={`navbar__menu ${open?"navbar__menu--open":"navbar__menu--closed"}`}>
+            <MenuItem title='pag1' onClick={() => redirect("")}/>
+            <MenuItem title='pag1' onClick={() => redirect("")}/>
+            <MenuItem title='pag1' onClick={() => redirect("")}/>
         </div>
     )
 }
