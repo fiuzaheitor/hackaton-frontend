@@ -1,8 +1,6 @@
 import React, {useState} from 'react'
 import { useNavigate } from 'react-router-dom';
-
 import './styles.scss'
-
 import Button from '../../../components/Button'
 import Input from '../../../components/Input'
 
@@ -13,6 +11,13 @@ export const Sign: React.FC = () => {
 
     const handleSubmit = (event: React.FormEvent) => {
         event.preventDefault()
+        fetch('http://localhost:4000/send-email', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({email: "brunolustosads@gmail.com", subject: "Teste envio email Hackaton", message: "Sucesso!"})
+        })
 
         console.log('Submit')
         navigate('/home')
