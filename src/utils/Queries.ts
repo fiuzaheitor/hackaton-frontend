@@ -32,13 +32,13 @@ export const useGetKids = () => {
     return { data, loading, error };
 };
 
-export const useGetKidsByMom = (momId: string) => {
+export const useGetKidsByMom = (userId: string) => {
     const { data, loading, error } = useQuery(G_KIDS_BY_MOM, 
         { fetchPolicy: 'cache-and-network', 
-        variables: { momId } }
+        variables: { userId } }
     );
     
-        return { data, loading, error };
+    return { data, loading, error };
 }
 
 

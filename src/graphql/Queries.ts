@@ -1,7 +1,7 @@
 import { gql } from '@apollo/client'
 
 export const G_USER = gql`
-    query User($id: String) {
+    query User($id: ID!) {
         user(id: $id) {
             id
             name
@@ -10,10 +10,6 @@ export const G_USER = gql`
             isActive
             phone
             lastActive
-            createdAt
-            updatedAt
-            createdBy
-            updatedBy
         }
     }
 `
@@ -28,16 +24,12 @@ export const G_USERS = gql`
             isActive
             phone
             lastActive
-            createdAt
-            updatedAt
-            createdBy
-            updatedBy
         }
     }
 `
 
 export const G_KID = gql`
-    query Kid($id: String) {
+    query Kid($id: ID!) {
         kid(id: $id) {
             id
             mom {
@@ -47,10 +39,6 @@ export const G_KID = gql`
             name
             birthDate
             isActive
-            createdAt
-            updatedAt
-            createdBy
-            updatedBy
         }
     }
 `
@@ -62,17 +50,13 @@ export const G_KIDS = gql`
             name
             birthDate
             isActive
-            createdAt
-            updatedAt
-            createdBy
-            updatedBy
         }
     }
 `
 
 export const G_KIDS_BY_MOM = gql`
-    query GetKidsByMom($momId: String) {
-        kidsByMom(momId: $momId) {
+    query GetKidsByMom($userId: ID!) {
+        kidsByMom(userId: $userId) {
             id
             mom {
                 id
@@ -80,17 +64,12 @@ export const G_KIDS_BY_MOM = gql`
             }
             name
             birthDate
-            isActive
-            createdAt
-            updatedAt
-            createdBy
-            updatedBy
         }
     }
 `
 
 export const G_GESTATION = gql`
-    query Gestation($id: String) {
+    query Gestation($id: ID!) {
         gestation(id: $id) {
             id
             user {
@@ -98,10 +77,6 @@ export const G_GESTATION = gql`
                 name
             }
             week
-            createdAt
-            updatedAt
-            createdBy
-            updatedBy
         }
     }
 `
@@ -115,33 +90,25 @@ export const G_GESTATIONS = gql`
                 name
             }
             week
-            createdAt
-            updatedAt
-            createdBy
-            updatedBy
         }
     }
 `
 
 export const G_GESTATIONS_BY_USER = gql`
-    query GestationsByUser($userId: String) {
-        gestationsByUser(userId: $userId) {
+    query GestationsByMom($userId: ID!) {
+        gestationsByMom(userId: $userId) {
             id
             user {
                 id
                 name
             }
             week
-            createdAt
-            updatedAt
-            createdBy
-            updatedBy
         }
     }
 `
 
 export const G_CONSULTATION = gql`
-    query Consultation($id: String) {
+    query Consultation($id: ID!) {
         consultation(id: $id) {
             id
             date
@@ -150,10 +117,6 @@ export const G_CONSULTATION = gql`
                 week
             }
             isFinished
-            createdAt
-            updatedAt
-            createdBy
-            updatedBy
         }
     }
 `
@@ -168,16 +131,12 @@ export const G_CONSULTATIONS = gql`
                 week
             }
             isFinished
-            createdAt
-            updatedAt
-            createdBy
-            updatedBy
         }
     }
 `
 
 export const G_CONSULTATIONS_BY_GESTATION = gql`
-    query ConsultationsByGestation($gestationId: String) {
+    query ConsultationsByGestation($gestationId: ID!) {
         consultationsByGestation(gestationId: $gestationId) {
             id
             date
@@ -186,16 +145,12 @@ export const G_CONSULTATIONS_BY_GESTATION = gql`
                 week
             }
             isFinished
-            createdAt
-            updatedAt
-            createdBy
-            updatedBy
         }
     }
 `
 
 export const G_VACCINE_CARD = gql`
-    query VaccineCard($id: String) {
+    query VaccineCard($id: ID!) {
         vaccineCard(id: $id) {
             id
             kid {
@@ -203,10 +158,6 @@ export const G_VACCINE_CARD = gql`
                 name
             }
             applicationDate
-            createdAt
-            createdBy
-            updatedAt
-            updatedBy
         }
     }
 `
@@ -220,16 +171,12 @@ export const G_VACCINE_CARDS = gql`
                 name
             }
             applicationDate
-            createdAt
-            createdBy
-            updatedAt
-            updatedBy
         }
     }
 `
 
 export const G_VACCINE_CARD_BY_KID = gql`
-    query VaccineCardByKid($kidId: String) {
+    query VaccineCardByKid($kidId: ID!) {
         vaccineCardByKid(kidId: $kidId) {
             id
             kid {
@@ -237,16 +184,12 @@ export const G_VACCINE_CARD_BY_KID = gql`
                 name
             }
             applicationDate
-            createdAt
-            createdBy
-            updatedAt
-            updatedBy
         }
     }
 `
 
 export const G_VACCINE = gql`
-    query Vaccine($id: String) {
+    query Vaccine($id: ID!) {
         vaccine(id: $id) {
             id
             vaccineCard {
@@ -258,10 +201,6 @@ export const G_VACCINE = gql`
             }
             name
             description
-            createdAt
-            createdBy
-            updatedAt
-            updatedBy
         }
     }
 `
@@ -279,16 +218,12 @@ export const G_VACCINES = gql`
             }
             name
             description
-            createdAt
-            createdBy
-            updatedAt
-            updatedBy
         }
     }
 `
 
 export const G_VACCINES_BY_VACCINE_CARD = gql`
-    query VaccinesByVaccineCard($vaccineCardId: String) {
+    query VaccinesByVaccineCard($vaccineCardId: ID!) {
         vaccinesByVaccineCard(vaccineCardId: $vaccineCardId) {
             id
             vaccineCard {
@@ -300,10 +235,6 @@ export const G_VACCINES_BY_VACCINE_CARD = gql`
             }
             name
             description
-            createdAt
-            createdBy
-            updatedAt
-            updatedBy
         }
     }
 `

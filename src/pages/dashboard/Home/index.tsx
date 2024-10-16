@@ -6,7 +6,7 @@ import { getCookie } from "../../../utils/cookies";
 import Button from "../../../components/Button";
 import { DashboardTask } from "../../../components/DashboardTask";
 import {ChevronDown, PlusSquare} from 'react-feather'
-import { useGetGestationsByUser, useGetKidsByMom } from "../../../utils/Queries";
+import { useGetGestationsByUser, useGetKidsByMom, useGetUsers } from "../../../utils/Queries";
 import { useMutation } from "@apollo/client";
 import { M_CREATE_CONSULTATION, M_CREATE_GESTATION, M_CREATE_KID, M_UPDATE_CONSULTATION } from "../../../graphql/Mutations";
 
@@ -15,6 +15,9 @@ export const Home: React.FC = () => {
     const [viewFilter, setViewFilter] = useState<Boolean>(true)
 
     const {data: dataUserGestations, loading: loadingUserGestations, error: errorUserGestations} = useGetGestationsByUser(auth?.ui)
+
+    const {data: dataUsers} = useGetUsers()
+    console.log(auth?.ui)
     const {data: dataUserKids, loading: loadingUserKids, error: errorUserKids} = useGetKidsByMom(auth?.ui)
 
     const [createGestation] = useMutation(M_CREATE_GESTATION)
@@ -124,7 +127,7 @@ export const Home: React.FC = () => {
         console.log(consultations)
     }
 
-    handleCreateCalendar()
+    // handleCreateCalendar()
 
 
     return (
