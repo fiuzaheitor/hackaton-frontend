@@ -6,13 +6,21 @@
 
 .container__menu_item {
     display: flex;
-    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
     gap: 8px;
     cursor: pointer;
     padding: 12px 24px;
+    transition: ease-in-out 0.2s;
 }
 
 .container__menu_item:hover {
-    background-color: #F4F4F4;
+    background-color: $brand2-500-10;
+    color: $brand2-500;
     border-radius: 12px;
+}
+
+.menu_item__icon img {
+    width: 20px;
+    height: 20px;
 }

@@ -6,8 +6,16 @@ import { Calendar } from "../../../components/Calendar";
 export const Home: React.FC = () => {
     return (
         <section className="container__home">
-            <div className="home__content">
+            <Header />
+            <div className="home__side">
+                
                 <Calendar />
+                <div className="">
+                    
+                </div>
+            </div>
+            <div className="home__content">
+                
             </div>
         </section>
     )

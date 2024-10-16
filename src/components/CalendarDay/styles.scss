@@ -9,11 +9,11 @@
     font-weight: 500;
 
     &:hover {
-        background-color: #cdd4e0;
+        background-color: $brand2-500-20;
         cursor: pointer;
     }
 
     &.today {
-        background-color: #ccc; // cor para o dia de hoje
+        background-color: $brand2-500-50; // cor para o dia de hoje
     }
 }

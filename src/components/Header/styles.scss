@@ -1,14 +1,130 @@
 @import '../../styles/globals.scss';
 
-.container__nav {
-    width: 100vw;
-    height: 100vh;
-    display: block;
+.container__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    padding: 8px 24px;
+    position: relative;
+    background-color: $white-100;
+    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.05);
 }
 
-.nav__header {
+.header__logo {
+    display: flex;
+    align-items: center;
+}
+
+.header__logo img {
+    width: 80px;
+    height: 80px;
+    rotate: 90deg;
+}
+
+.header__nav {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 24px;
+}
+
+.header__user {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 24px;
+    position: relative;
+}
+
+.user__bell {
+    padding: 10px;
+    border-radius: 12px;
+    background-color: #D9E1E160;
+    cursor: pointer;
+}
+
+.user__bell img {
+    width: 20px;
+    height: 20px;
+}
+
+.user__info {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    outline: 1px solid #16151C20;
+    border-radius: 12px;
+    padding: 5px 10px;
+    width: auto;
+    position: relative;
+}
+
+.user__icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 999px;
+    background-color: #D9E1E160;
+}
+
+.user__icon img {
+    width: 24px;
+    height: 24px;
+}
+
+.user__name {
+    display: flex;
+    flex-direction: column;
+}
+
+.user__name .name__title {
+    font-family: 'Satoshi-Variable';
+    font-size: 14px;
+    color: #16151C;
+    font-weight: 500;
+    line-height: 130%;
+}
+
+.user__name .name__func {
+    font-family: 'Satoshi-Variable';
+    font-size: 13px;
+    color: #16151C80;
+    font-weight: 300;
+}
+
+.dropdown_button {
+    cursor: pointer;
+    padding: 4px;
+    transition: ease-in-out 0.2s;
+}
+
+.dropdown_button:hover {
+    scale: 1.03;
+}
+
+.button--active {
+    rotate: 180deg;
+}
+
+.dropdown_options {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    position: absolute;
+    top: 110%;
     width: 100%;
-    padding: 24px;
+    border-radius: 12px;
+    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.005);
     background-color: $white-100;
-    box-shadow: 4px 4px 20px rgba(0, 0, 0, 0.05);
+    transition: ease-in-out 0.2s;
+    padding: 8px 12px;
+}
+
+.dropdown_options--active {
+    display: flex;
 }

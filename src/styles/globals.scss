@@ -25,6 +25,7 @@ $white-20: #FFFFFF20;
 
 $light-100: #D9E1E1;
 $light-80: #D9E1E180;
+$light-50: #D9E1E150;
 $light-20: #D9E1E120;
 $light-10: #D9E1E110;
 $light-5: #D9E1E105;
@@ -37,6 +38,8 @@ $brand-800: #3517B4;
 $brand-900: #250C92;
 
 $brand2-500-10: #F8136E10;
+$brand2-500-20: #F8136E20;
+$brand2-500-50: #F8136E50;
 $brand2-500: #F8136E;
 $brand2-800: #c60f58;
 
@@ -81,7 +84,7 @@ $font-bold: 700;
   box-sizing: border-box;
 }
 
-html, body {
-  width: 100%;
-  height: 100%;
+html, body, #root {
+  width: 100vw;
+  height: 100vh;
 }
