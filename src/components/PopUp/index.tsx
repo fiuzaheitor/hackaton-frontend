@@ -8,22 +8,24 @@ interface PopupProps {
     show: boolean;
     title?: string;
     onClick?: () => void;
+    dateInput?: boolean;
 }
 
-export const Popup: React.FC<PopupProps> = ({ show, title, onClick}) => {
-    const [weeks, setWeeks] = useState(0)
+export const Popup: React.FC<PopupProps> = ({ show, title, onClick, dateInput}) => {
+    const [value, setValue] = useState(0)
+    
 
     return (
         <div className="popup__overlay">
             <div className="popup__content">
-                <Button type="button" onlyIcon Icon={<X />} onClick={onClick}/>
                 {title && <h2>{title}</h2>}
                 <div className="popup__body">
-                    <div className="popup__weeks">
-                        <Input placeholder="Quantidade de Semanas" label="Semana da primeira consulta" type="number" value={weeks} onChange={(e) => setWeeks(Number(e.target.value))}/>
+                    <div className="popup__input">
+                        {dateInput?<Input placeholder="Data de consulta" label="Data da Consulta" type="number" value={value} onChange={(e) => setValue(Number(e.target.value))}/>
+                        :<Input placeholder="Quantidade de Semanas" label="Semana da primeira consulta" type="number" value={value} onChange={(e) => setValue(Number(e.target.value))}/>}
                     </div>
+                    <Button type="button" text="Confirmar" onClick={onClick}/>
                 </div>
-                <Button type="button" text="Confirmar" onClick={onClick}/>
             </div>
         </div>
     );

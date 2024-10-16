@@ -12,10 +12,9 @@ import { useGetConsultationsByGestation, useGetGestationsByUser, useGetKidsByMom
 import { useMutation } from "@apollo/client";
 import { M_CREATE_CONSULTATION, M_CREATE_GESTATION, M_CREATE_KID, M_CREATE_VACCINE_CARD, M_UPDATE_CONSULTATION, M_UPDATE_GESTATION } from "../../../graphql/Mutations";
 import {ChevronDown, Filter, PlusSquare} from 'react-feather'
-import { FilterItem } from "../../../components/FilterItem";
+import { CheckboxItem } from "../../../components/CheckboxItem";
 
 export const Home: React.FC = () => {
-    const dashboardItems = '123';
     const [isOpenPopup, setIsOpenPopup] = useState(false)
     const auth = JSON.parse(getCookie('_bu_l') as string)
     const [viewFilter, setViewFilter] = useState<Boolean>(true)
@@ -297,8 +296,8 @@ export const Home: React.FC = () => {
                         </div>
                         <div className={`filter__content ${viewFilter&&"filter__content--open"}`}>
                             <div className="content__item">
-                                <FilterItem name="Maternidade"/>
-                                <FilterItem name="Infantil"/>
+                                <CheckboxItem name="Maternidade"/>
+                                <CheckboxItem name="Infantil"/>
                             </div>
                         </div>
                     </div>
@@ -311,7 +310,7 @@ export const Home: React.FC = () => {
                         </div>
                     </div>
                     <div className="home__dashboard">
-                        {dataConsultationsByGestation?.consultationsByGestation.filter((consultation: any) => new Date(consultation.date).toDateString() === selectedFilter).length == 0?
+                        {dataConsultationsByGestation?.consultationsByGestation.filter((consultation: any) => new Date(consultation.date).toDateString() === selectedFilter).length === 0?
                         <div className="dashboard__empty">
                             <h2>Não há eventos programados para esse dia!</h2>
                         </div>:

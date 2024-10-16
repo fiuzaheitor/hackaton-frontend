@@ -1,12 +1,11 @@
 @import '../../styles/globals.scss';
 
-.filter__item {
+.item {
     display: flex;
     position: relative;
     align-items: center;
     gap: 12px;
 }
-
 
 .checkbox__label {
     display: flex;

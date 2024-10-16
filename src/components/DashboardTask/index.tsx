@@ -1,7 +1,9 @@
-import React from 'react'
+import React, {useState} from 'react'
 import './styles.scss'
 import Button from '../Button'
 import { Check, Trash, Edit2 } from 'react-feather'
+import { Popup } from '../PopUp'
+import { CheckboxItem } from '../CheckboxItem'
 
 interface DashboardTaskProps {
     title: string
@@ -10,8 +12,12 @@ interface DashboardTaskProps {
 }
 
 export const DashboardTask: React.FC<DashboardTaskProps> = ({title, description, date}) => {
+    const [showPopup, setShowPopup] = useState<boolean>(false)
+    const [confirm, setConfirm] = useState<boolean>(false)
+
     return (
         <div className="dashboard__task">
+            {showPopup&&<Popup show={showPopup} title="Editar Tarefa" onClick={() => setShowPopup(!showPopup)} dateInput/>}
             <div className="task__time">
                 <h2>Manhã</h2>
                 <span>{date}</span>
@@ -21,9 +27,7 @@ export const DashboardTask: React.FC<DashboardTaskProps> = ({title, description,
                 <p>{description}</p>
             </div>
             <div className="task__func">
-                <Button Icon={<Check/>} type="button" onlyIcon/>
-                <Button Icon={<Edit2/>} type="button" onlyIcon/>
-                <Button Icon={<Trash/>} type="button" onlyIcon/>
+                <CheckboxItem name="Concluído" onChange={() => {setConfirm(!confirm); setShowPopup(confirm)}}/>
             </div>
         </div>
     )
