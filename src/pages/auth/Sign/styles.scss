@@ -60,7 +60,9 @@
 }
 
 .form__inputs {
-    gap: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
 }
 
 .form__button {
