@@ -5,6 +5,7 @@ import { Calendar } from "../../../components/Calendar";
 import { getCookie } from "../../../utils/cookies";
 import Button from "../../../components/Button";
 import { DashboardTask } from "../../../components/DashboardTask";
+import { Popup } from "../../../components/PopUp";
 
 import { useGetConsultationsByGestation, useGetGestationsByUser, useGetKidsByMom, useGetUsers } from "../../../utils/Queries";
 
@@ -15,6 +16,7 @@ import { FilterItem } from "../../../components/FilterItem";
 
 export const Home: React.FC = () => {
     const dashboardItems = '123';
+    const [isOpenPopup, setIsOpenPopup] = useState(false)
     const auth = JSON.parse(getCookie('_bu_l') as string)
     const [viewFilter, setViewFilter] = useState<Boolean>(true)
     const [selectedFilter, setSelectedFilter] = useState<string>('')
@@ -253,11 +255,9 @@ export const Home: React.FC = () => {
             }
         }
     }, [dataUserGestations])
-    
-    
-
     return (
         <section className="container">
+            {isOpenPopup&&<Popup show={isOpenPopup} onClick={() => setIsOpenPopup(!isOpenPopup)} title="Confirme suas informações!"/>}
             <Header />
             <div className="container__home">
                 <div className="home__side">
@@ -281,7 +281,7 @@ export const Home: React.FC = () => {
                     <div className="home__title">
                         <h1>16 de Outubro de 2024</h1>
                         <div className="home__buttons">
-                            <Button text="Add" type="button" Icon={<PlusSquare color="#fff"/>} onClick={() => handleFinishGestation(dataUserGestations?.gestationsByMom[0]?.id, true, "Carlos")}/>
+                            <Button text="Add" type="button" Icon={<PlusSquare color="#fff"/>} onClick={() => setIsOpenPopup(!isOpenPopup)}/>
                         </div>
                     </div>
                     <div className="home__dashboard">
@@ -294,7 +294,6 @@ export const Home: React.FC = () => {
                             <DashboardTask title="Titulo da Task" description="Descrição da task" hour="20" minute="30" date="16/10/2024"/>
                             <DashboardTask title="Titulo da Task" description="Descrição da task" hour="20" minute="30" date="16/10/2024"/>
                         </div>}
-                            
                     </div>
                 </div>
             </div>

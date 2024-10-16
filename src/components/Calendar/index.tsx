@@ -47,7 +47,7 @@ export const Calendar: React.FC = () => {
             
             // Verificar se é um dia de evento/consulta
             const isEventDay = dataConsultationsByGestation?.consultationsByGestation.some((consultation: any) => {
-                const consultationDate = new Date(consultation.date);  // Converter milissegundos para Date
+                const consultationDate = new Date(consultation.date);   
                 return consultationDate.toDateString() === date.toDateString();  // Comparar as datas
             });
 

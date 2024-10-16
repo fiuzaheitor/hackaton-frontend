@@ -23,9 +23,9 @@ export const Header: React.FC = () => {
                 <MenuItem title="Contatos" icon={<img src="/icons/call.svg" alt="Contatos" />} onClick={() => {}}/>
             </div>*/}
             <div className='header__user'>
-                <div className='user__bell'>
+                {/*<div className='user__bell'>
                     <img src="/icons/bell.svg" alt="Sino"/>
-                </div>
+                </div>*/}
                 <div className="user__info">
                     <div className="user__icon">
                         <img src="/icons/user.svg" alt="Usuário" />
