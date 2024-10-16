@@ -61,7 +61,7 @@ export const Signup: React.FC = () => {
                 </form>
             </div>
             <div className='signup__image'>
-                <img src="" alt="Ilustraçõa" />
+                <img src="/banner-form.png" alt="Ilustraçõa" />
             </div>
         </div>
     )

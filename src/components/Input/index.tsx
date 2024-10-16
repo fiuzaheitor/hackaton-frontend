@@ -15,7 +15,7 @@ const Input: React.FC<InputProps> = ({ label, placeholder, type, onChange, value
     return (
         <div className='container__input'>
             {label&&<label>{label}</label>}
-            <input name='input' id='input' type={type} placeholder={placeholder} onChange={onChange} value={value} className='input__form'/>
+            <input name='input' id='input' type={type} placeholder={placeholder} onChange={onChange} value={value} className={`input__form`}/>
             {Icon&&<label htmlFor="input"></label>}
         </div>
     )

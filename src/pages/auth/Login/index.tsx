@@ -54,7 +54,7 @@ export const Login: React.FC = () => {
         <div className='container_login'>
             <ToastContainer position='top-left'/>
             <div className='login__image'>
-                <img src="" alt="Ilustraçõa" />
+                <img src="/banner-form.png" alt="Ilustraçõa" />
             </div>
             <div className='login__box'>
                 <div className='login__header'>

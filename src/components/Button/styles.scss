@@ -6,6 +6,7 @@
 
 button {
     all: unset;
+    width: auto;
     cursor: pointer;
 }
 
@@ -85,16 +86,16 @@ button span {
 
 .button--onlyIcon {
     padding: 8px;
-    border-radius: 16px;
+    border-radius: 12px;
     cursor: pointer;
 }
 
 .button--onlyIcon:hover {
-    border: 1px solid $brand2-500;  
+    outline: 1px solid $brand2-500;  
     transform: scale(1.03);
 }
 
 .button--onlyIcon svg {
-    width: 24px;
-    height: 24px;
+    width: 20px;
+    height: 20px;
 }
