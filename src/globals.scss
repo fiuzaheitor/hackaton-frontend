@@ -1,0 +1,113 @@
+@font-face {
+  font-family: 'Satoshi-Regular';
+  src: url('./assets/fonts/Satoshi/Satoshi-Regular.woff2') format('woff2'),
+       url('./assets/fonts/Satoshi/Satoshi-Regular.woff') format('woff'),
+       url('./assets/fonts/Satoshi/Satoshi-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-display: swap;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Satoshi-Medium';
+  src: url('./assets/fonts/Satoshi/Satoshi-Medium.woff2') format('woff2'),
+       url('./assets/fonts/Satoshi/Satoshi-Medium.woff') format('woff'),
+       url('./assets/fonts/Satoshi/Satoshi-Medium.ttf') format('truetype');
+  font-weight: 500;
+  font-display: swap;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Satoshi-Bold';
+  src: url('./assets/fonts/Satoshi/Satoshi-Bold.woff2') format('woff2'),
+       url('./assets/fonts/Satoshi/Satoshi-Bold.woff') format('woff'),
+       url('./assets/fonts/Satoshi/Satoshi-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-display: swap;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Satoshi-Variable';
+  src: url('./assets/fonts/Satoshi/Satoshi-Variable.woff2') format('woff2'),
+       url('./assets/fonts/Satoshi/Satoshi-Variable.woff') format('woff'),
+       url('./assets/fonts/Satoshi/Satoshi-Variable.ttf') format('truetype');
+  font-weight: 300 900;
+  font-display: swap;
+  font-style: normal;
+}
+
+$dark-100: #16151C;
+$dark-80: #16151C80;
+$dark-20: #16151C20;
+
+$gray-100: #A2A1A8;
+$gray-80: #A2A1A880;
+$gray-20: #A2A1A820;
+$gray-10: #A2A1A810;
+$gray-5: #A2A1A805;
+
+$white-100: #FFFFFF;
+$white-80: #FFFFFF80;
+$white-20: #FFFFFF20;
+
+$light-100: #D9E1E1;
+$light-80: #D9E1E180;
+$light-20: #D9E1E120;
+$light-10: #D9E1E110;
+$light-5: #D9E1E105;
+
+// Paleta de Cores
+$brand-500-5: #7152F305;
+$brand-500-10: #7152F310;
+$brand-500: #7152F3;
+$brand-800: #3517B4;
+$brand-900: #250C92;
+
+$yellow-100: #EFBE12;
+$yellow-5: #EFBE1205;
+
+$green-100: #3FC28A;
+$green-5: #3FC28A05;
+
+$red-100: #F45B69;
+$red-5: #F45B6905;
+
+// Tokens
+$text-primary: $dark-100;
+$text-brand: $brand-500;
+$text-inverted: $white-100;
+$text-placeholder: $gray-100;
+
+$bg-brand: $brand-500;
+$bg-primary: $white-100;
+$bg-secondary: $gray-100;
+$bg-inverted: $gray-100;
+
+$text-mini: 10px;
+$text-small: 13px;
+$text-base: 16px;
+$text-large: 20px;
+$text-xl: 49px;
+$text-2xl: 61px;
+
+$font-base: 'Satoshi-Regular';
+$font-variable: 'Satoshi-Variable';
+
+$font-light: 300;
+$font-regular: 400;
+$font-medium: 500;
+$font-bold: 700;
+
+// Global Styles
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+}

@@ -1,0 +1,68 @@
+@import '../../../globals.scss';
+
+* {
+    font-family: 'Satoshi-Variable', sans-serif;
+}
+
+.container_login {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+
+.login__box {
+    width: 50%;
+    background-color: $white-100;
+    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.05);
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding: 32px;
+    border-radius: 12px;
+    position: relative;
+}
+
+.login__header {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.header__title {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.header__title h1 {
+    font-family: 'Satoshi-Variable';
+    font-weight: 700;
+    font-size: 39px;
+}
+
+.header__info h2 {
+    font-weight: 500;
+    font-size: 24px;
+}
+
+.header__info p {
+    font-weight: 300;
+    font-size: 16px;
+    color: #16151C80;
+}
+
+.login__form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.form__inputs {
+    gap: 24px;
+}
+
+.form__button {
+    margin-top: 24px;
+}
