@@ -1,0 +1,31 @@
+@import '../../globals.scss';
+
+.container__hamburguer {
+    display: flex;
+    gap: 4px;
+    cursor: pointer;
+    flex-direction: column;
+    width: auto;
+    height: auto;
+    padding: 1px;
+}
+
+.hamburguer__line {
+    width: 24px;
+    height: 3px;
+    background-color: #16151C;
+    border-radius: 4px;
+    transition: ease-in-out 0.2s;
+}
+
+.container__hamburguer--open .hamburguer__line:first-child {
+    transform: translateY(7px) rotate(45deg);
+}
+
+.container__hamburguer--open .hamburguer__line:nth-child(2) {
+    opacity: 0;
+}
+
+.container__hamburguer--open .hamburguer__line:last-child {
+    transform: translateY(-7px) rotate(-45deg);
+}

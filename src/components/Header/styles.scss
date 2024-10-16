@@ -1,0 +1,13 @@
+@import '../../globals.scss';
+
+.container__header {
+    display: flex;
+    flex-direction: column;
+    
+}
+
+.nav__header {
+    padding: 24px;
+    background-color: $white-100;
+    box-shadow: 4px 4px 20px rgba(0, 0, 0, 0.05);
+}

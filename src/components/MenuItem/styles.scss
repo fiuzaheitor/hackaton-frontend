@@ -1,0 +1,18 @@
+@import "../../globals.scss";
+
+* {
+    font-family: 'Satoshi-Variable', sans-serif;
+}
+
+.container__menu_item {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    cursor: pointer;
+    padding: 12px 24px;
+}
+
+.container__menu_item:hover {
+    background-color: #F4F4F4;
+    border-radius: 12px;
+}

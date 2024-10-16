@@ -1,0 +1,39 @@
+@import "../../globals.scss";
+
+* {
+    font-family: 'Satoshi-Variable', sans-serif;
+}
+
+.navbar__menu {
+    position: absolute;
+    left: -100%;
+    width: 30%;
+    background-color: $white-100;
+    padding: 24px;
+}
+
+.navbar__menu--open {
+    animation: slideRight 0.5s forwards;
+}
+
+@keyframes slideRight {
+    from {
+        left: -100%;
+    }
+    to {
+        left: 0;
+    }
+}
+
+.navbar__menu--closed {
+    animation: slideLeft 0.5s forwards;
+}
+
+@keyframes slideLeft {
+    from {
+        left: 0;
+    }
+    to {
+        left: -100%;
+    }
+}
