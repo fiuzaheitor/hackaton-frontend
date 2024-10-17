@@ -24,13 +24,136 @@ export const useGestationMutations = () => {
     refetchQueries: ["VaccinesByVaccineCard"],
   });
 
+  const createGestationMutation = async (userId: any, description: any, week: any) => {
+    try {
+      const newGestation = await createGestation({
+        variables: {
+          data: {
+            user: userId,
+            description: description,
+            week: week,
+            isFinished: false,
+          },
+        },
+      }).then((res) => {
+        return res.data.createGestation.id;
+      });
+
+      return newGestation;
+    } catch (err: any) {
+      console.log(err.message);
+    }
+  };
+
+  const updateGestationMutation = async (gestationId: any, data: any) => {
+    try {
+      const newGestation = updateGestation({
+        variables: {
+          id: gestationId,
+          data: data,
+        },
+      }).then((res) => {
+        console.log(res);
+      });
+    } catch (err: any) {
+      console.log(err.message);
+    }
+  };
+
+  const createKidMutation = async (momId: any, name: any, birthDate: any) => {
+    try {
+      const newKid = createKid({
+        variables: {
+          data: {
+            mom: momId,
+            name: name,
+            birthDate: birthDate,
+          },
+        },
+      }).then((res) => {
+        return res.data.createKid;
+      });
+      return newKid;
+    } catch (err: any) {
+      console.log(err.message);
+    }
+  };
+
+  const createVaccineCardMutation = async (kidId: any) => {
+    try {
+      const newVaccineCard = createVaccineCard({
+        variables: {
+          data: {
+            kid: kidId,
+          },
+        },
+      }).then((res) => {
+        return res.data?.createVaccineCard?.id;
+      });
+      return newVaccineCard;
+    } catch (err: any) {
+      console.log(err.message);
+    }
+  };
+
+  const createConsultationMutation = async (gestationId: any, date: any, week: any) => {
+    try {
+      const newConsultation = createConsultation({
+        variables: {
+          data: {
+            gestation: gestationId,
+            date: date,
+            week: week,
+            isFinished: false,
+          },
+        },
+      }).then((res) => {
+        console.log(res);
+      });
+    } catch (err: any) {
+      console.log(err.message);
+    }
+  };
+
+  const updateConsultationMutation = async (id: string, data: any) => {
+    try {
+      const newConsultation = updateConsultation({
+        variables: {
+          id: id,
+          data: data,
+        },
+      }).then((res) => {
+        console.log(res);
+      });
+    } catch (err: any) {
+      console.log(err.message);
+    }
+  };
+
+  const createVaccineMutation = async (data: any) => {
+    try {
+      const newVaccine = createVaccine({
+        variables: {
+          data: {
+            ...data,
+          },
+        },
+      }).then((res) => {
+        return res;
+      });
+      return newVaccine;
+    } catch (err: any) {
+      console.log(err.message);
+    }
+  };
+
   return {
-    createGestation,
-    updateGestation,
-    createKid,
-    createVaccineCard,
-    createConsultation,
-    updateConsultation,
-    createVaccine,
+    createGestationMutation,
+    updateGestationMutation,
+    createKidMutation,
+    createVaccineCardMutation,
+    createConsultationMutation,
+    updateConsultationMutation,
+    createVaccineMutation,
   };
 };

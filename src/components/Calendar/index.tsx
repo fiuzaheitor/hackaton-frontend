@@ -9,10 +9,13 @@ export const Calendar: React.FC<{onClick: any, filter: string}> = ({onClick, fil
     const auth = JSON.parse(getCookie('_bu_l') as string)
     
     const { data: dataUserGestations, loading: loadingUserGestations, error: errorUserGestations } = useGetGestationsByUser(auth?.ui);
-    const { data: dataConsultationsByGestation, loading: loadingConsultationsByGestation, error: errorConsultationsByGestation } = useGetConsultationsByGestation(dataUserGestations?.gestationsByMom?.filter((gestation: any) => !gestation.isFinished)?.[0]?.id);
+    const { data: dataConsultationsByGestation, loading: loadingConsultationsByGestation, error: errorConsultationsByGestation } = useGetConsultationsByGestation(dataUserGestations?.gestationsByMom?.filter((gestation: any) => !gestation.isFinished)[0]?.id);
     const { data: dataUserKids, loading: loadingUserKids, error: errorUserKids } = useGetKidsByMom(auth?.ui);
     const { data: dataVaccineCardByKid, loading: loadingConsultationsByKid, error: errorConsultationsByKid } = useGetVaccineCardByKid(dataUserKids?.kidsByMom[0]?.id);
-    const { data: dataVaccinesByVaccineCard } = useGetVaccinesByVaccineCard(dataVaccineCardByKid?.vaccineCardByKid?.[0]?.id);
+    const { data: dataVaccinesByVaccineCard } = useGetVaccinesByVaccineCard(dataVaccineCardByKid?.vaccineCardByKid[0]?.id);
+
+    console.log(dataVaccinesByVaccineCard)
+    
     
     const [currentDate, setCurrentDate] = useState(new Date());
 
