@@ -68,7 +68,11 @@ export const Calendar: React.FC<{onClick: any, filter: string}> = ({onClick, fil
                 
                 dataVaccinesByVaccineCard?.vaccinesByVaccineCard?.map((vaccine: any) => {
                     const vaccineDate = new Date(vaccine.applicationDate);
-                    if (date.toDateString() === vaccineDate.toDateString()) {
+                    const dayInMillis = 24 * 60 * 60 * 1000;
+                    const birthDate = new Date(dataUserKids.kidsByMom[0].birthDate);
+                    const vaccineStartDate = new Date(vaccineDate.getTime() - 4 * dayInMillis);
+                    const vaccineEndDate = new Date(vaccineDate.getTime() + 3 * dayInMillis);
+                    if (date >= vaccineStartDate && date <= vaccineEndDate && date >= birthDate) {
                         isEventDay = true;
                     }
                 })
