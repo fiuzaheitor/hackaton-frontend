@@ -13,7 +13,7 @@ export const Header: React.FC = () => {
     const [isOpenDropdown, setIsOpenDropdown] = useState(false)
     const logout = useAuthContext().logout
 
-    const { data } = useGetUser(JSON.parse(getCookie('_bu_l') as string))
+    const { data } = useGetUser(JSON.parse(getCookie('_bu_l') as string)?.ui)
 
     return (
         <div className='container__header'>

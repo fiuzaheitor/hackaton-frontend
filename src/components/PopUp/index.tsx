@@ -14,6 +14,11 @@ interface PopupProps {
 
 export const Popup: React.FC<PopupProps> = ({ title, onClick, dateInput, showPopup, setShowPopup}) => {
     const [value, setValue] = useState('')
+
+    const handleSubmit = () => {
+        setShowPopup(!showPopup)
+        onClick(value)
+    }
     
     return (
         <div className={`popup__overlay`}>
@@ -25,7 +30,7 @@ export const Popup: React.FC<PopupProps> = ({ title, onClick, dateInput, showPop
                         {dateInput?<Input placeholder="Data de consulta" label="Data da Consulta" type="number" value={value} onChange={(e) => setValue(e.target.value)}/>
                         :<Input placeholder="Quantidade de Semanas" label="Semana da primeira consulta" type="number" value={value} onChange={(e) => setValue(e.target.value)}/>}
                     </div>
-                    <Button type="button" text="Confirmar" onClick={() => onClick(value)}/>
+                    <Button type="button" text="Confirmar" onClick={handleSubmit}/>
                 </div>
             </div>
         </div>

@@ -1,14 +1,15 @@
 import React, { useState } from "react";
 import './styles.scss';
-import { useGetConsultationsByGestation } from "../../utils/Queries";
+import { useGetConsultationsByGestation, useGetGestationsByUser } from "../../utils/Queries";
 import { CalendarDay } from "../CalendarDay";
+import { getCookie } from "../../utils/cookies";
 
 export const Calendar: React.FC<{onClick: any}> = ({onClick}) => {
     const feather = require('feather-icons');
-    // Consultar as consultas da gestação
-    const { data: dataConsultationsByGestation, loading: loadingConsultationsByGestation, error: errorConsultationsByGestation } = useGetConsultationsByGestation('671008bd53d0a9a09c42bfd6');
+    const auth = JSON.parse(getCookie('_bu_l') as string)
 
-    console.log(dataConsultationsByGestation);
+    const {data: dataUserGestations, loading: loadingUserGestations, error: errorUserGestations} = useGetGestationsByUser(auth?.ui)
+    const { data: dataConsultationsByGestation, loading: loadingConsultationsByGestation, error: errorConsultationsByGestation } = useGetConsultationsByGestation(dataUserGestations?.gestationsByMom[0]?.id);
 
     const [currentDate, setCurrentDate] = useState(new Date());
 

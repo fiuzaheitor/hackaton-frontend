@@ -21,31 +21,29 @@ export const Home: React.FC = () => {
     const [selectedFilter, setSelectedFilter] = useState<any>(new Date().toDateString())
     const [selectedCheckbox, setSelectedCheckbox] = useState<any>("Maternidade")
 
-    console.log("filtro:" + selectedFilter)
-
     const {data: dataUserGestations, loading: loadingUserGestations, error: errorUserGestations} = useGetGestationsByUser(auth?.ui)
     const {data: dataConsultationsByGestation, loading: loadingConsultationsByGestation, error: errorConsultationsByGestation} = useGetConsultationsByGestation(dataUserGestations?.gestationsByMom[0]?.id)
-
-    const {data: dataUsers} = useGetUsers()
-    console.log(auth?.ui)
+ 
     const {data: dataUserKids, loading: loadingUserKids, error: errorUserKids} = useGetKidsByMom(auth?.ui)
 
     const [createGestation] = useMutation(M_CREATE_GESTATION)
 
     const CreateGestation = async (userId: any, description: any, week: any) => {
         try {
-            const newGestation = createGestation({
+            const newGestation = await createGestation({
                 variables: {
                     data: {
-                        userId: auth?.ui,
-                        description: "Gestação...",
-                        week: 0,
+                        user: userId,
+                        description: description,
+                        week: week,
                         isFinished: false
                     }
                 }
             }).then((res) => {
-                console.log(res)
+                return res.data.createGestation.id
             })
+
+            return newGestation;
         } catch (err: any) {
             console.log(err.message)
         }
@@ -83,7 +81,6 @@ export const Home: React.FC = () => {
             }).then((res) => {
                 return res.data.createKid.id
             })
-            console.log(newKid)
             return newKid
 
         } catch (err: any) {
@@ -177,8 +174,8 @@ export const Home: React.FC = () => {
     };
     
     const handleCreateCalendar = async (week: any) => {
-        const gestation: any = await CreateGestation(auth?.ui, "Gestação...", week);
-        let currentWeek = week;
+        const gestation = await CreateGestation(auth?.ui, "Gestação...", Number(week));
+        let currentWeek = Number(week);
         let consultations: any = [];
 
         if (currentWeek === undefined) {
@@ -202,8 +199,7 @@ export const Home: React.FC = () => {
         }
     
         consultations.map((consultation: any) => {
-            console.log(new Date(consultation.date).toLocaleDateString());
-            CreateConsultation(gestation?.data?.createGestation?.id, consultation?.date, consultation?.week);
+            CreateConsultation(gestation, consultation?.date, consultation?.week);
         });
     };
     
@@ -241,25 +237,12 @@ export const Home: React.FC = () => {
     };
 
     useEffect(() => {
-        if(dataConsultationsByGestation){
-            dataConsultationsByGestation.consultationsByGestation.map((consultation: any) => {
-                console.log(new Date(consultation.date).toLocaleDateString());
-            })
-        }
-    }, [dataConsultationsByGestation])
-
-    useEffect(() => {
         if (dataUserGestations?.gestationsByMom[0] !== undefined) {
             const gestation = dataUserGestations?.gestationsByMom[0];
-    
-            console.log('Gestação:', gestation); // Log da gestação
-            console.log('Created At:', gestation.createdAt); // Log do createdAt
     
             const createdAtTimestamp = typeof gestation.createdAt === 'string' 
                 ? new Date(gestation.createdAt).getTime() 
                 : gestation.createdAt;
-    
-            console.log('Created At Timestamp:', createdAtTimestamp); // Log do timestamp convertido
     
             if (createdAtTimestamp > Date.now() + (60 * 60 * 24 * 7 * 1000)) {
                 UpdateGestation(gestation.id, { week: gestation.week + 1 });
