@@ -15,7 +15,8 @@ import {ChevronDown, Filter, PlusSquare} from 'react-feather'
 import { CheckboxItem } from "../../../components/CheckboxItem";
 
 export const Home: React.FC = () => {
-    const [isOpenPopup, setIsOpenPopup] = useState(false)
+    const [isOpenPopupForm, setIsOpenPopupForm] = useState(false)
+    const [isOpenPopupAlert, setIsOpenPopupAlert] = useState(false)
     const auth = JSON.parse(getCookie('_bu_l') as string)
     const [viewFilter, setViewFilter] = useState<Boolean | undefined>(true)
     const [selectedFilter, setSelectedFilter] = useState<any>(new Date().toDateString())
@@ -28,12 +29,12 @@ export const Home: React.FC = () => {
 
     const [createGestation] = useMutation(M_CREATE_GESTATION)
 
-    const CreateGestation = async (userId: any, description: any, week: any) => {
+    const CreateGestation = async (user: any, description: any, week: any) => {
         try {
             const newGestation = await createGestation({
                 variables: {
                     data: {
-                        user: userId,
+                        user: user,
                         description: description,
                         week: week,
                         isFinished: false
@@ -42,7 +43,6 @@ export const Home: React.FC = () => {
             }).then((res) => {
                 return res.data.createGestation.id
             })
-
             return newGestation;
         } catch (err: any) {
             console.log(err.message)
@@ -109,6 +109,7 @@ export const Home: React.FC = () => {
     const [createConsultation] = useMutation(M_CREATE_CONSULTATION)
 
     const CreateConsultation = async (gestationId: any, date: any, week: any) => {
+        console.log(gestationId, date, week)
         try {
             const newConsultation = createConsultation({
                 variables: {
@@ -197,7 +198,7 @@ export const Home: React.FC = () => {
                 "week": currentWeek
             });
         }
-    
+        
         consultations.map((consultation: any) => {
             CreateConsultation(gestation, consultation?.date, consultation?.week);
         });
@@ -276,19 +277,28 @@ export const Home: React.FC = () => {
           } catch (error: any) {
             console.error('Error sending message:', error.message);
           }
-        };   
+    };
 
+    const verifyChecked = () => {
+        if (dataUserKids?.kidsByMom.length == 0) {
+            setSelectedCheckbox("Maternidade")
+            return setIsOpenPopupAlert(!isOpenPopupAlert)
+        }
+        setSelectedCheckbox("Infantil")
+    }
 
-        useEffect(() => {
-            sendMessage();
-        }, []);
+    useEffect(() => {
+        sendMessage();
+    }, []);
+
     return (
         <section className="container">
-            {isOpenPopup&&<Popup showPopup={isOpenPopup} setShowPopup={setIsOpenPopup} onClick={handleCreateCalendar} title="Confirme suas informações!"/>}
+            {isOpenPopupForm&&<Popup showPopup={isOpenPopupForm} setShowPopup={setIsOpenPopupForm} onClick={handleCreateCalendar} title="Confirme suas informações!"/>}
+            {isOpenPopupAlert&&<Popup alert showPopup={isOpenPopupAlert} setShowPopup={setIsOpenPopupAlert} title="Alerta!" alertMessage="Não há crianças registradas nessa gestação."/>}
             <Header />
             <div className="container__home">
                 <div className="home__side">
-                    <Calendar onClick={setSelectedFilter}/>
+                    <Calendar onClick={setSelectedFilter} filter={selectedCheckbox}/>
                     <div className="side__filter">
                         <div className="filter__header">
                             <h2>Calendário</h2>
@@ -299,7 +309,7 @@ export const Home: React.FC = () => {
                         <div className={`filter__content ${viewFilter&&"filter__content--open"}`}>
                             <div className="content__item">
                                 <CheckboxItem name="Maternidade" checked={selectedCheckbox=="Maternidade"} setChecked={setSelectedCheckbox}/>
-                                <CheckboxItem name="Infantil" checked={selectedCheckbox=="Infantil"} setChecked={setSelectedCheckbox}/>
+                                <CheckboxItem name="Infantil" checked={selectedCheckbox=="Infantil"} setChecked={verifyChecked}/>
                             </div>
                         </div>
                     </div>
@@ -308,7 +318,7 @@ export const Home: React.FC = () => {
                     <div className="home__title">
                         <h1>{formatDate(new Date(selectedFilter)).slice(0,2)+formatDate(new Date(selectedFilter)).slice(2,6)+formatDate(new Date(selectedFilter)).slice(6,7).toUpperCase()+formatDate(new Date(selectedFilter)).slice(7)}</h1>
                         <div className="home__buttons">
-                            <Button text="Iniciar" type="button" Icon={<PlusSquare color="#fff"/>} onClick={() => setIsOpenPopup(!isOpenPopup)}/>
+                            <Button text="Iniciar" type="button" Icon={<PlusSquare color="#fff"/>} onClick={() => setIsOpenPopupForm(!isOpenPopupForm)}/>
                         </div>
                     </div>
                     <div className="home__dashboard">

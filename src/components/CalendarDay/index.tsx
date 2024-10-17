@@ -1,5 +1,5 @@
-import React from 'react';
-import './styles.scss';
+import React from "react";
+import "./styles.scss";
 
 export const CalendarDay: React.FC<{ date: any, day: number, isToday: boolean, isEventDay: boolean, onClick: any }> = ({ date, day, isToday, isEventDay, onClick }) => {
   return (

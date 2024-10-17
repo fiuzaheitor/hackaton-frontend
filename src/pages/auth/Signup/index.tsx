@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import './styles.scss'
 import Button from '../../../components/Button'
 import Input from '../../../components/Input'
+import { ToastContainer, toast } from 'react-toastify'
 import { M_CREATE_USER } from '../../../graphql/Mutations';
 import { useMutation } from '@apollo/client';
 
@@ -11,6 +12,7 @@ export const Signup: React.FC = () => {
     const [email, setEmail] = useState<string>('')
     const [password, setPassword] = useState<string>('')
     const [name, setName] = useState<string>('')
+    const [phone, setPhone] = useState<string>('')
     const [error, setError] = useState<string>('')
     
     const [createUser] = useMutation(M_CREATE_USER)
@@ -18,13 +20,20 @@ export const Signup: React.FC = () => {
     const handleSubmit = (event: React.FormEvent) => {
         event.preventDefault()
 
+        if (!name || !phone || !email || !password) {
+            setError('Preencha todos os campos!')
+            toast.error('Preencha todos os campos corretamente!')
+            return
+        }
+
         try {
             const newUser = createUser({
               variables: {
                 data: {
                     name: name,
-                  email: email,
-                  password: password
+                    phone: phone,
+                    email: email,
+                    password: password
                 },
               },
             })
@@ -38,6 +47,7 @@ export const Signup: React.FC = () => {
 
     return (
         <div className='container__signup'>
+            <ToastContainer position='top-left'/>
             <div className='signup__box'>
                 <div className='signup__header'>
                     <div className='header__title'>
@@ -50,7 +60,10 @@ export const Signup: React.FC = () => {
                     </div>
                 </div>
                 <form onSubmit={handleSubmit} className='signup__form'>
-                    <Input type='text' placeholder='Nome completo' value={name} onChange={(e) => setName(e.target.value)}/>  
+                    <div className='signup__div'>
+                        <Input type='text' placeholder='Nome' value={name} onChange={(e) => setName(e.target.value)}/>
+                        <Input type='phone' placeholder='Telefone' value={phone} onChange={(e) => setPhone(e.target.value)}/>
+                    </div>
                     <Input type='email' placeholder='Email' value={email} onChange={(e) => setEmail(e.target.value)}/>
                     <Input type='password' placeholder='Senha' value={password} onChange={(e) => setPassword(e.target.value)}/>
                     <div className="form__remember-forgot">

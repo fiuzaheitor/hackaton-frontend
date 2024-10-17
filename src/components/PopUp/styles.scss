@@ -51,12 +51,22 @@
 }
 
 .popup__body {
-    width: 80%;
+    width: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+.popup__body > div {
+    display: flex;
     flex-direction: column;
-    gap: 32px;
+    gap: 16px;
+}
+
+
+.popup__body > div .container__button {
+    align-self: center;
+    width: 120%;
 }
 
 .popup__body .container__button {

@@ -1,16 +1,20 @@
 import React, { useState } from "react";
 import './styles.scss';
-import { useGetConsultationsByGestation, useGetGestationsByUser } from "../../utils/Queries";
+import { useGetConsultations, useGetConsultationsByGestation, useGetGestationsByUser, useGetKidsByMom, useGetVaccineCardByKid } from "../../utils/Queries";
 import { CalendarDay } from "../CalendarDay";
 import { getCookie } from "../../utils/cookies";
 
-export const Calendar: React.FC<{onClick: any}> = ({onClick}) => {
+export const Calendar: React.FC<{onClick: any, filter: string}> = ({onClick, filter}) => {
     const feather = require('feather-icons');
     const auth = JSON.parse(getCookie('_bu_l') as string)
+    
+    const { data: dataUserGestations, loading: loadingUserGestations, error: errorUserGestations } = useGetGestationsByUser(auth?.ui);
+    const { data: dataConsultationsByGestation, loading: loadingConsultationsByGestation, error: errorConsultationsByGestation } = useGetConsultationsByGestation(dataUserGestations?.gestationsByMom?.[0]?.id);
 
-    const {data: dataUserGestations, loading: loadingUserGestations, error: errorUserGestations} = useGetGestationsByUser(auth?.ui)
-    const { data: dataConsultationsByGestation, loading: loadingConsultationsByGestation, error: errorConsultationsByGestation } = useGetConsultationsByGestation(dataUserGestations?.gestationsByMom[0]?.id);
-
+    const { data: dataUserKids, loading: loadingUserKids, error: errorUserKids } = useGetKidsByMom(auth?.ui);
+    console.log(dataUserKids)
+    const { data: dataConsultationsByKid, loading: loadingConsultationsByKid, error: errorConsultationsByKid } = useGetVaccineCardByKid(dataUserKids?.kidsByMom?.[0]?.id || '');
+    
     const [currentDate, setCurrentDate] = useState(new Date());
 
     const daysInMonth = (year: number, month: number) => {
@@ -30,6 +34,7 @@ export const Calendar: React.FC<{onClick: any}> = ({onClick}) => {
     const currentWeek = getWeekNumber(currentDate);
 
     const renderDays = () => {
+        
         const year = currentDate.getFullYear();
         const month = currentDate.getMonth();
         const days = daysInMonth(year, month);
@@ -49,13 +54,22 @@ export const Calendar: React.FC<{onClick: any}> = ({onClick}) => {
             const isToday = date.toDateString() === today.toDateString();  // Comparação de hoje
             
             let isEventDay = false;
-
-            dataConsultationsByGestation?.consultationsByGestation.map((consultation: any) => {
-                const consultationDate = new Date(consultation.date);
-                if (date.toDateString() === consultationDate.toDateString()) {
-                    isEventDay = true;
-                }
-            });
+            if (filter === "Maternidade") {
+                dataConsultationsByGestation?.consultationsByGestation.map((consultation: any) => {
+                    const consultationDate = new Date(consultation.date);
+                    if (date.toDateString() === consultationDate.toDateString()) {
+                        isEventDay = true;
+                    }
+                })
+            }
+            else if (filter === "Infantil") {
+                dataConsultationsByKid?.vaccineCardByKid.map((vaccineCard: any) => {
+                    const vaccineCardDate = new Date(vaccineCard.date);
+                    if (date.toDateString() === vaccineCardDate.toDateString()) {
+                        isEventDay = true;
+                    }
+                })
+            }
             
             dayElements.push(
                 <CalendarDay date={date.toDateString()} key={day} day={day} isToday={isToday} isEventDay={isEventDay} onClick={onClick}/>

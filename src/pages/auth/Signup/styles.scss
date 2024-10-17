@@ -90,6 +90,16 @@
   gap: 12px;
 }
 
+.signup__div {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.signup__div .container__input {
+  width: 100%;
+}
+
 .form__remember-forgot {
   display: flex;
   align-items: center;
