@@ -15,9 +15,10 @@ import {ChevronDown, Filter, PlusSquare} from 'react-feather'
 import { CheckboxItem } from "../../../components/CheckboxItem";
 
 export const Home: React.FC = () => {
+    const [filterCalendar, setFilterCalendar] = useState<Boolean | undefined>(false)
     const [isOpenPopup, setIsOpenPopup] = useState(false)
     const auth = JSON.parse(getCookie('_bu_l') as string)
-    const [viewFilter, setViewFilter] = useState<Boolean>(true)
+    const [viewFilter, setViewFilter] = useState<Boolean | undefined>(true)
     const [selectedFilter, setSelectedFilter] = useState<any>(new Date().toDateString())
 
     console.log("filtro:" + selectedFilter)
@@ -296,8 +297,8 @@ export const Home: React.FC = () => {
                         </div>
                         <div className={`filter__content ${viewFilter&&"filter__content--open"}`}>
                             <div className="content__item">
-                                <CheckboxItem name="Maternidade"/>
-                                <CheckboxItem name="Infantil"/>
+                                <CheckboxItem name="Maternidade" onChange={setFilterCalendar}/>
+                                <CheckboxItem name="Infantil" onChange={setFilterCalendar}/>
                             </div>
                         </div>
                     </div>

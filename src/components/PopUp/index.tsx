@@ -18,6 +18,7 @@ export const Popup: React.FC<PopupProps> = ({ show, title, onClick, dateInput}) 
     return (
         <div className="popup__overlay">
             <div className="popup__content">
+                <Button type="button" Icon={<X/>} onClick={onClick} onlyIcon/>
                 {title && <h2>{title}</h2>}
                 <div className="popup__body">
                     <div className="popup__input">
