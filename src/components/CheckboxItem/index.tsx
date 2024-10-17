@@ -4,7 +4,6 @@ import {Check} from 'react-feather'
 
 interface CheckboxItemProps {
     name: string;
-    value?: boolean;
     onChange?: (value: boolean) => void
     checked?: boolean
     setChecked?: any

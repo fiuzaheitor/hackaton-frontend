@@ -15,7 +15,6 @@ import {ChevronDown, Filter, PlusSquare} from 'react-feather'
 import { CheckboxItem } from "../../../components/CheckboxItem";
 
 export const Home: React.FC = () => {
-    const [filterCalendar, setFilterCalendar] = useState<Boolean | undefined>(false)
     const [isOpenPopup, setIsOpenPopup] = useState(false)
     const auth = JSON.parse(getCookie('_bu_l') as string)
     const [viewFilter, setViewFilter] = useState<Boolean | undefined>(true)
@@ -324,7 +323,7 @@ export const Home: React.FC = () => {
                 </div>
                 <div className="home__content">
                     <div className="home__title">
-                        <h1>{formatDate(new Date(selectedFilter))}</h1>
+                        <h1>{formatDate(new Date(selectedFilter)).slice(0,2)+formatDate(new Date(selectedFilter)).slice(2,6)+formatDate(new Date(selectedFilter)).slice(6,7).toUpperCase()+formatDate(new Date(selectedFilter)).slice(7)}</h1>
                         <div className="home__buttons">
                             <Button text="Iniciar" type="button" Icon={<PlusSquare color="#fff"/>} onClick={() => setIsOpenPopup(!isOpenPopup)}/>
                         </div>
