@@ -17,9 +17,7 @@ export const Signup: React.FC = () => {
     
     const [createUser] = useMutation(M_CREATE_USER)
 
-    const handleSubmit = (event: React.FormEvent) => {
-        event.preventDefault()
-
+    const handleSubmit = async (e: any) => {
         if (!name || !phone || !email || !password) {
             setError('Preencha todos os campos!')
             toast.error('Preencha todos os campos corretamente!')
@@ -43,7 +41,6 @@ export const Signup: React.FC = () => {
             setError(err.message)
           }
     }
-
 
     return (
         <div className='container__signup'>
@@ -76,6 +73,6 @@ export const Signup: React.FC = () => {
             <div className='signup__image'>
                 <img src="/banner-form.png" alt="Ilustraçõa" />
             </div>
-        </div>
-    )
-}
+      </div>
+  );
+};

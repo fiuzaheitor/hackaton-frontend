@@ -1,8 +1,8 @@
-@import '../../../styles/globals.scss';
+@import "../../../styles/globals.scss";
 
 * {
   font-family: "Satoshi-Variable";
-  color: #16151C;
+  color: #16151c;
 }
 
 .container__signup {
@@ -28,7 +28,6 @@
   padding: 32px 0px 32px 8px;
   border-radius: 24px;
 }
-
 
 .signup__image img {
   width: 560px;
@@ -67,7 +66,7 @@
 }
 
 .header__title h1 {
-  font-family: 'Satoshi-Variable';
+  font-family: "Satoshi-Variable";
   font-weight: 700;
   font-size: 39px;
 }
@@ -80,7 +79,7 @@
 .header__info p {
   font-weight: 300;
   font-size: 16px;
-  color: #16151C80;
+  color: #16151c80;
 }
 
 .signup__form {

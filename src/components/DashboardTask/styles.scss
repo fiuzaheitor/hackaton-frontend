@@ -1,64 +1,64 @@
-@import '../../styles/globals.scss';
+@import "../../styles/globals.scss";
 
 * {
-    color: $dark-100;
+  color: $dark-100;
 }
 
 .dashboard__task {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 24px;
-    border-radius: 24px;
-    background-color: $light-20;
-    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.05);
-    padding: 24px 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  border-radius: 24px;
+  background-color: $light-20;
+  box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.05);
+  padding: 24px 32px;
 }
 
 .task__time {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .task__time h2 {
-    font-family: "Satoshi-Variable";
-    font-size: 32px;
-    font-weight: 600;
+  font-family: "Satoshi-Variable";
+  font-size: 32px;
+  font-weight: 600;
 }
 
 .task__time span {
-    font-family: "Satoshi-Variable";
-    font-size: 14px;
-    font-weight: 400;
-    color: $gray-100;
+  font-family: "Satoshi-Variable";
+  font-size: 14px;
+  font-weight: 400;
+  color: $gray-100;
 }
 
 .task__info {
-    flex: 3;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    gap: 8px;
+  flex: 3;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 8px;
 }
 
 .task__info h3 {
-    font-size: 20px;
+  font-size: 20px;
 }
 
 .task__info p {
-    font-size: 16px;
+  font-size: 16px;
 }
 
 .task__func {
-    flex: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 16px;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
 }
 
 .task__func .container__button {
-    width: auto;
+  width: auto;
 }

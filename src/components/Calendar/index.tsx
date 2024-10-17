@@ -17,13 +17,13 @@ export const Calendar: React.FC<{onClick: any, filter: string}> = ({onClick, fil
     
     const [currentDate, setCurrentDate] = useState(new Date());
 
-    const daysInMonth = (year: number, month: number) => {
-        return new Date(year, month + 1, 0).getDate();
-    };
+  const daysInMonth = (year: number, month: number) => {
+    return new Date(year, month + 1, 0).getDate();
+  };
 
-    const firstDayOfMonth = (year: number, month: number) => {
-        return new Date(year, month, 1).getDay();
-    };
+  const firstDayOfMonth = (year: number, month: number) => {
+    return new Date(year, month, 1).getDay();
+  };
 
     const getWeekNumber = (date: Date) => {
         const startOfYear = new Date(date.getFullYear(), 0, 1);

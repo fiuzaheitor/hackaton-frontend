@@ -1,33 +1,32 @@
 @import "../../styles/globals.scss";
 
 .calendar-day {
-    text-align: center;
-    padding: 12px;
-    transition: background-color 0.2s ease;
-    font-size: 14px;
-    border-radius: 10px;
-    font-weight: 500;
+  text-align: center;
+  padding: 12px;
+  transition: background-color 0.2s ease;
+  font-size: 14px;
+  border-radius: 10px;
+  font-weight: 500;
 
-    &:hover {
-        background-color: $brand2-500-50;
-        cursor: pointer;
-    }
+  &:hover {
+    background-color: $brand2-500-50;
+    cursor: pointer;
+  }
 
-    &.today {
-        background-color: $brand2-500; // cor para o dia de hoje
-        
-    }
+  &.today {
+    background-color: $brand2-500; // cor para o dia de hoje
+  }
 
-    &.today > div {
-        color: $white-100;
-    }
+  &.today > div {
+    color: $white-100;
+  }
 }
 
 .event-day {
-    background-color: $brand-500-20; // cor para os dias com eventos
-    color: $dark-100;
-    border-radius: 10px;
-    padding: 12px;
-    font-size: 14px;
-    font-weight: 500;
+  background-color: $brand-500-20; // cor para os dias com eventos
+  color: $dark-100;
+  border-radius: 10px;
+  padding: 12px;
+  font-size: 14px;
+  font-weight: 500;
 }
