@@ -3,6 +3,7 @@ import React from "react";
 import Button from "../Button";
 import { ChevronDown } from "react-feather";
 import { CheckboxItem } from "../CheckboxItem";
+import "./styles.scss";
 
 interface SideFilterProps {
   viewFilter: boolean;

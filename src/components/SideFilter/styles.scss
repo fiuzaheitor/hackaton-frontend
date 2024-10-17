@@ -1,0 +1,76 @@
+@import '../../styles/globals.scss';
+
+.side__filter {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    padding: 24px;
+    background-color: $white-100;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+
+  .header__buttons {
+    transition: ease-in-out 0.2s;
+  }
+  
+  .header__buttons button:hover {
+    border: none;
+    outline: none;
+  }
+  
+  .header__buttons--open {
+    transform: rotate(180deg);
+  }
+  
+  .filter__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px;
+    border-bottom: 2px solid $gray-80;
+    gap: 12px;
+  }
+  
+  .filter__content {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 8px;
+    height: 0%;
+    transition: ease-in-out 0.2s;
+    position: absolute;
+    opacity: 0%;
+  }
+  
+  .filter__content > div {
+    display: none;
+  }
+  
+  .filter__content--open {
+    opacity: 100%;
+    position: relative;
+  }
+  
+  .filter__content--open > div {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    transition: ease-in-out 0.2s;
+  }
+
+  @media screen and (max-width: 867px) {
+    .side__filter {
+      padding: 16px;
+    }
+  }
+
+  @media screen and (max-width: 480px) {
+    .side__filter .filter__header h2 {
+      font-size: 20px;
+    }
+  
+    .side__filter .item__name label {
+      font-size: 16px;
+    }
+  }

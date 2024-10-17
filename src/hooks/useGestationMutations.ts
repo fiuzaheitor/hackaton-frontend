@@ -5,6 +5,8 @@ import {
   M_CREATE_KID,
   M_CREATE_VACCINE,
   M_CREATE_VACCINE_CARD,
+  M_DELETE_CONSULTATION,
+  M_DELETE_GESTATION,
   M_UPDATE_CONSULTATION,
   M_UPDATE_GESTATION,
 } from "../graphql/Mutations";
@@ -22,6 +24,12 @@ export const useGestationMutations = () => {
   });
   const [createVaccine] = useMutation(M_CREATE_VACCINE, {
     refetchQueries: ["VaccinesByVaccineCard"],
+  });
+  const [deleteGestation] = useMutation(M_DELETE_GESTATION, {
+    refetchQueries: ["GestationsByMom"],
+  });
+  const [deleteConsultation] = useMutation(M_DELETE_CONSULTATION, {
+    refetchQueries: ["ConsultationsByGestation", "GestationsByMom"],
   });
 
   const createGestationMutation = async (
@@ -154,6 +162,34 @@ export const useGestationMutations = () => {
       console.log(err.message);
     }
   };
+
+  const deleteGestationMutation = async (id: any) => {
+    try {
+      const deletedGestation = deleteGestation({
+        variables: {
+          id: id,
+        },
+      }).then((res) => {
+        console.log(res);
+      });
+    } catch (err: any) {
+      console.log(err.message);
+    }
+  }
+
+  const deleteConsultationMutation = async (id: any) => {
+    try {
+      const deletedConsultation = deleteConsultation({
+        variables: {
+          id: id,
+        },
+      }).then((res) => {
+        console.log(res);
+      });
+    } catch (err: any) {
+      console.log(err.message);
+    }
+  }
 
   return {
     createGestationMutation,

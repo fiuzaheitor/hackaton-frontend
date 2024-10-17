@@ -2,6 +2,7 @@
 import React from "react";
 import Button from "../Button";
 import { AlertTriangle, PlusCircle, PlusSquare, Download } from "react-feather";
+import "./styles.scss";
 
 interface HomeButtonsProps {
   currentScheduleSelection: string;
