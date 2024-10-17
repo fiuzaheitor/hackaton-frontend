@@ -11,10 +11,7 @@ export const Calendar: React.FC<{onClick: any, filter: string}> = ({onClick, fil
     const { data: dataUserGestations, loading: loadingUserGestations, error: errorUserGestations } = useGetGestationsByUser(auth?.ui);
     const { data: dataConsultationsByGestation, loading: loadingConsultationsByGestation, error: errorConsultationsByGestation } = useGetConsultationsByGestation(dataUserGestations?.gestationsByMom?.filter((gestation: any) => !gestation.isFinished)?.[0]?.id);
     const { data: dataUserKids, loading: loadingUserKids, error: errorUserKids } = useGetKidsByMom(auth?.ui);
-    console.log(dataUserKids);
     const { data: dataVaccineCardByKid, loading: loadingConsultationsByKid, error: errorConsultationsByKid } = useGetVaccineCardByKid(dataUserKids?.kidsByMom[0]?.id);
-
-    console.log(dataVaccineCardByKid);
     const { data: dataVaccinesByVaccineCard } = useGetVaccinesByVaccineCard(dataVaccineCardByKid?.vaccineCardByKid?.[0]?.id);
     
     const [currentDate, setCurrentDate] = useState(new Date());
@@ -65,11 +62,10 @@ export const Calendar: React.FC<{onClick: any, filter: string}> = ({onClick, fil
                 })
             }
             else if (filter === "Infantil") {
+                
                 dataVaccinesByVaccineCard?.vaccinesByVaccineCard?.map((vaccine: any) => {
                     const vaccineDate = new Date(vaccine.applicationDate);
-                    console.log(vaccineDate.toDateString());
                     if (date.toDateString() === vaccineDate.toDateString()) {
-                        console.log("AAAAAAAAAAAAAAAA")
                         isEventDay = true;
                     }
                 })

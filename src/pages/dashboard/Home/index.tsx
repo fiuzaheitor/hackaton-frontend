@@ -19,7 +19,7 @@ import {
   useGetVaccinesByVaccineCard,
   useGetVaccineTemplates,
 } from "../../../utils/Queries";
-import { AlertTriangle, ChevronDown, Filter, PlusCircle, PlusSquare } from "react-feather";
+import { AlertTriangle, ChevronDown, Download, Filter, PlusCircle, PlusSquare } from "react-feather";
 import { CheckboxItem } from "../../../components/CheckboxItem";
 
 export const Home: React.FC = () => {
@@ -250,8 +250,6 @@ const sendMessage = async (message: any, phone: any) => {
       (consultation: any) => consultation.id === consultationId,
     );
 
-    console.log("Selecionado: ", selectedConsultation);
-
     if (selectedConsultation) {
       const newDate = date.getTime();
       const currentDate = new Date(selectedConsultation.date).getTime();
@@ -299,7 +297,8 @@ const sendMessage = async (message: any, phone: any) => {
         if (kid) {
           const vaccineCard = await CreateVaccineCard(kid?.id);
 
-          dataVaccineTemplates?.vaccineTemplates.map((vaccineTemplate: any) => {
+          dataVaccineTemplates?.vaccineTemplates?.map((vaccineTemplate: any) => {
+            console.log(vaccineTemplate);
             CreateVaccine({vaccineCard: vaccineCard, vaccineTemplate: vaccineTemplate.id, description: vaccineTemplate.description, applicationDate: kid?.birthDate + (vaccineTemplate.applicationDate * 86400 * 1000), isFinished: false});
           });
         } else {
@@ -415,6 +414,7 @@ const sendMessage = async (message: any, phone: any) => {
                 formatDate(new Date(selectedFilter)).slice(6, 7).toUpperCase() +
                 formatDate(new Date(selectedFilter)).slice(7)}
             </h1>
+            {selectedCheckbox === "Maternidade" && 
             <div className="home__buttons">
                 { dataUserGestations?.gestationsByMom.length == 0 ?
               <Button
@@ -439,6 +439,18 @@ const sendMessage = async (message: any, phone: any) => {
               </div>
                 }
             </div>
+            }
+            {
+              selectedCheckbox === "Infantil" && 
+              <div className="home__buttons">
+                  <Button
+                    text="Exportar"
+                    type="button"
+                    Icon={<Download color="#fff" />}
+                    onClick={() => {}}
+                  />
+              </div>
+            }
           </div>
           <div className="home__dashboard">
             {dataConsultationsByGestation?.consultationsByGestation.filter(
@@ -477,11 +489,10 @@ const sendMessage = async (message: any, phone: any) => {
                       />
                     );
                   })}
-                {selectedCheckbox === "Infantil" && dataVaccinesByVaccineCard.vaccinesByVaccineCard
+                {selectedCheckbox === "Infantil" && dataVaccinesByVaccineCard?.vaccinesByVaccineCard
                   .filter(
-                    (vaccine: any) =>
-                      new Date(vaccine.applicationDate).toDateString() ===
-                      selectedFilter,
+                    (vaccine: any) => 
+                      new Date(vaccine.applicationDate).toDateString() === selectedFilter,
                   )
                   .map((vaccine: any) => {
                     return (
