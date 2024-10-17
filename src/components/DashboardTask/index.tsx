@@ -17,7 +17,7 @@ export const DashboardTask: React.FC<DashboardTaskProps> = ({title, description,
 
     return (
         <div className="dashboard__task">
-            {showPopup&&<Popup show={showPopup} title="Editar Tarefa" onClick={() => setShowPopup(!showPopup)} dateInput/>}
+            {showPopup&&<Popup showPopup={showPopup} setShowPopup={setShowPopup} title="Editar Tarefa" onClick={() => setShowPopup(!showPopup)} dateInput/>}
             <div className="task__time">
                 <h2>Manhã</h2>
                 <span>{date}</span>

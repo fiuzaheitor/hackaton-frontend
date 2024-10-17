@@ -301,7 +301,7 @@ export const Home: React.FC = () => {
         }, []);
     return (
         <section className="container">
-            {isOpenPopup&&<Popup show={isOpenPopup} onClick={handleCreateCalendar} title="Confirme suas informações!"/>}
+            {isOpenPopup&&<Popup showPopup={isOpenPopup} setShowPopup={setIsOpenPopup} onClick={handleCreateCalendar} title="Confirme suas informações!"/>}
             <Header />
             <div className="container__home">
                 <div className="home__side">
