@@ -36,6 +36,7 @@ export const M_CREATE_KID = gql`
   mutation CreateKid($data: KidInput) {
     createKid(data: $data) {
       id
+      birthDate
     }
   }
 `;

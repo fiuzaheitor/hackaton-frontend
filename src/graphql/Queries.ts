@@ -161,7 +161,6 @@ export const G_VACCINE_CARD = gql`
         id
         name
       }
-      applicationDate
     }
   }
 `;
@@ -174,7 +173,6 @@ export const G_VACCINE_CARDS = gql`
         id
         name
       }
-      applicationDate
     }
   }
 `;
@@ -187,7 +185,6 @@ export const G_VACCINE_CARD_BY_KID = gql`
         id
         name
       }
-      applicationDate
     }
   }
 `;
@@ -203,8 +200,8 @@ export const G_VACCINE = gql`
           name
         }
       }
-      name
       description
+      applicationDate
     }
   }
 `;
@@ -220,8 +217,8 @@ export const G_VACCINES = gql`
           name
         }
       }
-      name
       description
+      applicationDate
     }
   }
 `;
@@ -237,8 +234,13 @@ export const G_VACCINES_BY_VACCINE_CARD = gql`
           name
         }
       }
-      name
+      vaccineTemplate {
+        id
+        name
+        description
+      }
       description
+      applicationDate
     }
   }
 `;
@@ -260,7 +262,7 @@ export const G_VACCINE_TEMPLATES = gql`
             id
             name
             description
-            applicationDate 
+            applicationDate
         }
     }
 `;

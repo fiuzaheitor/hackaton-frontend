@@ -1,8 +1,5 @@
 import React, { useState } from "react";
 import "./styles.scss";
-import Button from "../Button";
-import { Check, Trash, Edit2 } from "react-feather";
-import { PopupWeek } from "../PopUpWeek";
 import { CheckboxItem } from "../CheckboxItem";
 
 interface DashboardTaskProps {
@@ -24,20 +21,9 @@ export const DashboardTask: React.FC<DashboardTaskProps> = ({
   isFinished,
   showCheckbox,
 }) => {
-  const [showPopup, setShowPopup] = useState<boolean>(false);
-  const [confirm, setConfirm] = useState<boolean>(false);
 
   return (
     <div className="dashboard__task">
-      {showPopup && (
-        <PopupWeek
-          showPopup={showPopup}
-          setShowPopup={setShowPopup}
-          title="Editar Tarefa"
-          onClick={() => setShowPopup(!showPopup)}
-          dateInput
-        />
-      )}
       <div className="task__time">
         <h2>Dia todo</h2>
         <span>{date}</span>

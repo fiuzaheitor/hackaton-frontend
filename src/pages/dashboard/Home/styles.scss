@@ -112,6 +112,7 @@
 .home__dashboard > div {
   display: flex;
   justify-content: center;
+  flex-direction: column;
   width: 100%;
   gap: 24px;
 }
@@ -130,4 +131,40 @@
   color: $dark-100;
   font-size: 24px;
   font-weight: 400;
+}
+
+.buttons__with__gestation {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+@media screen and (max-width: 768px) {
+  .container__home {
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  .home__side {
+    gap: 24px;
+  }
+
+  .side__filter {
+    padding: 16px;
+  }
+
+  .home__content {
+    padding: 8px;
+  }
+
+  .home__title {
+    font-size: 24px;
+  }
+
+  .dashboard__empty h2 {
+    font-size: 20px;
+  }
+  
 }

@@ -5,7 +5,9 @@ import { Calendar } from "../../../components/Calendar";
 import { getCookie } from "../../../utils/cookies";
 import Button from "../../../components/Button";
 import { DashboardTask } from "../../../components/DashboardTask";
-import { PopupWeek } from "../../../components/PopUpWeek";
+import { useGestationMutations } from "../../../hooks/useGestationMutations";
+import { handleWeekend, calculateNextConsultationDate, formatDate } from "../../../hooks/useGestationHelpers";
+import { PopupWeek, PopupComplete, PopupText, PopupKid } from "../../../components/Popup";
 
 import {
   useGetConsultationsByGestation,
@@ -14,23 +16,16 @@ import {
   useGetUser,
   useGetUsers,
   useGetVaccineCardByKid,
+  useGetVaccinesByVaccineCard,
+  useGetVaccineTemplates,
 } from "../../../utils/Queries";
-
-import { useMutation } from "@apollo/client";
-import {
-  M_CREATE_CONSULTATION,
-  M_CREATE_GESTATION,
-  M_CREATE_KID,
-  M_CREATE_VACCINE_CARD,
-  M_UPDATE_CONSULTATION,
-  M_UPDATE_GESTATION,
-} from "../../../graphql/Mutations";
-import { ChevronDown, Filter, PlusSquare } from "react-feather";
+import { AlertTriangle, ChevronDown, Filter, PlusCircle, PlusSquare } from "react-feather";
 import { CheckboxItem } from "../../../components/CheckboxItem";
-import { PopupComplete } from "../../../components/PopupComplete";
 
 export const Home: React.FC = () => {
   const [isOpenPopup, setIsOpenPopup] = useState(false);
+  const [isOpenPopupText, setIsOpenPopupText] = useState(false);
+  const [isOpenPopupKid, setIsOpenPopupKid] = useState(false);
   const [completeConsultation, setCompleteConsultation] = useState(false);
   const [selectedConsultation, setSelectedConsultation] = useState<any>(null);
   const auth = JSON.parse(getCookie("_bu_l") as string);
@@ -40,36 +35,25 @@ export const Home: React.FC = () => {
   );
   const [selectedCheckbox, setSelectedCheckbox] = useState<any>("Maternidade");
 
+  const { createGestation, updateGestation, createKid, createVaccineCard, createConsultation, updateConsultation, createVaccine } = useGestationMutations();
+
   const {
     data: dataUserGestations,
-    loading: loadingUserGestations,
-    error: errorUserGestations,
   } = useGetGestationsByUser(auth?.ui);
   const {
     data: dataConsultationsByGestation,
-    loading: loadingConsultationsByGestation,
-    error: errorConsultationsByGestation,
   } = useGetConsultationsByGestation(
-    dataUserGestations?.gestationsByMom[0]?.id,
+    dataUserGestations?.gestationsByMom?.filter((gestation: any) => !gestation.isFinished)[0]?.id,
   );
-  const {
-    data: dataUserKids,
-    loading: loadingUserKids,
-    error: errorUserKids,
-  } = useGetKidsByMom(auth?.ui);
+  const { data: dataUserKids, loading: loadingUserKids, error: errorUserKids } = useGetKidsByMom(auth?.ui);
+    const { data: dataVaccineCardByKid, loading: loadingConsultationsByKid, error: errorConsultationsByKid } = useGetVaccineCardByKid(dataUserKids?.kidsByMom[0]?.id);
+    const { data: dataVaccinesByVaccineCard } = useGetVaccinesByVaccineCard(dataVaccineCardByKid?.vaccineCardByKid?.[0]?.id);
   const {
     data: dataUser,
-    loading: loadingUser,
-    error: errorUser,
   } = useGetUser(auth?.ui);
-
   const {
-    data: dataConsultationsByKid,
-    loading: loadingConsultationsByKid,
-    error: errorConsultationsByKid,
-  } = useGetVaccineCardByKid(dataUserKids?.kidsByMom?.[0]?.id || "");
-
-  const [createGestation] = useMutation(M_CREATE_GESTATION);
+    data: dataVaccineTemplates
+  } = useGetVaccineTemplates();
 
   const CreateGestation = async (userId: any, description: any, week: any) => {
     try {
@@ -92,8 +76,6 @@ return newGestation;
 }
 };
 
-const [updateGestation] = useMutation(M_UPDATE_GESTATION);
-
 const UpdateGestation = async (gestationId: any, data: any) => {
     try {
         const newGestation = updateGestation({
@@ -109,8 +91,6 @@ const UpdateGestation = async (gestationId: any, data: any) => {
     }
 };
 
-const [createKid] = useMutation(M_CREATE_KID);
-
 const CreateKid = async (momId: any, name: any, birthDate: any) => {
     try {
         const newKid = createKid({
@@ -122,15 +102,13 @@ const CreateKid = async (momId: any, name: any, birthDate: any) => {
                 },
             },
         }).then((res) => {
-            return res.data.createKid.id;
+            return res.data.createKid;
         });
         return newKid;
     } catch (err: any) {
         console.log(err.message);
     }
 };
-
-const [createVaccineCard] = useMutation(M_CREATE_VACCINE_CARD);
 
 const CreateVaccineCard = async (kidId: any) => {
     try {
@@ -141,16 +119,13 @@ const CreateVaccineCard = async (kidId: any) => {
                 },
             },
         }).then((res) => {
-            console.log(res);
+            return res.data?.createVaccineCard?.id;
         });
+        return newVaccineCard;
     } catch (err: any) {
         console.log(err.message);
     }
 };
-
-const [createConsultation] = useMutation(M_CREATE_CONSULTATION, {
-    refetchQueries: ["ConsultationsByGestation", "GestationsByMom"],
-});
 
 const CreateConsultation = async (gestationId: any, date: any, week: any) => {
     try {
@@ -171,10 +146,6 @@ const CreateConsultation = async (gestationId: any, date: any, week: any) => {
 }
 };
 
-const [updateConsultation] = useMutation(M_UPDATE_CONSULTATION, {
-    refetchQueries: ["ConsultationsByGestation", "GestationsByMom"],
-});
-
 const UpdateConsultation = async (id: string, data: any) => {
     try {
         const newConsultation = updateConsultation({
@@ -189,6 +160,23 @@ const UpdateConsultation = async (id: string, data: any) => {
         console.log(err.message);
     }
 };
+
+const CreateVaccine = async (data: any) => {
+    try {
+        const newVaccine = createVaccine({
+            variables: {
+                data: {
+                    ...data,
+                },
+            },
+        }).then((res) => {
+            return res;
+        });
+        return newVaccine;
+    } catch (err: any) {
+        console.log(err.message);
+    }
+}
 
 const sendMessage = async (message: any, phone: any) => {
   try {
@@ -210,37 +198,6 @@ const sendMessage = async (message: any, phone: any) => {
     console.error("Error sending message:", error.message);
   }
 };
-
-const handleWeekend = (date: any) => {
-    let day = new Date(date).getDay();
-    if (day === 0) {
-        return date + 60 * 60 * 24 * 1 * 1000;
-    }
-    if (day === 6) {
-      return date - 60 * 60 * 24 * 1 * 1000;
-    }
-
-    return date;
-  };
-
-  const calculateNextConsultationDate = (
-    currentWeek: number,
-    lastConsultationDate: number,
-  ) => {
-    let intervalDays;
-
-    if (currentWeek <= 28) {
-      intervalDays = 30; // 4 semanas
-    } else if (currentWeek <= 36) {
-      intervalDays = 15; // 2 semanas
-    } else {
-      intervalDays = 7; // 1 semana
-    }
-
-    return handleWeekend(
-      lastConsultationDate + 60 * 60 * 24 * intervalDays * 1000,
-    );
-  };
 
   const handleCreateCalendar = async (week: any) => {
     const gestation = await CreateGestation(
@@ -325,15 +282,13 @@ const handleWeekend = (date: any) => {
   };
 
   const handleFinishGestation = async (
-    gestationId: any,
     hasBorn: any,
-    kidName: any,
+    kidName?: any,
   ) => {
-    const gestation = dataUserGestations?.gestationsByMom?.find(
-      (gestation: any) => gestation.id === gestationId,
-    );
 
-    if (gestation && hasBorn) {
+    const gestationId = await dataUserGestations?.gestationsByMom[0]?.id;
+
+    if (gestationId && hasBorn) {
       try {
         const kid: any = await CreateKid(
           auth?.ui,
@@ -342,7 +297,11 @@ const handleWeekend = (date: any) => {
         );
 
         if (kid) {
-          await CreateVaccineCard(kid);
+          const vaccineCard = await CreateVaccineCard(kid?.id);
+
+          dataVaccineTemplates?.vaccineTemplates.map((vaccineTemplate: any) => {
+            CreateVaccine({vaccineCard: vaccineCard, vaccineTemplate: vaccineTemplate.id, description: vaccineTemplate.description, applicationDate: kid?.birthDate + (vaccineTemplate.applicationDate * 86400 * 1000), isFinished: false});
+          });
         } else {
           console.error("Error: Kid creation returned undefined.");
         }
@@ -371,38 +330,6 @@ const handleWeekend = (date: any) => {
     }
   }, [dataUserGestations]);
 
-  const formatDate = (date: any) => {
-    const months = [
-      "janeiro",
-      "fevereiro",
-      "março",
-      "abril",
-      "maio",
-      "junho",
-      "julho",
-      "agosto",
-      "setembro",
-      "outubro",
-      "novembro",
-      "dezembro",
-    ];
-
-    const day = date.getDate().toString().padStart(2, "0");
-    const month = months[date.getMonth()];
-    const year = date.getFullYear();
-
-    const formattedDate = `${day} de ${month} de ${year}`;
-
-    return formattedDate;
-  };
-
-  
-
-
-  //   useEffect(() => {
-  //     sendMessage();
-  //   }, [])
-
   return (
     <section className="container">
       {isOpenPopup && (
@@ -421,7 +348,29 @@ const handleWeekend = (date: any) => {
           title="Data de comparecimento"
           onClick={handleUpdateCalendar} // Agora passa a função corrigida
         />
-      )}
+        )}
+        {isOpenPopupText && <PopupText
+            showPopup={isOpenPopupText}
+            setShowPopup={setIsOpenPopupText}
+            title="Perdeu o bebê?"
+            description="Querida mamãe,
+            
+            Sabemos que nada que possamos dizer pode aliviar a dor que você está sentindo agora. Perder um bebê é uma experiência profundamente dolorosa e única, e não há maneira certa ou errada de vivenciar esse momento. Permita-se sentir e processar tudo no seu próprio tempo.
+
+            Você não está sozinha. Muitas mães passaram por isso e encontraram força em pedir ajuda e se cercar de apoio. Conversar com pessoas próximas ou buscar o auxílio de profissionais pode ser um passo importante para atravessar esse momento.
+
+            Se precisar conversar com alguém ou buscar apoio emocional, você pode sempre procurar o Centro de Valorização da Vida (CVV), ligue para 188 (disponível 24h por dia, todos os dias da semana).
+            Não hesite em procurar ajuda. Lembre-se de que cuidar de você mesma é fundamental, e você merece todo o carinho e apoio neste momento.
+
+            Estamos aqui com você, e esperamos que o tempo traga serenidade para o seu coração."
+            onClick={handleFinishGestation}
+        />}
+        {isOpenPopupKid && <PopupKid
+            showPopup={isOpenPopupKid}
+            setShowPopup={setIsOpenPopupKid}
+            title="Seu bebê nasceu!"
+            onClick={handleFinishGestation}
+        />}
       <Header />
       <div className="container__home">
         <div className="home__side">
@@ -467,88 +416,91 @@ const handleWeekend = (date: any) => {
                 formatDate(new Date(selectedFilter)).slice(7)}
             </h1>
             <div className="home__buttons">
+                { dataUserGestations?.gestationsByMom.length == 0 ?
               <Button
                 text="Iniciar"
                 type="button"
                 Icon={<PlusSquare color="#fff" />}
                 onClick={() => setIsOpenPopup(!isOpenPopup)}
-              />
+              />:
+              <div className="buttons__with__gestation">
+                <Button
+                    text="Perdi"
+                    type="button"
+                    Icon={<AlertTriangle color="#fff" />}
+                    onClick={() => setIsOpenPopupText(!isOpenPopupText)}
+                />
+                <Button
+                    text="Nasceu"
+                    type="button"
+                    Icon={<PlusCircle color="#fff" />}
+                    onClick={() => setIsOpenPopupKid(!isOpenPopupKid)}
+                />
+              </div>
+                }
             </div>
           </div>
-            <div className="home__dashboard">
-                {selectedCheckbox === "Infantil" ? (
-                    dataConsultationsByKid?.vaccineCardByKid?.length === 0 ? (
-                        <div className="dashboard__empty">
-                            <h2>
-                                {dataUserKids?.kidsByMom?.length === 0
-                                    ? "Adicione um filho para ter acesso ao calendário!"
-                                    : "Não há eventos programados para esse dia!"}
-                            </h2>
-                        </div>
-                    ) : (
-                        <div>
-                            {dataConsultationsByKid?.vaccineCardByKid
-                                .filter(
-                                    (vaccineCard: any) =>
-                                        new Date(vaccineCard.date).toDateString() === selectedFilter
-                                )
-                                .map((vaccineCard: any) => {
-                                    return (
-                                        <DashboardTask
-                                            key={vaccineCard.id}
-                                            title="Vacina"
-                                            id={vaccineCard.id}
-                                            description={vaccineCard.vaccine}
-                                            isFinished={vaccineCard.isFinished}
-                                            onClick={setSelectedConsultation}
-                                            date={new Date(vaccineCard.date).toLocaleDateString()}
-                                            showCheckbox={
-                                                dataConsultationsByKid?.vaccineCardByKid
-                                                    .filter((v: any) => !v.isFinished)[0]?.id === vaccineCard.id
-                                            }
-                                        />
-                                    );
-                                })}
-                        </div>
-                    )
-                ) : dataConsultationsByGestation?.consultationsByGestation?.filter(
-                            (consultation: any) =>
-                                new Date(consultation.date).toDateString() === selectedFilter
-                        ).length === 0 ? (
-                    <div className="dashboard__empty">
-                        <h2>
-                            {dataUserGestations?.gestationsByMom?.length === 0
-                                ? "Inicie a gestação para ter acesso ao seu calendário!"
-                                : "Não há eventos programados para esse dia!"}
-                        </h2>
-                    </div>
-                ) : (
-                    dataConsultationsByGestation?.consultationsByGestation
-                        .filter(
-                            (consultation: any) =>
-                                new Date(consultation.date).toDateString() === selectedFilter
-                        )
-                        .map((consultation: any) => {
-                            return (
-                                <DashboardTask
-                                    key={consultation.id}
-                                    title="Consulta"
-                                    id={consultation.id}
-                                    description={
-                                        "Consulta da " + consultation?.week + "º semana de pré-natal."
-                                    }
-                                    isFinished={consultation.isFinished}
-                                    onClick={setSelectedConsultation}
-                                    date={new Date(consultation.date).toLocaleDateString()}
-                                    showCheckbox={
-                                        dataConsultationsByGestation?.consultationsByGestation
-                                            .filter((c: any) => !c.isFinished)[0]?.id === consultation.id
-                                    }
-                                />
-                            );
-                        })
-                )}
-            </div>
+          <div className="home__dashboard">
+            {dataConsultationsByGestation?.consultationsByGestation.filter(
+              (consultation: any) =>
+                new Date(consultation.date).toDateString() === selectedFilter,
+            ).length === 0 ? (
+              <div className="dashboard__empty">
+                <h2>
+                  {dataUserGestations?.gestationsByMom.length == 0
+                    ? "Inicie a gestação para ter acesso ao seu calendário!"
+                    : "Não há eventos programados para esse dia!"}
+                </h2>
+              </div>
+            ) : (
+              <div>
+                {selectedCheckbox === "Maternidade" && dataConsultationsByGestation?.consultationsByGestation
+                  .filter(
+                    (consultation: any) =>
+                      new Date(consultation.date).toDateString() ===
+                      selectedFilter,
+                  )
+                  .map((consultation: any) => {
+                    return (
+                      <DashboardTask
+                        title="Consulta"
+                        id={consultation.id}
+                        description={
+                          "Consulta da " +
+                          consultation?.week +
+                          "º semana de pré-natal."
+                        }
+                        isFinished={consultation.isFinished}
+                        onClick={setSelectedConsultation}
+                        date={new Date(consultation.date).toLocaleDateString()}
+                        showCheckbox={dataConsultationsByGestation?.consultationsByGestation.filter((consultation: any) => !consultation.isFinished)[0].id == consultation.id}
+                      />
+                    );
+                  })}
+                {selectedCheckbox === "Infantil" && dataVaccinesByVaccineCard.vaccinesByVaccineCard
+                  .filter(
+                    (vaccine: any) =>
+                      new Date(vaccine.applicationDate).toDateString() ===
+                      selectedFilter,
+                  )
+                  .map((vaccine: any) => {
+                    return (
+                      <DashboardTask
+                        title="Vacina"
+                        id={vaccine?.id}
+                        description={
+                          vaccine?.vaccineTemplate?.name + " - " + vaccine?.description
+                        }
+                        isFinished={vaccine?.isFinished}
+                        onClick={setSelectedConsultation}
+                        date={new Date(vaccine.applicationDate).toLocaleDateString()}
+                        showCheckbox={dataConsultationsByGestation?.consultationsByGestation.filter((vaccine: any) => !vaccine.isFinished)[0].id == vaccine.id}
+                      />
+                    );
+                  })}
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </section>
