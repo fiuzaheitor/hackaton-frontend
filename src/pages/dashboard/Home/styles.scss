@@ -187,6 +187,16 @@
 }
 
 @media screen and (max-width: 867px) {
+  .container .popup__overlay .popup__content {
+    padding: 16px;
+    gap: 16px;
+    max-width: 350px;
+  }
+
+  .container .popup__overlay .popup__content .popup__body {
+    width: 100%;
+  }
+
   .container__home {
     flex-direction: column;
     gap: 24px;
