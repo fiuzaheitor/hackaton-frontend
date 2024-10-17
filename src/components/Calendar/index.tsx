@@ -37,6 +37,7 @@ export const Calendar: React.FC<{ onClick: any; filter: string }> = ({
     loading: loadingUserKids,
     error: errorUserKids,
   } = useGetKidsByMom(auth?.ui);
+  console.log(dataUserKids)
   const {
     data: dataVaccineCardByKid,
     loading: loadingConsultationsByKid,

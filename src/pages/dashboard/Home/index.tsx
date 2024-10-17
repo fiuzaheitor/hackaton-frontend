@@ -293,17 +293,18 @@ export const Home: React.FC = () => {
           <div className="home__dashboard">
             {currentScheduleSelection === "Maternidade" ? (
               <DashboardTasks
-                tasks={dataConsultationsByGestation?.consultationsByGestation || []}
+                tasks={dataConsultationsByGestation?.consultationsByGestation}
                 type="Maternidade"
                 selectedFilter={selectedFilter}
                 onClick={setSelectedConsultation}
               />
             ) : (
               <DashboardTasks
-                tasks={dataVaccinesByVaccineCard?.vaccinesByVaccineCard || []}
+                tasks={dataVaccinesByVaccineCard?.vaccinesByVaccineCard}
                 type="Infantil"
                 selectedFilter={selectedFilter}
                 onClick={setSelectedConsultation}
+                
               />
             )}
           </div>
