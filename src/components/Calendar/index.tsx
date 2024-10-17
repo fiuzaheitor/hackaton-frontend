@@ -6,6 +6,7 @@ import {
   useGetGestationsByUser,
   useGetKidsByMom,
   useGetVaccineCardByKid,
+  useGetVaccineTemplates,
 } from "../../utils/Queries";
 import { CalendarDay } from "../CalendarDay";
 import { getCookie } from "../../utils/cookies";
@@ -37,12 +38,19 @@ export const Calendar: React.FC<{ onClick: any; filter: string }> = ({
     loading: loadingUserKids,
     error: errorUserKids,
   } = useGetKidsByMom(auth?.ui);
-  console.log(dataUserKids);
-  const {
-    data: dataConsultationsByKid,
-    loading: loadingConsultationsByKid,
-    error: errorConsultationsByKid,
-  } = useGetVaccineCardByKid(dataUserKids?.kidsByMom?.[0]?.id || "");
+
+    const {
+        data: dataVaccineTemplates,
+        loading: loadingVaccineTemplates,
+        error: errorVaccineTemplates,
+    } = useGetVaccineTemplates();
+
+    const {
+        data: dataConsultationsByKid,
+        loading: loadingConsultationsByKid,
+        error: errorConsultationsByKid,
+    } = useGetVaccineCardByKid(dataUserKids?.kidsByMom?.[0]?.id);
+    console.log(dataVaccineTemplates);
 
   const [currentDate, setCurrentDate] = useState(new Date());
 
@@ -94,12 +102,11 @@ export const Calendar: React.FC<{ onClick: any; filter: string }> = ({
           },
         );
       } else if (filter === "Infantil") {
-        dataConsultationsByKid?.vaccineCardByKid.map((vaccineCard: any) => {
-          const vaccineCardDate = new Date(vaccineCard.date);
-          if (date.toDateString() === vaccineCardDate.toDateString()) {
-            isEventDay = true;
-          }
-        });
+        const birthDate = new Date(dataUserKids.kidsByMom[0].birthDate);
+        console.log(birthDate.toDateString())
+        console.log(dataUserKids.kidsByMom[0].birthDate);
+        console.log(dataVaccineTemplates.vaccineTemplates[10]);
+        
       }
 
       dayElements.push(

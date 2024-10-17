@@ -249,6 +249,7 @@ export const G_VACCINE_TEMPLATE = gql`
             id
             name
             description
+            applicationDate 
         }
     }
 `;
@@ -259,6 +260,7 @@ export const G_VACCINE_TEMPLATES = gql`
             id
             name
             description
+            applicationDate 
         }
     }
 `;
