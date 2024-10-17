@@ -33,7 +33,7 @@ export const Home: React.FC = () => {
 
     const [createGestation] = useMutation(M_CREATE_GESTATION)
 
-    const CreateGestation = async () => {
+    const CreateGestation = async (userId: any, description: any, week: any) => {
         try {
             const newGestation = createGestation({
                 variables: {
@@ -177,13 +177,14 @@ export const Home: React.FC = () => {
         return handleWeekend(lastConsultationDate + (60 * 60 * 24 * intervalDays * 1000));
     };
     
-    const handleCreateCalendar = () => {
-        let currentWeek = 12
+    const handleCreateCalendar = async (week: any) => {
+        const gestation: any = await CreateGestation(auth?.ui, "Gestação...", week);
+        let currentWeek = week;
         let consultations: any = [];
 
         if (currentWeek === undefined) {
             console.error("Gestação não encontrada.");
-            return; // Sai da função se não houver gestação
+            return;
         }
     
         while (currentWeek <= 41) {
@@ -203,7 +204,7 @@ export const Home: React.FC = () => {
     
         consultations.map((consultation: any) => {
             console.log(new Date(consultation.date).toLocaleDateString());
-            CreateConsultation(dataUserGestations?.gestationsByMom[0]?.id, consultation?.date, consultation?.week);
+            CreateConsultation(gestation?.data?.createGestation?.id, consultation?.date, consultation?.week);
         });
     };
     
@@ -282,9 +283,26 @@ export const Home: React.FC = () => {
         return formattedDate;
     }
 
+    const sendMessage = async () => {
+        try {
+            const response = await fetch('http://localhost:3000/send-message', {
+              method: 'POST',
+            });
+        
+            const data = await response.json();
+            console.log('Message sent:', data);
+          } catch (error: any) {
+            console.error('Error sending message:', error.message);
+          }
+        };   
+
+
+        useEffect(() => {
+            sendMessage();
+        }, []);
     return (
         <section className="container">
-            {isOpenPopup&&<Popup show={isOpenPopup} onClick={() => setIsOpenPopup(!isOpenPopup)} title="Confirme suas informações!"/>}
+            {isOpenPopup&&<Popup show={isOpenPopup} onClick={handleCreateCalendar} title="Confirme suas informações!"/>}
             <Header />
             <div className="container__home">
                 <div className="home__side">
