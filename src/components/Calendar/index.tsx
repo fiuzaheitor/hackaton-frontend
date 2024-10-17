@@ -51,7 +51,7 @@ export const Calendar: React.FC<{onClick: any, filter: string}> = ({onClick, fil
         // Adicionar os dias do mês
         for (let day = 1; day <= days; day++) {
             const date = new Date(year, month, day);  // Data correta do loop
-            const isToday = date.toDateString() === today.toDateString();  // Comparação de hoje
+            const isToday = date.toDateString() === today.toDateString(); 
             
             let isEventDay = false;
             if (filter === "Maternidade") {

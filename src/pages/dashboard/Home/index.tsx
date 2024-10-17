@@ -396,7 +396,7 @@ export const Home: React.FC = () => {
       <Header />
       <div className="container__home">
         <div className="home__side">
-          <Calendar onClick={setSelectedFilter} filter={""}/>
+          <Calendar onClick={setSelectedFilter} filter={selectedCheckbox}/>
           <div className="side__filter">
             <div className="filter__header">
               <h2>Calendário</h2>
