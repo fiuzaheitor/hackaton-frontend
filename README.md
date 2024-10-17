@@ -102,12 +102,7 @@ Antes de iniciar, certifique-se de ter as seguintes ferramentas instaladas em su
    yarn install
    ```
 
-3. Crie um arquivo `.env` na raiz do projeto front-end com as configurações de ambiente necessárias para conectar ao back-end e outros serviços. Exemplo:
-   ```
-   REACT_APP_API_URL=http://localhost:4000
-   ```
-
-4. Execute o servidor de desenvolvimento:
+3. Execute o servidor de desenvolvimento:
    ```bash
    npm run start
    ```
@@ -116,7 +111,7 @@ Antes de iniciar, certifique-se de ter as seguintes ferramentas instaladas em su
    yarn start
    ```
 
-5. O front-end estará rodando em `http://localhost:3000`.
+4. O front-end estará rodando em `http://localhost:3000`.
 
 ### Verificação
 
