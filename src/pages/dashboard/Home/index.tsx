@@ -38,7 +38,8 @@ import {
 import { CheckboxItem } from "../../../components/CheckboxItem";
 
 export const Home: React.FC = () => {
-  const [isOpenPopupStartSchedule, setIsOpenPopupStartSchedule] = useState(false);
+  const [isOpenPopupStartSchedule, setIsOpenPopupStartSchedule] =
+    useState(false);
   const [isOpenPopupLostBaby, setIsOpenPopupLostBaby] = useState(false);
   const [isOpenPopupGenerateKid, setIsOpenPopupGenerateKid] = useState(false);
 
@@ -48,9 +49,10 @@ export const Home: React.FC = () => {
 
   const [viewFilter, setViewFilter] = useState<Boolean | undefined>(true);
   const [selectedFilter, setSelectedFilter] = useState<any>(
-    new Date().toDateString()
+    new Date().toDateString(),
   );
-  const [currentScheduleSelection, setCurrentScheduleSelection] = useState<any>("Maternidade");
+  const [currentScheduleSelection, setCurrentScheduleSelection] =
+    useState<any>("Maternidade");
 
   const {
     createConsultationMutation,
@@ -59,34 +61,33 @@ export const Home: React.FC = () => {
     createVaccineCardMutation,
     createVaccineMutation,
     updateConsultationMutation,
-    updateGestationMutation
+    updateGestationMutation,
   } = useGestationMutations();
 
   const { data: dataUserGestations } = useGetGestationsByUser(auth?.ui);
   const { data: dataConsultationsByGestation } = useGetConsultationsByGestation(
     dataUserGestations?.gestationsByMom?.filter(
-      (gestation: any) => !gestation.isFinished
-    )[0]?.id
+      (gestation: any) => !gestation.isFinished,
+    )[0]?.id,
   );
-  const {
-    data: dataUserKids,
-  } = useGetKidsByMom(auth?.ui);
-  const {
-    data: dataVaccineCardByKid,
-  } = useGetVaccineCardByKid(dataUserKids?.kidsByMom[0]?.id);
+  const { data: dataUserKids } = useGetKidsByMom(auth?.ui);
+  const { data: dataVaccineCardByKid } = useGetVaccineCardByKid(
+    dataUserKids?.kidsByMom[0]?.id,
+  );
   const { data: dataVaccinesByVaccineCard } = useGetVaccinesByVaccineCard(
-    dataVaccineCardByKid?.vaccineCardByKid?.[0]?.id
+    dataVaccineCardByKid?.vaccineCardByKid?.[0]?.id,
   );
   const { data: dataUser } = useGetUser(auth?.ui);
   const { data: dataVaccineTemplates } = useGetVaccineTemplates();
 
-  
-
-  const handleCreateCalendarAfterInitialConsultation = async (week: any, description: any) => {
+  const handleCreateCalendarAfterInitialConsultation = async (
+    week: any,
+    description: any,
+  ) => {
     const gestation = await createGestationMutation(
       auth?.ui,
       description,
-      Number(week)
+      Number(week),
     );
 
     let currentWeek = Number(week);
@@ -107,7 +108,7 @@ export const Home: React.FC = () => {
 
       const nextDate = calculateNextConsultationDate(
         currentWeek,
-        lastConsultationDate
+        lastConsultationDate,
       );
 
       consultations.push({
@@ -117,23 +118,30 @@ export const Home: React.FC = () => {
     }
 
     consultations.map((consultation: any) => {
-      createConsultationMutation(gestation, consultation?.date, consultation?.week);
+      createConsultationMutation(
+        gestation,
+        consultation?.date,
+        consultation?.week,
+      );
     });
 
     sendMessage(
       "Oi, mamãe!\n\nParabéns por ter agendado a sua primeira consulta pré-natal antes da 12ª semana! Essa etapa é fundamental para cuidar da sua saúde e do seu bebê. Durante essa consulta, você realizará exames importantes, receberá orientações sobre nutrição e cuidados essenciais, e poderá esclarecer todas as suas dúvidas.\n\nAo comparecer, você está dando um passo crucial para garantir um acompanhamento adequado do desenvolvimento fetal e para monitorar condições importantes, como diabetes gestacional e hipertensão. O diagnóstico precoce de qualquer problema de saúde pode facilitar o tratamento e evitar complicações futuras.\n\nAlém disso, essa consulta é uma oportunidade valiosa para se informar sobre vacinas e exames recomendados no início da gestação, como a ultrassonografia. Continue assim, cuidando de você e do seu pequeno! Estamos aqui para apoiar você em cada etapa da sua jornada!",
-      dataUser?.user?.phone
+      dataUser?.user?.phone,
     );
   };
 
-  const handleUpdateCalendarAfterFinishConsultation = (consultationId: string, date: Date) => {
+  const handleUpdateCalendarAfterFinishConsultation = (
+    consultationId: string,
+    date: Date,
+  ) => {
     const consultations =
       dataConsultationsByGestation?.consultationsByGestation.filter(
-        (consultation: any) => !consultation.isFinished
+        (consultation: any) => !consultation.isFinished,
       );
 
     const selectedConsultation = consultations.find(
-      (consultation: any) => consultation.id === consultationId
+      (consultation: any) => consultation.id === consultationId,
     );
 
     if (selectedConsultation) {
@@ -142,13 +150,16 @@ export const Home: React.FC = () => {
       const dateDifference = newDate - currentDate; // Calcula a diferença em milissegundos
 
       // Atualiza a consulta selecionada e marca como finalizada
-      updateConsultationMutation(consultationId, { date: newDate, isFinished: true })
+      updateConsultationMutation(consultationId, {
+        date: newDate,
+        isFinished: true,
+      })
         .then(() => {
           // Atualiza as consultas subsequentes com a diferença
           consultations.map((consultation: any, index: number) => {
             if (consultation.id !== consultationId) {
               const previousDate = new Date(
-                consultations[index].date
+                consultations[index].date,
               ).getTime();
 
               const updatedDate = previousDate + dateDifference;
@@ -173,7 +184,7 @@ export const Home: React.FC = () => {
         const kid: any = await createKidMutation(
           auth?.ui,
           kidName,
-          new Date().getTime()
+          new Date().getTime(),
         );
 
         if (kid) {
@@ -191,7 +202,7 @@ export const Home: React.FC = () => {
                   vaccineTemplate.applicationDate * 86400 * 1000,
                 isFinished: false,
               });
-            }
+            },
           );
         } else {
           console.error("Error: Kid creation returned undefined.");
@@ -269,7 +280,10 @@ export const Home: React.FC = () => {
       <Header />
       <div className="container__home">
         <div className="home__side">
-          <Calendar onClick={setSelectedFilter} filter={currentScheduleSelection} />
+          <Calendar
+            onClick={setSelectedFilter}
+            filter={currentScheduleSelection}
+          />
           <div className="side__filter">
             <div className="filter__header">
               <h2>Calendário</h2>
@@ -317,7 +331,9 @@ export const Home: React.FC = () => {
                     text="Iniciar"
                     type="button"
                     Icon={<PlusSquare color="#fff" />}
-                    onClick={() => setIsOpenPopupStartSchedule(!isOpenPopupStartSchedule)}
+                    onClick={() =>
+                      setIsOpenPopupStartSchedule(!isOpenPopupStartSchedule)
+                    }
                   />
                 ) : (
                   <div className="buttons__with__gestation">
@@ -325,13 +341,17 @@ export const Home: React.FC = () => {
                       text="Perdi"
                       type="button"
                       Icon={<AlertTriangle color="#fff" />}
-                      onClick={() => setIsOpenPopupLostBaby(!isOpenPopupLostBaby)}
+                      onClick={() =>
+                        setIsOpenPopupLostBaby(!isOpenPopupLostBaby)
+                      }
                     />
                     <Button
                       text="Nasceu"
                       type="button"
                       Icon={<PlusCircle color="#fff" />}
-                      onClick={() => setIsOpenPopupGenerateKid(!isOpenPopupGenerateKid)}
+                      onClick={() =>
+                        setIsOpenPopupGenerateKid(!isOpenPopupGenerateKid)
+                      }
                     />
                   </div>
                 )}
@@ -351,7 +371,7 @@ export const Home: React.FC = () => {
           <div className="home__dashboard">
             {dataConsultationsByGestation?.consultationsByGestation.filter(
               (consultation: any) =>
-                new Date(consultation.date).toDateString() === selectedFilter
+                new Date(consultation.date).toDateString() === selectedFilter,
             ).length === 0 ? (
               <div className="dashboard__empty">
                 <h2>
@@ -367,7 +387,7 @@ export const Home: React.FC = () => {
                     .filter(
                       (consultation: any) =>
                         new Date(consultation.date).toDateString() ===
-                        selectedFilter
+                        selectedFilter,
                     )
                     .map((consultation: any) => {
                       return (
@@ -382,11 +402,11 @@ export const Home: React.FC = () => {
                           isFinished={consultation.isFinished}
                           onClick={setSelectedConsultation}
                           date={new Date(
-                            consultation.date
+                            consultation.date,
                           ).toLocaleDateString()}
                           showCheckbox={
                             dataConsultationsByGestation?.consultationsByGestation.filter(
-                              (consultation: any) => !consultation.isFinished
+                              (consultation: any) => !consultation.isFinished,
                             )[0].id == consultation.id
                           }
                         />
@@ -397,7 +417,7 @@ export const Home: React.FC = () => {
                     .filter(
                       (vaccine: any) =>
                         new Date(vaccine.applicationDate).toDateString() ===
-                        selectedFilter
+                        selectedFilter,
                     )
                     .map((vaccine: any) => {
                       return (
@@ -412,11 +432,11 @@ export const Home: React.FC = () => {
                           isFinished={vaccine?.isFinished}
                           onClick={setSelectedConsultation}
                           date={new Date(
-                            vaccine.applicationDate
+                            vaccine.applicationDate,
                           ).toLocaleDateString()}
                           showCheckbox={
                             dataConsultationsByGestation?.consultationsByGestation.filter(
-                              (vaccine: any) => !vaccine.isFinished
+                              (vaccine: any) => !vaccine.isFinished,
                             )[0].id == vaccine.id
                           }
                         />

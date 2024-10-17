@@ -170,18 +170,18 @@ export const useGetVaccinesByVaccineCard = (vaccineCardId: string) => {
 };
 
 export const useGetVaccineTemplate = (id: string) => {
-    const { data, loading, error } = useQuery(G_VACCINE_TEMPLATE, {
-        fetchPolicy: "cache-and-network",
-        variables: {id}
-    });
-    
-    return { data, loading, error };
+  const { data, loading, error } = useQuery(G_VACCINE_TEMPLATE, {
+    fetchPolicy: "cache-and-network",
+    variables: { id },
+  });
+
+  return { data, loading, error };
 };
 
 export const useGetVaccineTemplates = () => {
-    const { data, loading, error } = useQuery(G_VACCINE_TEMPLATES, {
-        fetchPolicy: "cache-and-network"
-    });
-    
-    return { data, loading, error };
-}
+  const { data, loading, error } = useQuery(G_VACCINE_TEMPLATES, {
+    fetchPolicy: "cache-and-network",
+  });
+
+  return { data, loading, error };
+};

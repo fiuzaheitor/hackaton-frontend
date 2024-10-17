@@ -246,23 +246,23 @@ export const G_VACCINES_BY_VACCINE_CARD = gql`
 `;
 
 export const G_VACCINE_TEMPLATE = gql`
-    query VaccineTemplate($id: ID!) {
-        vaccineTemplate(id: $id) {
-            id
-            name
-            description
-            applicationDate 
-        }
+  query VaccineTemplate($id: ID!) {
+    vaccineTemplate(id: $id) {
+      id
+      name
+      description
+      applicationDate
     }
+  }
 `;
 
 export const G_VACCINE_TEMPLATES = gql`
-    query VaccineTemplates {
-        vaccineTemplates {
-            id
-            name
-            description
-            applicationDate
-        }
+  query VaccineTemplates {
+    vaccineTemplates {
+      id
+      name
+      description
+      applicationDate
     }
+  }
 `;

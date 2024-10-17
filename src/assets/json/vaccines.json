@@ -1,124 +1,124 @@
 {
-    "vaccines": [
-            {
-                "name": "BCG",
-                "description": "Protege contra formas graves de tuberculose.",
-                "applicationDate": 0
-            },
-            {
-                "name": "Hepatite B",
-                "description": "Essencial para prevenir infecções que podem afetar o fígado.",
-                "applicationDate": 0
-            },
-            {
-                "name": "Hexavalente",
-                "description": "Protege contra difteria, tétano, coqueluche, poliomielite, Haemophilus influenzae tipo B e hepatite B.",
-                "applicationDate": 60
-            },
-            {
-                "name": "Rotavírus pentavalente",
-                "description": "Importante para prevenir infecções intestinais graves.",
-                "applicationDate": 60
-            },
-            {
-                "name": "Pneumocócica 13V",
-                "description": "Protege contra doenças como pneumonia, meningite e otite.",
-                "applicationDate": 60
-            },
-            {
-                "name": "Meningocócica B e ACWY",
-                "description": "Essenciais para prevenir diferentes tipos de meningite, uma infecção grave que pode ser evitada com a vacinação.",
-                "applicationDate": 90
-            },
-            {
-                "name": "Hexavalente",
-                "description": "Para fortalecer a proteção contra várias doenças infecciosas.",
-                "applicationDate": 120
-            },
-            {
-                "name": "Rotavírus pentavalente",
-                "description": "Segunda dose para aumentar a proteção contra infecções intestinais.",
-                "applicationDate": 120
-            },
-            {
-                "name": "Pneumocócica 13V",
-                "description": "Mais uma dose para fortalecer a imunidade.",
-                "applicationDate": 120
-            },
-            {
-                "name": "Meningocócica B e ACWY",
-                "description": "Reforço necessário para manter a proteção contra diferentes tipos de meningite.",
-                "applicationDate": 150 
-            },
-            {
-                "name": "Hexavalente",
-                "description": "Mais uma dose para proteger contra várias doenças.",
-                "applicationDate": 180
-            },
-            {
-                "name": "Rotavírus pentavalente",
-                "description": "Última dose para garantir proteção completa.",
-                "applicationDate": 180
-            },
-            {
-                "name": "Pneumocócica 13V",
-                "description": "Dose final para prevenir infecções pneumocócicas.",
-                "applicationDate": 180
-            },
-            {
-                "name": "Influenza",
-                "description": "Vacina contra a gripe, essencial para proteger os pequenos contra complicações.",
-                "applicationDate": 180
-            },
-            {
-                "name": "Febre Amarela",
-                "description": "Protege contra uma infecção viral que pode ser grave.",
-                "applicationDate": 270
-            },
-            {
-                "name": "Reforço Pneumocócica 13V",
-                "description": "Para continuar protegendo contra doenças respiratórias graves.",
-                "applicationDate": 365
-            },
-            {
-                "name": "Hepatite A",
-                "description": "Para prevenir infecções que podem causar problemas no fígado.",
-                "applicationDate": 365
-            },
-            {
-                "name": "Tetraviral",
-                "description": "Protege contra sarampo, caxumba, rubéola e varicela (catapora).",
-                "applicationDate": 365
-            },
-            {
-                "name": "Meningocócica B e ACWY",
-                "description": "Reforço para garantir proteção prolongada contra diferentes tipos de meningite.",
-                "applicationDate": 395
-            },
-            {
-                "name": "Reforço Pentavalente Acellular",
-                "description": "Para fortalecer a imunidade contra difteria, tétano, coqueluche, poliomielite e Haemophilus influenzae.",
-                "applicationDate": 450
-            },
-            {
-                "name": "Tetraviral",
-                "description": "Segunda dose para reforçar a proteção contra doenças como sarampo e caxumba.",
-                "applicationDate": 450
-            },
-            {
-                "name": "Hepatite A",
-                "description": "Dose final para reforçar a imunidade contra essa doença.",
-                "applicationDate": 540
-            },
-            {
-                "name": "DTPa + VIP",
-                "description": "Importante para manter a proteção contra difteria, tétano, coqueluche e poliomielite.",
-                "applicationDate": 1460
-            },
-            {
-                "name": "Febre Amarela",
-                "description": "Dose final para reforçar a imunidade contra essa doença.",
-                "applicationDate": 1460
-            }
-    ]
+  "vaccines": [
+    {
+      "name": "BCG",
+      "description": "Protege contra formas graves de tuberculose.",
+      "applicationDate": 0
+    },
+    {
+      "name": "Hepatite B",
+      "description": "Essencial para prevenir infecções que podem afetar o fígado.",
+      "applicationDate": 0
+    },
+    {
+      "name": "Hexavalente",
+      "description": "Protege contra difteria, tétano, coqueluche, poliomielite, Haemophilus influenzae tipo B e hepatite B.",
+      "applicationDate": 60
+    },
+    {
+      "name": "Rotavírus pentavalente",
+      "description": "Importante para prevenir infecções intestinais graves.",
+      "applicationDate": 60
+    },
+    {
+      "name": "Pneumocócica 13V",
+      "description": "Protege contra doenças como pneumonia, meningite e otite.",
+      "applicationDate": 60
+    },
+    {
+      "name": "Meningocócica B e ACWY",
+      "description": "Essenciais para prevenir diferentes tipos de meningite, uma infecção grave que pode ser evitada com a vacinação.",
+      "applicationDate": 90
+    },
+    {
+      "name": "Hexavalente",
+      "description": "Para fortalecer a proteção contra várias doenças infecciosas.",
+      "applicationDate": 120
+    },
+    {
+      "name": "Rotavírus pentavalente",
+      "description": "Segunda dose para aumentar a proteção contra infecções intestinais.",
+      "applicationDate": 120
+    },
+    {
+      "name": "Pneumocócica 13V",
+      "description": "Mais uma dose para fortalecer a imunidade.",
+      "applicationDate": 120
+    },
+    {
+      "name": "Meningocócica B e ACWY",
+      "description": "Reforço necessário para manter a proteção contra diferentes tipos de meningite.",
+      "applicationDate": 150
+    },
+    {
+      "name": "Hexavalente",
+      "description": "Mais uma dose para proteger contra várias doenças.",
+      "applicationDate": 180
+    },
+    {
+      "name": "Rotavírus pentavalente",
+      "description": "Última dose para garantir proteção completa.",
+      "applicationDate": 180
+    },
+    {
+      "name": "Pneumocócica 13V",
+      "description": "Dose final para prevenir infecções pneumocócicas.",
+      "applicationDate": 180
+    },
+    {
+      "name": "Influenza",
+      "description": "Vacina contra a gripe, essencial para proteger os pequenos contra complicações.",
+      "applicationDate": 180
+    },
+    {
+      "name": "Febre Amarela",
+      "description": "Protege contra uma infecção viral que pode ser grave.",
+      "applicationDate": 270
+    },
+    {
+      "name": "Reforço Pneumocócica 13V",
+      "description": "Para continuar protegendo contra doenças respiratórias graves.",
+      "applicationDate": 365
+    },
+    {
+      "name": "Hepatite A",
+      "description": "Para prevenir infecções que podem causar problemas no fígado.",
+      "applicationDate": 365
+    },
+    {
+      "name": "Tetraviral",
+      "description": "Protege contra sarampo, caxumba, rubéola e varicela (catapora).",
+      "applicationDate": 365
+    },
+    {
+      "name": "Meningocócica B e ACWY",
+      "description": "Reforço para garantir proteção prolongada contra diferentes tipos de meningite.",
+      "applicationDate": 395
+    },
+    {
+      "name": "Reforço Pentavalente Acellular",
+      "description": "Para fortalecer a imunidade contra difteria, tétano, coqueluche, poliomielite e Haemophilus influenzae.",
+      "applicationDate": 450
+    },
+    {
+      "name": "Tetraviral",
+      "description": "Segunda dose para reforçar a proteção contra doenças como sarampo e caxumba.",
+      "applicationDate": 450
+    },
+    {
+      "name": "Hepatite A",
+      "description": "Dose final para reforçar a imunidade contra essa doença.",
+      "applicationDate": 540
+    },
+    {
+      "name": "DTPa + VIP",
+      "description": "Importante para manter a proteção contra difteria, tétano, coqueluche e poliomielite.",
+      "applicationDate": 1460
+    },
+    {
+      "name": "Febre Amarela",
+      "description": "Dose final para reforçar a imunidade contra essa doença.",
+      "applicationDate": 1460
+    }
+  ]
 }

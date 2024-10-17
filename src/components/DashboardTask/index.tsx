@@ -21,7 +21,6 @@ export const DashboardTask: React.FC<DashboardTaskProps> = ({
   isFinished,
   showCheckbox,
 }) => {
-
   return (
     <div className="dashboard__task">
       <div className="task__time">

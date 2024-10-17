@@ -24,7 +24,11 @@ export const useGestationMutations = () => {
     refetchQueries: ["VaccinesByVaccineCard"],
   });
 
-  const createGestationMutation = async (userId: any, description: any, week: any) => {
+  const createGestationMutation = async (
+    userId: any,
+    description: any,
+    week: any,
+  ) => {
     try {
       const newGestation = await createGestation({
         variables: {
@@ -96,7 +100,11 @@ export const useGestationMutations = () => {
     }
   };
 
-  const createConsultationMutation = async (gestationId: any, date: any, week: any) => {
+  const createConsultationMutation = async (
+    gestationId: any,
+    date: any,
+    week: any,
+  ) => {
     try {
       const newConsultation = createConsultation({
         variables: {

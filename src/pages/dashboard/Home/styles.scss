@@ -157,13 +157,12 @@
     font-size: 36px;
   }
 
-  .home__buttons .container__button button{
+  .home__buttons .container__button button {
     padding: 12px;
   }
 }
 
-
-@media screen and (max-width:  980px) {
+@media screen and (max-width: 980px) {
   .home__dashboard {
     display: flex;
     align-items: center;
@@ -209,7 +208,7 @@
 
   .home__side {
     gap: 24px;
-    margin-bottom: 32px
+    margin-bottom: 32px;
   }
 
   .side__filter {
@@ -223,7 +222,6 @@
   .dashboard__empty h2 {
     font-size: 20px;
   }
-  
 }
 
 @media screen and (max-width: 480px) {
@@ -235,13 +233,12 @@
   .home__title h1 {
     font-size: 28px;
   }
-  
+
   .home__side .calendar {
     padding: 4px;
   }
 
-
-  .home__side .side__filter .filter__header h2{
+  .home__side .side__filter .filter__header h2 {
     font-size: 20px;
   }
 
