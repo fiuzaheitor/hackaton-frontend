@@ -11,7 +11,7 @@ export const Calendar: React.FC<{onClick: any, filter: string}> = ({onClick, fil
     const { data: dataUserGestations, loading: loadingUserGestations, error: errorUserGestations } = useGetGestationsByUser(auth?.ui);
     const { data: dataConsultationsByGestation, loading: loadingConsultationsByGestation, error: errorConsultationsByGestation } = useGetConsultationsByGestation(dataUserGestations?.gestationsByMom?.filter((gestation: any) => !gestation.isFinished)?.[0]?.id);
     const { data: dataUserKids, loading: loadingUserKids, error: errorUserKids } = useGetKidsByMom(auth?.ui);
-    const { data: dataVaccineCardByKid, loading: loadingConsultationsByKid, error: errorConsultationsByKid } = useGetVaccineCardByKid(dataUserKids?.kidsByMom[3]?.id);
+    const { data: dataVaccineCardByKid, loading: loadingConsultationsByKid, error: errorConsultationsByKid } = useGetVaccineCardByKid(dataUserKids?.kidsByMom[0]?.id);
     console.log(dataUserKids)
     console.log(dataVaccineCardByKid)
     const { data: dataVaccinesByVaccineCard } = useGetVaccinesByVaccineCard(dataVaccineCardByKid?.vaccineCardByKid?.[0]?.id);
@@ -72,7 +72,7 @@ export const Calendar: React.FC<{onClick: any, filter: string}> = ({onClick, fil
                     const birthDate = new Date(dataUserKids.kidsByMom[0].birthDate);
                     const vaccineStartDate = new Date(vaccineDate.getTime() - 4 * dayInMillis);
                     const vaccineEndDate = new Date(vaccineDate.getTime() + 3 * dayInMillis);
-                    if (date >= vaccineStartDate && date <= vaccineEndDate && date > birthDate) {
+                    if (date >= vaccineStartDate && date <= vaccineEndDate && date >= birthDate) {
                         isEventDay = true;
                     }
                 })
