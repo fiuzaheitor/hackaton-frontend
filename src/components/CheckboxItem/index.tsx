@@ -12,7 +12,7 @@ interface CheckboxItemProps {
 
 export const CheckboxItem: React.FC<CheckboxItemProps> = ({
   name,
-    id,
+  id,
   onChange,
   checked,
   setChecked,
@@ -27,13 +27,13 @@ export const CheckboxItem: React.FC<CheckboxItemProps> = ({
           {checked && <Check color="white" />}
         </label>
         <input
-            name={name}
-            id={name}
-            type="checkbox"
-            checked={checked}
-            onChange={() => {
-                setChecked ? setChecked(name) : onChange(id);
-            }}
+          name={name}
+          id={name}
+          type="checkbox"
+          checked={checked}
+          onChange={() => {
+            setChecked ? setChecked(name) : onChange(id);
+          }}
         />
       </div>
       <div className="item__name">

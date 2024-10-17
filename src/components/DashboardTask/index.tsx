@@ -10,9 +10,9 @@ interface DashboardTaskProps {
   id: string;
   description: string;
   date: string;
-  onClick: any,
-  isFinished: boolean
-  showCheckbox: boolean
+  onClick: any;
+  isFinished: boolean;
+  showCheckbox: boolean;
 }
 
 export const DashboardTask: React.FC<DashboardTaskProps> = ({
@@ -22,7 +22,7 @@ export const DashboardTask: React.FC<DashboardTaskProps> = ({
   date,
   onClick,
   isFinished,
-    showCheckbox
+  showCheckbox,
 }) => {
   const [showPopup, setShowPopup] = useState<boolean>(false);
   const [confirm, setConfirm] = useState<boolean>(false);
@@ -47,14 +47,14 @@ export const DashboardTask: React.FC<DashboardTaskProps> = ({
         <p>{description}</p>
       </div>
       <div className="task__func">
-      {showCheckbox &&
-        <CheckboxItem
+        {showCheckbox && (
+          <CheckboxItem
             name="Concluído"
             onChange={() => onClick(id)}
             checked={isFinished}
-            />
-        }
-        </div>
+          />
+        )}
+      </div>
     </div>
   );
 };

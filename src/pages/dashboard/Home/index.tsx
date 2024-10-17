@@ -13,6 +13,7 @@ import {
   useGetKidsByMom,
   useGetUser,
   useGetUsers,
+  useGetVaccineCardByKid,
 } from "../../../utils/Queries";
 
 import { useMutation } from "@apollo/client";
@@ -61,6 +62,12 @@ export const Home: React.FC = () => {
     loading: loadingUser,
     error: errorUser,
   } = useGetUser(auth?.ui);
+
+  const {
+    data: dataConsultationsByKid,
+    loading: loadingConsultationsByKid,
+    error: errorConsultationsByKid,
+  } = useGetVaccineCardByKid(dataUserKids?.kidsByMom?.[0]?.id || "");
 
   const [createGestation] = useMutation(M_CREATE_GESTATION);
 
@@ -197,6 +204,7 @@ const sendMessage = async (message: any, phone: any) => {
   });
 
     const data = await response.json();
+    
     console.log("Message sent:", data);
   } catch (error: any) {
     console.error("Error sending message:", error.message);
@@ -276,31 +284,34 @@ const handleWeekend = (date: any) => {
   };
 
   const handleUpdateCalendar = (consultationId: string, date: Date) => {
-    const consultations = dataConsultationsByGestation?.consultationsByGestation.filter(
-      (consultation: any) => !consultation.isFinished,
-    );
-  
+    const consultations =
+      dataConsultationsByGestation?.consultationsByGestation.filter(
+        (consultation: any) => !consultation.isFinished,
+      );
+
     const selectedConsultation = consultations.find(
       (consultation: any) => consultation.id === consultationId,
     );
-  
+
     console.log("Selecionado: ", selectedConsultation);
-  
+
     if (selectedConsultation) {
       const newDate = date.getTime();
       const currentDate = new Date(selectedConsultation.date).getTime();
       const dateDifference = newDate - currentDate; // Calcula a diferença em milissegundos
-  
+
       // Atualiza a consulta selecionada e marca como finalizada
       UpdateConsultation(consultationId, { date: newDate, isFinished: true })
         .then(() => {
           // Atualiza as consultas subsequentes com a diferença
           consultations.map((consultation: any, index: number) => {
             if (consultation.id !== consultationId) {
-              const previousDate = new Date(consultations[index].date).getTime();
-  
+              const previousDate = new Date(
+                consultations[index].date,
+              ).getTime();
+
               const updatedDate = previousDate + dateDifference;
-  
+
               UpdateConsultation(consultation.id, {
                 date: updatedDate,
               });
@@ -386,9 +397,9 @@ const handleWeekend = (date: any) => {
   };
 
 
-//   useEffect(() => {
-//     sendMessage();
-//   }, [])
+  //   useEffect(() => {
+  //     sendMessage();
+  //   }, [])
 
   return (
     <section className="container">
@@ -401,18 +412,18 @@ const handleWeekend = (date: any) => {
         />
       )}
       {selectedConsultation && (
-        <PopupComplete 
-            showPopup={selectedConsultation != null}
-            setShowPopup={setSelectedConsultation}
-            consultationId={selectedConsultation}
-            title="Data de comparecimento"
-            onClick={handleUpdateCalendar} // Agora passa a função corrigida
+        <PopupComplete
+          showPopup={selectedConsultation != null}
+          setShowPopup={setSelectedConsultation}
+          consultationId={selectedConsultation}
+          title="Data de comparecimento"
+          onClick={handleUpdateCalendar} // Agora passa a função corrigida
         />
-        )}
+      )}
       <Header />
       <div className="container__home">
         <div className="home__side">
-          <Calendar onClick={setSelectedFilter} filter={selectedCheckbox}/>
+          <Calendar onClick={setSelectedFilter} filter={selectedCheckbox} />
           <div className="side__filter">
             <div className="filter__header">
               <h2>Calendário</h2>
@@ -462,46 +473,77 @@ const handleWeekend = (date: any) => {
               />
             </div>
           </div>
-          <div className="home__dashboard">
-            {dataConsultationsByGestation?.consultationsByGestation.filter(
-              (consultation: any) =>
-                new Date(consultation.date).toDateString() === selectedFilter,
-            ).length === 0 ? (
-              <div className="dashboard__empty">
-                <h2>
-                  {dataUserGestations?.gestationsByMom.length == 0
-                    ? "Inicie a gestação para ter acesso ao seu calendário!"
-                    : "Não há eventos programados para esse dia!"}
-                </h2>
-              </div>
-            ) : (
-              <div>
-                {dataConsultationsByGestation?.consultationsByGestation
-                  .filter(
-                    (consultation: any) =>
-                      new Date(consultation.date).toDateString() ===
-                      selectedFilter,
-                  )
-                  .map((consultation: any) => {
-                    return (
-                      <DashboardTask
-                        title="Consulta"
-                        id={consultation.id}
-                        description={
-                          "Consulta da " +
-                          consultation?.week +
-                          "º semana de pré-natal."
-                        }
-                        isFinished={consultation.isFinished}
-                        onClick={setSelectedConsultation}
-                        date={new Date(consultation.date).toLocaleDateString()}
-                        showCheckbox={dataConsultationsByGestation?.consultationsByGestation.filter((consultation: any) => !consultation.isFinished)[0].id == consultation.id}
-                      />
-                    );
-                  })}
-              </div>
-            )}
-          </div>
+            <div className="home__dashboard">
+                {selectedCheckbox === "Infantil" ? (
+                    dataConsultationsByKid?.vaccineCardByKid?.length === 0 ? (
+                        <div className="dashboard__empty">
+                            <h2>
+                                {dataUserKids?.kidsByMom?.length === 0
+                                    ? "Adicione um filho para ter acesso ao calendário!"
+                                    : "Não há eventos programados para esse dia!"}
+                            </h2>
+                        </div>
+                    ) : (
+                        <div>
+                            {dataConsultationsByKid?.vaccineCardByKid
+                                .filter(
+                                    (vaccineCard: any) =>
+                                        new Date(vaccineCard.date).toDateString() === selectedFilter
+                                )
+                                .map((vaccineCard: any) => {
+                                    return (
+                                        <DashboardTask
+                                            key={vaccineCard.id}
+                                            title="Vacina"
+                                            id={vaccineCard.id}
+                                            description={vaccineCard.vaccine}
+                                            isFinished={vaccineCard.isFinished}
+                                            onClick={setSelectedConsultation}
+                                            date={new Date(vaccineCard.date).toLocaleDateString()}
+                                            showCheckbox={
+                                                dataConsultationsByKid?.vaccineCardByKid
+                                                    .filter((v: any) => !v.isFinished)[0]?.id === vaccineCard.id
+                                            }
+                                        />
+                                    );
+                                })}
+                        </div>
+                    )
+                ) : dataConsultationsByGestation?.consultationsByGestation?.length === 0 ? (
+                    <div className="dashboard__empty">
+                        <h2>
+                            {dataUserGestations?.gestationsByMom?.length === 0
+                                ? "Inicie a gestação para ter acesso ao seu calendário!"
+                                : "Não há eventos programados para esse dia!"}
+                        </h2>
+                    </div>
+                ) : (
+                    dataConsultationsByGestation?.consultationsByGestation
+                        .filter(
+                            (consultation: any) =>
+                                new Date(consultation.date).toDateString() === selectedFilter
+                        )
+                        .map((consultation: any) => {
+                            return (
+                                <DashboardTask
+                                    key={consultation.id}
+                                    title="Consulta"
+                                    id={consultation.id}
+                                    description={
+                                        "Consulta da " + consultation?.week + "º semana de pré-natal."
+                                    }
+                                    isFinished={consultation.isFinished}
+                                    onClick={setSelectedConsultation}
+                                    date={new Date(consultation.date).toLocaleDateString()}
+                                    showCheckbox={
+                                        dataConsultationsByGestation?.consultationsByGestation
+                                            .filter((c: any) => !c.isFinished)[0]?.id === consultation.id
+                                    }
+                                />
+                            );
+                        })
+                )}
+            </div>
         </div>
       </div>
     </section>

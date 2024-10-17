@@ -45,7 +45,7 @@ export const PopupComplete: React.FC<PopupProps> = ({
           <div className="popup__input">
             <DatePicker
               selected={value}
-              onChange={(e) => setValue(e)} 
+              onChange={(e) => setValue(e)}
               dateFormat={"dd/MM/yyyy"}
             />
           </div>
