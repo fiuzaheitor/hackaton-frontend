@@ -18,6 +18,8 @@ import {
   G_VACCINE_CARD_BY_KID,
   G_VACCINE,
   G_VACCINES,
+  G_VACCINE_TEMPLATE,
+  G_VACCINE_TEMPLATES,
 } from "../graphql/Queries";
 
 export const useGetUser = (id: string) => {
@@ -166,3 +168,20 @@ export const useGetVaccinesByVaccineCard = (vaccineCardId: string) => {
 
   return { data, loading, error };
 };
+
+export const useGetVaccineTemplate = (id: string) => {
+    const { data, loading, error } = useQuery(G_VACCINE_TEMPLATE, {
+        fetchPolicy: "cache-and-network",
+        variables: {id}
+    });
+    
+    return { data, loading, error };
+};
+
+export const useGetVaccineTemplates = () => {
+    const { data, loading, error } = useQuery(G_VACCINE_TEMPLATES, {
+        fetchPolicy: "cache-and-network"
+    });
+    
+    return { data, loading, error };
+}

@@ -151,3 +151,27 @@ export const M_UPDATE_VACCINE = gql`
     }
   }
 `;
+
+export const M_CREATE_VACCINE_TEMPLATE = gql`
+    mutation CreateVaccineTemplate($data: VaccineTemplateInput) {
+        createVaccineTemplate(data: $data) {
+            id
+        }
+    }
+`;
+
+export const M_DELETE_VACCINE_TEMPLATE = gql`
+    mutation DeleteVaccineTemplate($id: ID!) {
+        deleteVaccineTemplate(id: $id) {
+            id
+        }
+    }
+`;
+
+export const M_UPDATE_VACCINE_TEMPLATE = gql`
+    mutation UpdateVaccineTemplate($id: ID!, $data: VaccineTemplateInput) {
+        updateVaccineTemplate(id: $id, data: $data) {
+            id
+        }
+    }
+`;

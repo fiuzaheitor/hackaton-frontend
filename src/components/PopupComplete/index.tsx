@@ -40,7 +40,7 @@ export const PopupComplete: React.FC<PopupProps> = ({
           onlyIcon
         />
         {title && <h2>{title}</h2>}
-        <p>{consultationId}</p>
+        <p>Essa ação é irreversível.</p>
         <div className="popup__body">
           <div className="popup__input">
             <DatePicker

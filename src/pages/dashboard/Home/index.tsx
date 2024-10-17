@@ -11,6 +11,7 @@ import {
   useGetConsultationsByGestation,
   useGetGestationsByUser,
   useGetKidsByMom,
+  useGetUser,
   useGetUsers,
 } from "../../../utils/Queries";
 
@@ -50,12 +51,16 @@ export const Home: React.FC = () => {
   } = useGetConsultationsByGestation(
     dataUserGestations?.gestationsByMom[0]?.id,
   );
-
   const {
     data: dataUserKids,
     loading: loadingUserKids,
     error: errorUserKids,
   } = useGetKidsByMom(auth?.ui);
+  const {
+    data: dataUser,
+    loading: loadingUser,
+    error: errorUser,
+  } = useGetUser(auth?.ui);
 
   const [createGestation] = useMutation(M_CREATE_GESTATION);
 
@@ -63,125 +68,145 @@ export const Home: React.FC = () => {
     try {
       const newGestation = await createGestation({
         variables: {
-          data: {
-            user: userId,
+            data: {
+                user: userId,
             description: description,
             week: week,
             isFinished: false,
-          },
         },
-      }).then((res) => {
-        return res.data.createGestation.id;
-      });
+    },
+}).then((res) => {
+    return res.data.createGestation.id;
+});
 
-      return newGestation;
-    } catch (err: any) {
-      console.log(err.message);
-    }
-  };
+return newGestation;
+} catch (err: any) {
+    console.log(err.message);
+}
+};
 
-  const [updateGestation] = useMutation(M_UPDATE_GESTATION);
+const [updateGestation] = useMutation(M_UPDATE_GESTATION);
 
-  const UpdateGestation = async (gestationId: any, data: any) => {
+const UpdateGestation = async (gestationId: any, data: any) => {
     try {
-      const newGestation = updateGestation({
-        variables: {
-          id: gestationId,
-          data: data,
-        },
-      }).then((res) => {
-        console.log(res);
-      });
+        const newGestation = updateGestation({
+            variables: {
+                id: gestationId,
+                data: data,
+            },
+        }).then((res) => {
+            console.log(res);
+        });
     } catch (err: any) {
-      console.log(err.message);
+        console.log(err.message);
     }
-  };
+};
 
-  const [createKid] = useMutation(M_CREATE_KID);
+const [createKid] = useMutation(M_CREATE_KID);
 
-  const CreateKid = async (momId: any, name: any, birthDate: any) => {
+const CreateKid = async (momId: any, name: any, birthDate: any) => {
     try {
-      const newKid = createKid({
-        variables: {
-          data: {
-            mom: momId,
-            name: name,
-            birthDate: birthDate,
-          },
-        },
-      }).then((res) => {
-        return res.data.createKid.id;
-      });
-      return newKid;
+        const newKid = createKid({
+            variables: {
+                data: {
+                    mom: momId,
+                    name: name,
+                    birthDate: birthDate,
+                },
+            },
+        }).then((res) => {
+            return res.data.createKid.id;
+        });
+        return newKid;
     } catch (err: any) {
-      console.log(err.message);
+        console.log(err.message);
     }
-  };
+};
 
-  const [createVaccineCard] = useMutation(M_CREATE_VACCINE_CARD);
+const [createVaccineCard] = useMutation(M_CREATE_VACCINE_CARD);
 
-  const CreateVaccineCard = async (kidId: any) => {
+const CreateVaccineCard = async (kidId: any) => {
     try {
-      const newVaccineCard = createVaccineCard({
-        variables: {
-          data: {
-            kid: kidId,
-          },
-        },
-      }).then((res) => {
-        console.log(res);
-      });
+        const newVaccineCard = createVaccineCard({
+            variables: {
+                data: {
+                    kid: kidId,
+                },
+            },
+        }).then((res) => {
+            console.log(res);
+        });
     } catch (err: any) {
-      console.log(err.message);
+        console.log(err.message);
     }
-  };
+};
 
-  const [createConsultation] = useMutation(M_CREATE_CONSULTATION, {
+const [createConsultation] = useMutation(M_CREATE_CONSULTATION, {
     refetchQueries: ["ConsultationsByGestation", "GestationsByMom"],
-  });
+});
 
-  const CreateConsultation = async (gestationId: any, date: any, week: any) => {
+const CreateConsultation = async (gestationId: any, date: any, week: any) => {
     try {
-      const newConsultation = createConsultation({
-        variables: {
-          data: {
+        const newConsultation = createConsultation({
+            variables: {
+                data: {
             gestation: gestationId,
             date: date,
             week: week,
             isFinished: false,
-          },
         },
-      }).then((res) => {
-        console.log(res);
-      });
-    } catch (err: any) {
-      console.log(err.message);
-    }
-  };
+    },
+}).then((res) => {
+    console.log(res);
+});
+} catch (err: any) {
+    console.log(err.message);
+}
+};
 
-  const [updateConsultation] = useMutation(M_UPDATE_CONSULTATION, {
+const [updateConsultation] = useMutation(M_UPDATE_CONSULTATION, {
     refetchQueries: ["ConsultationsByGestation", "GestationsByMom"],
+});
+
+const UpdateConsultation = async (id: string, data: any) => {
+    try {
+        const newConsultation = updateConsultation({
+            variables: {
+                id: id,
+                data: data
+            },
+        }).then((res) => {
+            console.log(res);
+        });
+    } catch (err: any) {
+        console.log(err.message);
+    }
+};
+
+const sendMessage = async (message: any, phone: any) => {
+  try {
+    const response = await fetch("http://localhost:4000/send-message", {
+      method: "POST",
+      headers: {
+          "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+          message: message,
+          phone: phone,
+      })
   });
 
-  const UpdateConsultation = async (id: string, data: any) => {
-    try {
-      const newConsultation = updateConsultation({
-        variables: {
-          id: id,
-          data: data
-        },
-      }).then((res) => {
-        console.log(res);
-      });
-    } catch (err: any) {
-      console.log(err.message);
-    }
-  };
+    const data = await response.json();
+    console.log("Message sent:", data);
+  } catch (error: any) {
+    console.error("Error sending message:", error.message);
+  }
+};
 
-  const handleWeekend = (date: any) => {
+const handleWeekend = (date: any) => {
     let day = new Date(date).getDay();
     if (day === 0) {
-      return date + 60 * 60 * 24 * 1 * 1000;
+        return date + 60 * 60 * 24 * 1 * 1000;
     }
     if (day === 6) {
       return date - 60 * 60 * 24 * 1 * 1000;
@@ -245,6 +270,9 @@ export const Home: React.FC = () => {
     consultations.map((consultation: any) => {
       CreateConsultation(gestation, consultation?.date, consultation?.week);
     });
+
+    sendMessage("Oi, mamãe!\n\nParabéns por ter agendado a sua primeira consulta pré-natal antes da 12ª semana! Essa etapa é fundamental para cuidar da sua saúde e do seu bebê. Durante essa consulta, você realizará exames importantes, receberá orientações sobre nutrição e cuidados essenciais, e poderá esclarecer todas as suas dúvidas.\n\nAo comparecer, você está dando um passo crucial para garantir um acompanhamento adequado do desenvolvimento fetal e para monitorar condições importantes, como diabetes gestacional e hipertensão. O diagnóstico precoce de qualquer problema de saúde pode facilitar o tratamento e evitar complicações futuras.\n\nAlém disso, essa consulta é uma oportunidade valiosa para se informar sobre vacinas e exames recomendados no início da gestação, como a ultrassonografia. Continue assim, cuidando de você e do seu pequeno! Estamos aqui para apoiar você em cada etapa da sua jornada!", dataUser?.user?.phone);
+    
   };
 
   const handleUpdateCalendar = (consultationId: string, date: Date) => {
@@ -357,18 +385,6 @@ export const Home: React.FC = () => {
     return formattedDate;
   };
 
-  const sendMessage = async () => {
-    try {
-      const response = await fetch("http://localhost:4000/send-message", {
-        method: "POST",
-      });
-
-      const data = await response.json();
-      console.log("Message sent:", data);
-    } catch (error: any) {
-      console.error("Error sending message:", error.message);
-    }
-  };
 
 //   useEffect(() => {
 //     sendMessage();
