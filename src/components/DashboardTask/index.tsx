@@ -7,14 +7,22 @@ import { CheckboxItem } from "../CheckboxItem";
 
 interface DashboardTaskProps {
   title: string;
+  id: string;
   description: string;
   date: string;
+  onClick: any,
+  isFinished: boolean
+  showCheckbox: boolean
 }
 
 export const DashboardTask: React.FC<DashboardTaskProps> = ({
   title,
+  id,
   description,
   date,
+  onClick,
+  isFinished,
+    showCheckbox
 }) => {
   const [showPopup, setShowPopup] = useState<boolean>(false);
   const [confirm, setConfirm] = useState<boolean>(false);
@@ -31,7 +39,7 @@ export const DashboardTask: React.FC<DashboardTaskProps> = ({
         />
       )}
       <div className="task__time">
-        <h2>Manhã</h2>
+        <h2>Dia todo</h2>
         <span>{date}</span>
       </div>
       <div className="task__info">
@@ -39,14 +47,14 @@ export const DashboardTask: React.FC<DashboardTaskProps> = ({
         <p>{description}</p>
       </div>
       <div className="task__func">
+      {showCheckbox &&
         <CheckboxItem
-          name="Concluído"
-          onChange={() => {
-            setConfirm(!confirm);
-            setShowPopup(confirm);
-          }}
-        />
-      </div>
+            name="Concluído"
+            onChange={() => onClick(id)}
+            checked={isFinished}
+            />
+        }
+        </div>
     </div>
   );
 };

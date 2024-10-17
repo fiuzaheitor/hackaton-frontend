@@ -30,6 +30,12 @@
   position: relative;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
   gap: 32px;
+
+  p {
+    font-size: 1rem;
+    text-align: center;
+    color: crimson;
+  }
 }
 
 .popup__content > .container__button {
@@ -41,6 +47,22 @@
   border: none;
   font-size: 1.5rem;
   cursor: pointer;
+}
+
+.popup__input {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+
+  input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid $brand2-500;
+    border-radius: 12px;
+    outline: none;
+    font-size: 1rem;
+  }
 }
 
 .popup__content > .container__button button:hover {

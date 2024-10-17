@@ -25,9 +25,12 @@ import {
 } from "../../../graphql/Mutations";
 import { ChevronDown, Filter, PlusSquare } from "react-feather";
 import { CheckboxItem } from "../../../components/CheckboxItem";
+import { PopupComplete } from "../../../components/PopupComplete";
 
 export const Home: React.FC = () => {
   const [isOpenPopup, setIsOpenPopup] = useState(false);
+  const [completeConsultation, setCompleteConsultation] = useState(false);
+  const [selectedConsultation, setSelectedConsultation] = useState<any>(null);
   const auth = JSON.parse(getCookie("_bu_l") as string);
   const [viewFilter, setViewFilter] = useState<Boolean | undefined>(true);
   const [selectedFilter, setSelectedFilter] = useState<any>(
@@ -145,6 +148,7 @@ export const Home: React.FC = () => {
             gestation: gestationId,
             date: date,
             week: week,
+            isFinished: false,
           },
         },
       }).then((res) => {
@@ -155,18 +159,16 @@ export const Home: React.FC = () => {
     }
   };
 
-  const [updateConsultation] = useMutation(M_UPDATE_CONSULTATION);
+  const [updateConsultation] = useMutation(M_UPDATE_CONSULTATION, {
+    refetchQueries: ["ConsultationsByGestation", "GestationsByMom"],
+  });
 
-  const UpdateConsultation = async () => {
+  const UpdateConsultation = async (id: string, data: any) => {
     try {
       const newConsultation = updateConsultation({
         variables: {
-          id: "614d9b4d8a0f1b001f8e5d8b",
-          data: {
-            gestation: "614d9b4d8a0f1b001f8e5d8b",
-            date: new Date(),
-            week: 1,
-          },
+          id: id,
+          data: data
         },
       }).then((res) => {
         console.log(res);
@@ -245,21 +247,41 @@ export const Home: React.FC = () => {
     });
   };
 
-  const handleUpdateCalendar = (date: any, consultationId: any) => {
-    const consultations =
-      dataConsultationsByGestation?.consultationsByGestation.filter(
-        (consultation: any) => !consultation.isFinished,
-      );
-
+  const handleUpdateCalendar = (consultationId: string, date: Date) => {
+    const consultations = dataConsultationsByGestation?.consultationsByGestation.filter(
+      (consultation: any) => !consultation.isFinished,
+    );
+  
     const selectedConsultation = consultations.find(
       (consultation: any) => consultation.id === consultationId,
     );
-    if (selectedConsultation.date !== date) {
-      consultations.map((consultation: any) => {
-        console.log(
-          new Date(calculateNextConsultationDate(consultation.week, date)),
-        );
-      });
+  
+    console.log("Selecionado: ", selectedConsultation);
+  
+    if (selectedConsultation) {
+      const newDate = date.getTime();
+      const currentDate = new Date(selectedConsultation.date).getTime();
+      const dateDifference = newDate - currentDate; // Calcula a diferença em milissegundos
+  
+      // Atualiza a consulta selecionada e marca como finalizada
+      UpdateConsultation(consultationId, { date: newDate, isFinished: true })
+        .then(() => {
+          // Atualiza as consultas subsequentes com a diferença
+          consultations.map((consultation: any, index: number) => {
+            if (consultation.id !== consultationId) {
+              const previousDate = new Date(consultations[index].date).getTime();
+  
+              const updatedDate = previousDate + dateDifference;
+  
+              UpdateConsultation(consultation.id, {
+                date: updatedDate,
+              });
+            }
+          });
+        })
+        .catch((error: any) => {
+          console.error("Erro ao atualizar a consulta:", error.message);
+        });
     }
   };
 
@@ -348,6 +370,10 @@ export const Home: React.FC = () => {
     }
   };
 
+//   useEffect(() => {
+//     sendMessage();
+//   }, [])
+
   return (
     <section className="container">
       {isOpenPopup && (
@@ -358,6 +384,15 @@ export const Home: React.FC = () => {
           title="Confirme suas informações!"
         />
       )}
+      {selectedConsultation && (
+        <PopupComplete 
+            showPopup={selectedConsultation != null}
+            setShowPopup={setSelectedConsultation}
+            consultationId={selectedConsultation}
+            title="Data de comparecimento"
+            onClick={handleUpdateCalendar} // Agora passa a função corrigida
+        />
+        )}
       <Header />
       <div className="container__home">
         <div className="home__side">
@@ -435,12 +470,16 @@ export const Home: React.FC = () => {
                     return (
                       <DashboardTask
                         title="Consulta"
+                        id={consultation.id}
                         description={
                           "Consulta da " +
                           consultation?.week +
                           "º semana de pré-natal."
                         }
+                        isFinished={consultation.isFinished}
+                        onClick={setSelectedConsultation}
                         date={new Date(consultation.date).toLocaleDateString()}
+                        showCheckbox={dataConsultationsByGestation?.consultationsByGestation.filter((consultation: any) => !consultation.isFinished)[0].id == consultation.id}
                       />
                     );
                   })}

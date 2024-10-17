@@ -4,6 +4,7 @@ import { Check } from "react-feather";
 
 interface CheckboxItemProps {
   name: string;
+  id?: string;
   onChange?: any;
   checked?: boolean;
   setChecked?: any;
@@ -11,6 +12,7 @@ interface CheckboxItemProps {
 
 export const CheckboxItem: React.FC<CheckboxItemProps> = ({
   name,
+    id,
   onChange,
   checked,
   setChecked,
@@ -25,13 +27,13 @@ export const CheckboxItem: React.FC<CheckboxItemProps> = ({
           {checked && <Check color="white" />}
         </label>
         <input
-          name={name}
-          id={name}
-          type="checkbox"
-          checked={checked}
-          onChange={() => {
-            setChecked ? setChecked(name) : onChange();
-          }}
+            name={name}
+            id={name}
+            type="checkbox"
+            checked={checked}
+            onChange={() => {
+                setChecked ? setChecked(name) : onChange(id);
+            }}
         />
       </div>
       <div className="item__name">

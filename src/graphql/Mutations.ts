@@ -97,7 +97,7 @@ export const M_DELETE_CONSULTATION = gql`
 `;
 
 export const M_UPDATE_CONSULTATION = gql`
-  mutation UpdateConsultation($id: ID!, $data: ConsultationInput) {
+  mutation UpdateConsultation($id: ID!, $data: ConsultationInput!) {
     updateConsultation(id: $id, data: $data) {
       id
     }
