@@ -1,26 +1,26 @@
-@import '../../styles/globals.scss';
+@import "../../styles/globals.scss";
 
 * {
-    font-family: 'Satoshi-Variable', sans-serif;
+  font-family: "Satoshi-Variable", sans-serif;
 }
 
 .container__menu_item {
-    display: flex;
-    align-items: flex-start;
-    justify-content: center;
-    gap: 8px;
-    cursor: pointer;
-    padding: 12px 24px;
-    transition: ease-in-out 0.2s;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 8px;
+  cursor: pointer;
+  padding: 12px 24px;
+  transition: ease-in-out 0.2s;
 }
 
 .container__menu_item:hover {
-    background-color: $brand2-500-10;
-    color: $brand2-500;
-    border-radius: 12px;
+  background-color: $brand2-500-10;
+  color: $brand2-500;
+  border-radius: 12px;
 }
 
 .menu_item__icon img {
-    width: 20px;
-    height: 20px;
+  width: 20px;
+  height: 20px;
 }

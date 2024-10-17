@@ -1,101 +1,101 @@
-@import '../../styles/globals.scss';
+@import "../../styles/globals.scss";
 
 * {
-    font-family: 'Satoshi-Variable', sans-serif;
+  font-family: "Satoshi-Variable", sans-serif;
 }
 
 button {
-    all: unset;
-    width: auto;
-    cursor: pointer;
+  all: unset;
+  width: auto;
+  cursor: pointer;
 }
 
 button svg {
-    width: 24px;
-    height: 24px;
+  width: 24px;
+  height: 24px;
 }
 
 button span {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
 }
 
 .container__button {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    outline: none;
-    width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  outline: none;
+  width: 100%;
 }
 
 .container__button button {
-    transition: ease-in-out 0.2s;
-    outline: none;
+  transition: ease-in-out 0.2s;
+  outline: none;
 }
 
 .button--outline {
-    all: unset;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    width: 100%;
-    border: 1px solid $gray-100;
-    border-radius: 12px;
-    padding: 10px;
-    cursor: pointer;
+  all: unset;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  border: 1px solid $gray-100;
+  border-radius: 12px;
+  padding: 10px;
+  cursor: pointer;
 }
 
 .button--outline:hover {
-    transform: scale(1.05);
+  transform: scale(1.05);
 }
 
 .button--outline span {
-    color: $dark-100;
-    font-weight: 500;
-    font-size: 16px;
-    font-family: $font-base;
+  color: $dark-100;
+  font-weight: 500;
+  font-size: 16px;
+  font-family: $font-base;
 }
 
 .button {
-    all: unset;
-    width: 100%;
-    border-radius: 12px;
-    background-color: $brand2-500;
-    padding: 12px 24px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
+  all: unset;
+  width: 100%;
+  border-radius: 12px;
+  background-color: $brand2-500;
+  padding: 12px 24px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
 }
 
 .button:hover {
-    background-color: $brand2-800;
-    cursor: pointer;
-    transform: scale(1.03);
+  background-color: $brand2-800;
+  cursor: pointer;
+  transform: scale(1.03);
 }
 
-.button > span{
-    font-family: $font-base;
-    color: white;
-    font-weight: 500;
-    font-size: 16px;
+.button > span {
+  font-family: $font-base;
+  color: white;
+  font-weight: 500;
+  font-size: 16px;
 }
 
 .button--onlyIcon {
-    padding: 8px;
-    border-radius: 12px;
-    cursor: pointer;
+  padding: 8px;
+  border-radius: 12px;
+  cursor: pointer;
 }
 
 .button--onlyIcon:hover {
-    outline: 1px solid $brand2-500;  
-    transform: scale(1.03);
+  outline: 1px solid $brand2-500;
+  transform: scale(1.03);
 }
 
 .button--onlyIcon svg {
-    width: 20px;
-    height: 20px;
+  width: 20px;
+  height: 20px;
 }
