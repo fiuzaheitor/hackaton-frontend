@@ -5,11 +5,15 @@ import { MenuItem } from '../MenuItem'
 import Button from '../Button'
 import { ChevronDown, LogOut } from 'react-feather'
 import { useNavigate } from 'react-router-dom';
+import { useGetUser } from '../../utils/Queries';
+import { getCookie } from '../../utils/cookies';
 
 export const Header: React.FC = () => {
     const navigate = useNavigate()
     const [isOpenDropdown, setIsOpenDropdown] = useState(false)
     const logout = useAuthContext().logout
+
+    const { data } = useGetUser(JSON.parse(getCookie('_bu_l') as string))
 
     return (
         <div className='container__header'>
@@ -31,8 +35,7 @@ export const Header: React.FC = () => {
                         <img src="/icons/user.svg" alt="Usuário" />
                     </div>
                     <div className="user__name">
-                        <span className="name__title">Nome</span>
-                        <span className="name__func">Nome menor</span>
+                        <span className="name__title">{data?.user?.name}</span>
                     </div>
                     <div onClick={() => setIsOpenDropdown(!isOpenDropdown)} className={`dropdown_button ${isOpenDropdown&&'button--active'}`}>
                         <ChevronDown width={24} height={24}/>

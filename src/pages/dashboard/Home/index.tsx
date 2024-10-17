@@ -20,6 +20,7 @@ export const Home: React.FC = () => {
     const auth = JSON.parse(getCookie('_bu_l') as string)
     const [viewFilter, setViewFilter] = useState<Boolean | undefined>(true)
     const [selectedFilter, setSelectedFilter] = useState<any>(new Date().toDateString())
+    const [selectedCheckbox, setSelectedCheckbox] = useState<any>("Maternidade")
 
     console.log("filtro:" + selectedFilter)
 
@@ -297,8 +298,8 @@ export const Home: React.FC = () => {
                         </div>
                         <div className={`filter__content ${viewFilter&&"filter__content--open"}`}>
                             <div className="content__item">
-                                <CheckboxItem name="Maternidade" onChange={setFilterCalendar}/>
-                                <CheckboxItem name="Infantil" onChange={setFilterCalendar}/>
+                                <CheckboxItem name="Maternidade" checked={selectedCheckbox=="Maternidade"} setChecked={setSelectedCheckbox}/>
+                                <CheckboxItem name="Infantil" checked={selectedCheckbox=="Infantil"} setChecked={setSelectedCheckbox}/>
                             </div>
                         </div>
                     </div>
@@ -307,7 +308,7 @@ export const Home: React.FC = () => {
                     <div className="home__title">
                         <h1>{formatDate(new Date(selectedFilter))}</h1>
                         <div className="home__buttons">
-                            <Button text="Add" type="button" Icon={<PlusSquare color="#fff"/>} onClick={() => setIsOpenPopup(!isOpenPopup)}/>
+                            <Button text="Iniciar" type="button" Icon={<PlusSquare color="#fff"/>} onClick={() => setIsOpenPopup(!isOpenPopup)}/>
                         </div>
                     </div>
                     <div className="home__dashboard">
