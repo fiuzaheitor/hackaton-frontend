@@ -9,12 +9,17 @@
     font-weight: 500;
 
     &:hover {
-        background-color: $brand2-500-20;
+        background-color: $brand2-500-50;
         cursor: pointer;
     }
 
     &.today {
-        background-color: $brand2-500-50; // cor para o dia de hoje
+        background-color: $brand2-500; // cor para o dia de hoje
+        
+    }
+
+    &.today > div {
+        color: $white-100;
     }
 }
 
