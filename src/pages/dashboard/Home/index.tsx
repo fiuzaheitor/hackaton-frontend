@@ -204,7 +204,7 @@ const sendMessage = async (message: any, phone: any) => {
   });
 
     const data = await response.json();
-    
+
     console.log("Message sent:", data);
   } catch (error: any) {
     console.error("Error sending message:", error.message);
@@ -509,7 +509,10 @@ const handleWeekend = (date: any) => {
                                 })}
                         </div>
                     )
-                ) : dataConsultationsByGestation?.consultationsByGestation?.length === 0 ? (
+                ) : dataConsultationsByGestation?.consultationsByGestation?.filter(
+                            (consultation: any) =>
+                                new Date(consultation.date).toDateString() === selectedFilter
+                        ).length === 0 ? (
                     <div className="dashboard__empty">
                         <h2>
                             {dataUserGestations?.gestationsByMom?.length === 0

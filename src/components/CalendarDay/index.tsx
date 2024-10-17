@@ -7,10 +7,11 @@ export const CalendarDay: React.FC<{
   isToday: boolean;
   isEventDay: boolean;
   onClick: any;
-}> = ({ date, day, isToday, isEventDay, onClick }) => {
+  selectedDay: boolean;
+}> = ({ date, day, isToday, isEventDay, onClick, selectedDay }) => {
   return (
     <div
-      className={`calendar-day ${isToday ? "today" : ""} ${isEventDay && "event-day"}`}
+      className={`calendar-day ${isToday ? "today" : ""} ${isEventDay && "event-day"} ${selectedDay && "selected"} `}
       onClick={() => onClick(date)}
     >
       <div>{day}</div>

@@ -37,7 +37,7 @@ export const CheckboxItem: React.FC<CheckboxItemProps> = ({
         />
       </div>
       <div className="item__name">
-        <p>{name}</p>
+        <label htmlFor={name}>{name}</label>
       </div>
     </div>
   );

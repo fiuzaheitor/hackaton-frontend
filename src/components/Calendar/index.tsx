@@ -9,6 +9,7 @@ import {
 } from "../../utils/Queries";
 import { CalendarDay } from "../CalendarDay";
 import { getCookie } from "../../utils/cookies";
+import { set } from "react-datepicker/dist/date_utils";
 
 export const Calendar: React.FC<{ onClick: any; filter: string }> = ({
   onClick,
@@ -16,6 +17,7 @@ export const Calendar: React.FC<{ onClick: any; filter: string }> = ({
 }) => {
   const feather = require("feather-icons");
   const auth = JSON.parse(getCookie("_bu_l") as string);
+  const [selectedDay, setSelectedDay] = useState("");
 
   const {
     data: dataUserGestations,
@@ -103,11 +105,12 @@ export const Calendar: React.FC<{ onClick: any; filter: string }> = ({
       dayElements.push(
         <CalendarDay
           date={date.toDateString()}
+          selectedDay={selectedDay===date.toDateString()}
           key={day}
           day={day}
           isToday={isToday}
           isEventDay={isEventDay}
-          onClick={onClick}
+          onClick={(date: any) => {onClick(date); setSelectedDay(date)}}
         />,
       );
     }

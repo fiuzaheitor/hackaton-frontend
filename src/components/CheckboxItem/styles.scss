@@ -29,7 +29,8 @@
   display: none;
 }
 
-.item__name p {
+.item__name label {
   font-size: 18px;
   font-family: $font-base;
+  cursor: pointer;
 }
